@@ -48,7 +48,7 @@ int encola_textura(char *nombre)
 
 
     strcpy(matriz_texturas_nombre[lon], nombre);
-    _sis_msje("\t\t\t\t%s", matriz_texturas_nombre[lon]);
+    _sis_msje("\t%s", matriz_texturas_nombre[lon]);
     if (lon == indice_texturas)
         indice_texturas++;
     return (lon);
@@ -68,7 +68,7 @@ int genera_texturas(GLuint tipo)
     _sis_msj("\n\t\tGenerando texturas...............\n ");
 
     for (i = 1; i < indice_texturas; i++) {
-        _sis_msje("\tTextura id %d",i);
+        _sis_msje("\t\t\tTextura id %d",i);
         strcpy(f_text, "texturas/");
         strcat(f_text, matriz_texturas_nombre[i]);
         textura_datos = (char *) carga_tga(f_text, &tam_x, &tam_y);
@@ -87,13 +87,13 @@ int genera_texturas(GLuint tipo)
         if (tipo == GL_LINEAR) {
             glTexImage2D(GL_TEXTURE_2D, 0, 3, tam_x, tam_y, 0, GL_RGBA,
                          GL_UNSIGNED_BYTE, textura_datos);
-            _sis_msj("\t\t\t\tUsando GL_LINEAR para esta textura\n");
+            _sis_msj("\tUsando GL_LINEAR para esta textura\n");
 
         } else {
             gluBuild2DMipmaps(GL_TEXTURE_2D, 3, tam_x, tam_y, GL_RGBA,
                               GL_UNSIGNED_BYTE, textura_datos);
             _sis_msj
-                ("\t\t\tUsando MIPMAPS para esta textura ¡qué trascendental!\n");
+                ("\tUsando MIPMAPS para esta textura ¡qué trascendental!\n");
         }
 
         free(textura_datos);

@@ -67,10 +67,10 @@ void *carga_tga(char f_imagen[], int *tam_x, int *tam_y)
 
 
     if (fichero == NULL) {
-        _sis_msj(" [KO]\n");
+        _sis_msj(" [KO]");
         return NULL;
     }
-    _sis_msj(" [OK]\n");
+    _sis_msj(" [OK]");
 
 
     /* Esto abre y comprueba que es un TGA */
