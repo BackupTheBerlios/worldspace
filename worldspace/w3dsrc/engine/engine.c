@@ -48,14 +48,10 @@ float camara[4][4];
 */
 int logo(void)
 {
-
-    T_FUNC_IN SDL_Event event;
+    SDL_Event event;
     Uint8 *keys;
-
     int taux;
     int intervalo;
-    
-
     modelo *logo;
     float angulo = 0;
     GLfloat Ambient0[] = { 0.0f, 0.0f, 1.0f, 0.0f };
@@ -63,6 +59,8 @@ int logo(void)
     GLfloat Diffuse0[4];
     ALfloat SonPosition [] = {0.0,0.0,0.0};
     ALfloat SonVelocidad [] = {1.0,1.0,1.0};
+
+	T_FUNC_IN;
 
     log_msj("[engine.c] Veamos ese logo...\n");
     Diffuse0[3] = 1.0f;
@@ -88,7 +86,7 @@ int logo(void)
         glLoadIdentity();
         glRotatef(angulo, 1.0f, 1.0f, 0.0f);
         glLoadIdentity();
-        glTranslatef(0.0f, 0.0f, -(angulo / 34.28) + 1.0f);
+        glTranslatef(0.0f, 0.0f, -(angulo / 34.28f) + 1.0f);
         glRotatef(0.0f, 1.0f, 0.0f, 0.0f);
         glRotatef(0.0f, 0.0f, 1.0f, 0.0f);
         glRotatef(-angulo / 2, 1.0f, 1.0f, 1.0f);
@@ -207,9 +205,9 @@ int ini_engine()
 
     glGetFloatv(GL_MODELVIEW_MATRIX, &camara[0][0]);
     camara[2][2] = 1.0f;
-    camara[3][0] = ((rand() % 100) - 50);
-    camara[3][1] = ((rand() % 100) - 50);
-    camara[3][2] = ((rand() % 100) - 50);
+    camara[3][0] = ((rand() % 100) - 50.0f);
+    camara[3][1] = ((rand() % 100) - 50.0f);
+    camara[3][2] = ((rand() % 100) - 50.0f);
 
     /*
        id_textura_crosshair = encola_textura("crosshair.tga", GL_RGBA);
