@@ -1,0 +1,24 @@
+Plugins
+------------------
+
+* Plugin MAD y MD2
+
+- Linux & gcc
+
+gcc -shared -Wl,-soname,<plugin.so> -o <plugin.so> <plugin.c> -DLINUX
+
+- Dev C++
+
+gcc -shared -Wl,-soname,<plugin.so> -o <plugin.so> <plugin.c> -DWIN32
+
+
+- MS Visual C++
+
+
+
+
+* Plugin 3DS
+
+- Linux 
+
+g++ -shared -Wl,-soname,3ds.so -o 3ds.so 3ds.c l3ds.cpp -DLINUX
