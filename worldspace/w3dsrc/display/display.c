@@ -167,7 +167,7 @@ int cerrar_display(void)
 /*!
 Cambia la resolucion del contexto gráfico
 */
-int cambiar_display( int xdis, int ydis, int pan_completa){
+int cambia_display( int xdis, int ydis, int pan_completa){
 
   configuracion.Xtam = xdis;
   configuracion.Ytam = ydis;

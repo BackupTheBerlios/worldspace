@@ -36,6 +36,6 @@ extern int cerrar_display(void);
 /*!
 Cambia la resolucion del contexto gráfico
 */
-extern int cambiar_display(int xdis, int ydis, int pan_completa);
+extern int cambia_display(int xdis, int ydis, int pan_completa);
 
 #endif
