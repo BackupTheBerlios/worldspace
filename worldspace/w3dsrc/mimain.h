@@ -49,10 +49,10 @@ int WINAPI WinMain( HINSTANCE hInstance,
 		pCadW=strtok(NULL, " ");
 
 	vArg = (char **) dar_m( sizeof(char *) * (iArg+1), "Linea de argumentos");
-	mNULO(vArg);
+	miNulo(vArg);
 
 	vArg[0]=(char *) dar_m( strlen("Programa")+1, "Nombre Programa");
-	mNULO(vArg[0]);
+	miNulo(vArg[0]);
 
 	strcpy(vArg[0],"Programa");
 
@@ -61,7 +61,7 @@ int WINAPI WinMain( HINSTANCE hInstance,
 		iLonW = strlen(pCadW);
 
 		vArg[iArg]= (char *) dar_m( iLonW+1, "Argumento");
-		mNULO(vArg[iArg]);
+		miNulo(vArg[iArg]);
 
 		strcpy(vArg[iArg],pCadW);
 		pCadW=strtok(NULL, " ");
