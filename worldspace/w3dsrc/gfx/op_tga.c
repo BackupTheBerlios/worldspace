@@ -1,22 +1,18 @@
-/***************************************************************************
-                          op_tga.c  -  Carga de imagenes en formatos TGA
-                             -------------------
-    begin                : sat apr 12 2003 / sab 12 abr 2003
-    copyright            : (C) 2003 by Grupo WorldSpace
-    email                : eric@users.berlios.de
- ***************************************************************************/
+//==========================================================================
+//  op_tga.c  -  Carga de imagenes en formatos TGA
+//
+//  begin     : sat apr 12 2003 / sab 12 abr 2003
+//  copyright : (C) 2003 by Grupo WorldSpace
+//  email     : eric (erocafull@jazzfree.com)
+//==========================================================================
+//                                                                         *
+//   This program is free software; you can redistribute it and/or modify  *
+//   it under the terms of the GNU General Public License as published by  *
+//   the Free Software Foundation; either version 2 of the License, or     *
+//   (at your option) any later version.                                   *
+//                                                                         *
+//==========================================================================
 
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
-//==========================================================================
-//  Carga de imagenes en formatos TGA
-//==========================================================================
 #include "memoria.h"
 #include "globales.h"
 #include "sdl_gl.h"
@@ -48,12 +44,14 @@ void * carga_tga  ( char * sFichero, int *tam_x, int *tam_y )
 	FILE    * fichero;
 
     miImagenTGA  rImgTga;
-	
+
+	T_FUNC_IN
+
 	fichero= fopen(sFichero, "rb");
 	if (fichero == NULL)
 	{
 			log_msj("\n No pude cargar fichero %s (tal vez no exista)",sFichero);
-			return NULL;
+			_return NULL;
 	}
 
 	// Esto abre y comprueba que es un TGA.
@@ -61,7 +59,7 @@ void * carga_tga  ( char * sFichero, int *tam_x, int *tam_y )
 	if (memcmp(TGAheader,TGAcompare,sizeof(TGAheader))!=0)
 	{
 		fclose(fichero);
-		return NULL;
+		_return NULL;
 	}
 
     // Leemos la cabecera.
@@ -79,7 +77,7 @@ void * carga_tga  ( char * sFichero, int *tam_x, int *tam_y )
 		( header[4]!=32))					
 	{
 		fclose(fichero);								
-		return NULL;								
+		_return NULL;								
 	}
 
 	// Calculamos la memoria que será necesaria.
@@ -96,8 +94,8 @@ void * carga_tga  ( char * sFichero, int *tam_x, int *tam_y )
 	{
 		rImgTga.imageData = (GLubyte *)liberar_m(rImgTga.imageData);
 		fclose(fichero);								
-		return NULL;								
-	} 
+		_return NULL;								
+	}
 
     // El TGA viene en formato BGR, lo pasamos a RGB.
 	for(i=0; i<(GLuint)(imageSize); i+=bytesPerPixel)	
@@ -125,7 +123,7 @@ void * carga_tga  ( char * sFichero, int *tam_x, int *tam_y )
 	rImgTga.imageData = (GLubyte *) liberar_m(rImgTga.imageData);
 	
 	// Todo fue bien!
-	return aux;
+	_return aux;
 }
 
 

@@ -1,22 +1,18 @@
-/***************************************************************************
-                          op_bmp.c  -  Carga de imagenes en formatos BMP
-                             -------------------
-    begin                : sat apr 12 2003 / sab 12 abr 2003
-    copyright            : (C) 2003 by Grupo WorldSpace
-    email                : eric@users.berlios.de
- ***************************************************************************/
+//==========================================================================
+//  op_bmp.c  -  Carga de imagenes en formatos BMP
+//
+//  begin     : sat apr 12 2003 / sab 12 abr 2003
+//  copyright : (C) 2003 by Grupo WorldSpace
+//  email     : eric (erocafull@jazzfree.com)
+//==========================================================================
+//                                                                         *
+//   This program is free software; you can redistribute it and/or modify  *
+//   it under the terms of the GNU General Public License as published by  *
+//   the Free Software Foundation; either version 2 of the License, or     *
+//   (at your option) any later version.                                   *
+//                                                                         *
+//==========================================================================
 
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
-//==========================================================================
-//  Carga de imagenes en formatos BMP
-//==========================================================================
 #include "memoria.h"
 #include "globales.h"
 #include "sdl_gl.h"
@@ -34,11 +30,13 @@ SDL_Surface * carga_bmp (char *sFichero)
 
     SDL_Surface *image;
 
+	T_FUNC_IN
+
     image = SDL_LoadBMP(sFichero);
     if ( image == NULL )
 	{
         log_msj( "\n Incapaz de cargar %s: %s\n", sFichero, SDL_GetError());
-        return(NULL);
+        _return (NULL);
     }
 
     /* GL surfaces are upsidedown and RGB, not BGR :-) */
@@ -62,7 +60,7 @@ SDL_Surface * carga_bmp (char *sFichero)
     }
     liberar_m(tmpbuf);
 
-    return(image);
+    _return (image);
 }
 
 

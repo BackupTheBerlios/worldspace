@@ -1,24 +1,19 @@
-/***************************************************************************
-                          carga_imagen.c  -  Carga los ficheros de imagen
-											en sus distintos formatos
-                             -------------------
-    begin                : sat apr 12 2003 / sab 12 abr 2003
-    copyright            : (C) 2003 by Grupo WorldSpace
-    email                : eric@users.berlios.de
- ***************************************************************************/
+//==========================================================================
+//  carga_imagen.c  -  Carga los ficheros de imagen en sus distintos
+//                     formatos
+//
+//  begin     : sat apr 12 2003 / sab 12 abr 2003
+//  copyright : (C) 2003 by Grupo WorldSpace
+//  email     : eric (erocafull@jazzfree.com)
+//==========================================================================
+//                                                                         *
+//   This program is free software; you can redistribute it and/or modify  *
+//   it under the terms of the GNU General Public License as published by  *
+//   the Free Software Foundation; either version 2 of the License, or     *
+//   (at your option) any later version.                                   *
+//                                                                         *
+//==========================================================================
 
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
-//==========================================================================
-//  Carga/lectura de los ficheros de IMÁGENES en sus
-//  distintos formatos.
-//==========================================================================
 #include <ctype.h>
 #include <string.h>
 
@@ -70,12 +65,15 @@ void mayusculas ( char * sCad )
 // Si todo va bien devuelve 0
 // Si no devuelve -1
 //==========================================================================
+// Este módulo está relacionado con las texturas, por ello tampoco voy a
+// utilizar las devoluciones de SI(1) y NO(0)
+//==========================================================================
 int carga_imagen  ( miFic_imagen * pFic_imagen )
 {
+	T_FUNC_IN;
+
     if (pFic_imagen->sFichero == NULL)
-	{
-		return -1;
-	}
+	{	_return -1;	}
 	else
 	{
 		char sCadena  [LON_BUFF/4];
@@ -109,7 +107,8 @@ int carga_imagen  ( miFic_imagen * pFic_imagen )
 						pFicBmp = NULL;
 					}
 					pFicBmp = carga_bmp (pFic_imagen->sFichero);
-					if (pFicBmp==NULL) return -1;
+					if (pFicBmp==NULL)
+					{	_return -1; }
 					pFic_imagen->iTipo  = FBMP;
 					pFic_imagen->iAncho = pFicBmp->w;
 					pFic_imagen->iAlto  = pFicBmp->h;
@@ -122,7 +121,8 @@ int carga_imagen  ( miFic_imagen * pFic_imagen )
 					int iAncho, iAlto;
 					void * imagen;
 					imagen = carga_tga (pFic_imagen->sFichero, &iAncho, &iAlto );
-					if (imagen==NULL) return -1;
+					if (imagen==NULL)
+					{	_return -1; }
 					pFic_imagen->iTipo  = FTGA;
 					pFic_imagen->iAncho = iAncho;
 					pFic_imagen->iAlto  = iAlto;
@@ -157,17 +157,17 @@ int carga_imagen  ( miFic_imagen * pFic_imagen )
 
 			default:// Fichero no reconocido
 			    log_msj ("\n Extensión de fichero de imagen no reconocida: %s", sCadena);
-			    return -1;
+			    _return -1;
 		}
 	}
-	return 0;  // Todo ha ido bien.
+	_return 0;  // Todo ha ido bien.
 }
 
 
 //==========================================================================
 //  Devuelve el nombre del tipo de fichero de imagen
 //==========================================================================
-char * wTipoImagen  ( int iTipo )
+char * tipo_imagen  ( int iTipo )
 {
 	return vsFicImagen[iTipo];
 }
@@ -178,14 +178,10 @@ char * wTipoImagen  ( int iTipo )
 //  Si alguno de los directorios que se pasan están vacíos,
 //  se eliminan las '/' de la cadena final.
 //==========================================================================
-//  Esta función es lo mismo que 'sprintf', con la diferencia que aquí se
-//  puede introducir como destino un puntero en una asignación,
+//  Esta función es casi lo mismo que 'sprintf'.
 //
-//	sDest = directorio (sDest, "%s/%s", Config.sDirGeneral,Config.sDirFuente );
+//	directorio (sDest, "%s/%s", Config.sDirGeneral,Config.sDirFuente );
 //
-//  al cual se asigna una zona de memoria dinámica.
-//  Por lo tanto, al resultado, despues de usarlo hay que acordarse de 
-//  liberarlo. O con 'free' o con 'liberar_m'.
 //==========================================================================
 char * directorio ( char * sDir, char * sFormat, ... )
 {
@@ -193,7 +189,7 @@ char * directorio ( char * sDir, char * sFormat, ... )
 	int     i;
 	char  * sCad;
 
-	memset(sAux2,0,sizeof(sAux1));
+	memset(sAux1,0,sizeof(sAux1));
 	memset(sAux2,0,sizeof(sAux2));
 
 	va_start(lista,sFormat);
