@@ -3,45 +3,36 @@
 <KDevPrjSession>
  <LastCompileConfig>(Predeterminado)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
- <DocsAndViews NumberOfDocuments="13" >
-  <Doc0 CursorPosLine="27" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="15" FileName="/home/abeiro/personal/cvs/tut_1_7/tut_1_7/Makefile" >
-   <View0 Top="0" Width="771" Attach="1" Height="406" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />
+ <DocsAndViews NumberOfDocuments="10" >
+  <Doc0 CursorPosLine="174" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="1" FileName="/usr/src/worldspace/tut_1_7/tut_1_7/render.c" >
+   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc0>
-  <Doc1 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/cvs/madIVS/madivs/Makefile" >
-   <View0 Top="0" Width="771" Attach="1" Height="395" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc1 CursorPosLine="188" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="33" FileName="/usr/src/worldspace/tut_1_7/tut_1_7/ini_sys.c" >
+   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />
   </Doc1>
-  <Doc2 CursorPosLine="8" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/cvs/tut_1_7/tut_1_7/main.c" >
-   <View0 Top="203" Width="771" Attach="1" Height="1" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc2 CursorPosLine="51" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="29" FileName="/usr/src/worldspace/tut_1_7/tut_1_7/main.c" >
+   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc2>
-  <Doc3 CursorPosLine="84" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="63" FileName="/home/abeiro/personal/cvs/tut_1_7/tut_1_7/ini_sys.c" >
-   <View0 Top="203" Width="771" Attach="1" Height="1" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc3 CursorPosLine="20" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="24" FileName="/usr/src/worldspace/tut_1_7/tut_1_7/w3d_api.h" >
+   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc3>
-  <Doc4 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/cvs/tut_1_7/tut_1_7/estructuras.h" >
-   <View0 Top="203" Width="771" Attach="1" Height="1" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc4 CursorPosLine="3" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/tut_1_7/tut_1_7/logo.c" >
+   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc4>
-  <Doc5 CursorPosLine="22" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="23" FileName="/home/abeiro/personal/cvs/tut_1_7/tut_1_7/sys_data.h" >
-   <View0 Top="203" Width="771" Attach="1" Height="1" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc5 CursorPosLine="31" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="14" FileName="/usr/src/worldspace/tut_1_7/tut_1_7/Makefile" >
+   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc5>
-  <Doc6 CursorPosLine="555" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/cvs/prueba/w3d/render.c" >
-   <View0 Top="0" Width="771" Attach="1" Height="389" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc6 CursorPosLine="811" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/include/SDL/SDL_video.h" >
+   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc6>
-  <Doc7 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/cvs/madIVS/plugins/mad.c" >
-   <View0 Top="0" Width="771" Attach="1" Height="406" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc7 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/tut_1_7/tut_1_7/opengl.h" >
+   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc7>
-  <Doc8 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/cvs/tut_1_7/tut_1_7/render.c" >
-   <View0 Top="0" Width="771" Attach="1" Height="406" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc8 CursorPosLine="18" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/tut_1_7/tut_1_7/render.h" >
+   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc8>
-  <Doc9 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/cvs/tut_1_7/tut_1_7/w3d_api.h" >
-   <View0 Top="0" Width="771" Attach="1" Height="406" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc9 CursorPosLine="327" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="52" FileName="/usr/src/worldspace/tut_1_6/w3d/render.c" >
+   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc9>
-  <Doc10 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/cvs/tut_1_7/tut_1_7/render.h" >
-   <View0 Top="0" Width="771" Attach="1" Height="406" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
-  </Doc10>
-  <Doc11 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/cvs/tut_1_7/tut_1_7/opengl.h" >
-   <View0 Top="0" Width="771" Attach="1" Height="406" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
-  </Doc11>
-  <Doc12 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/cvs/tut_1_7/tut_1_7.kdevprj" >
-   <View0 Top="0" Width="771" Attach="1" Height="406" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
-  </Doc12>
  </DocsAndViews>
 </KDevPrjSession>

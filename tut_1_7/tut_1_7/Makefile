@@ -7,11 +7,11 @@ CC = gcc
 CFLAGS = $(COMPILERFLAGS) $(INCLUDE)
 LIBRARIES = -lX11 -lXi -lXmu  -lGL -lGLU -lm -lpthread -lSDL -lXxf86dga -lXv -lXxf86vm
 
-FUENTES= ini_sys.c main.c render.c
+FUENTES= ini_sys.c main.c render.c logo.c
 
 CABECERAS= estructuras.h opengl.h sys_data.h w3d_api.h render.h
 
-OBJS= ini_sys.o main.o render.o
+OBJS= ini_sys.o main.o render.o logo.o
 
 all:tut_1_7
 	
@@ -27,6 +27,10 @@ main.o:main.c estructuras.h w3d_api.h sys_data.h opengl.h
 
 render.o:render.c estructuras.h w3d_api.h render.h opengl.h
 	$(CC) -c render.c $(CFLAGS)
+
+logo.o:logo.c
+	$(CC) -c logo.c $(CFLAGS)
+
 
 
 clean:	

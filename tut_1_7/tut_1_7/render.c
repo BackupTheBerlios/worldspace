@@ -10,6 +10,8 @@
 
 #include <stdlib.h>
 
+extern void W1_C(void);
+
 
 /*!         |
       			| Y+
@@ -34,9 +36,9 @@ modelo *modelo_1;
 
 
 
-GLfloat LightAmbient0[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+GLfloat LightAmbient0[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 GLfloat LightDiffuse0[] = { 0.9f, 0.9f, 0.9f, 1.0f };
-GLfloat LightPosition0[] = { 0.0f, 1.0f, 0.0f, 0.0f };
+GLfloat LightPosition0[] = { 0.0f, 0.0f, -1.0f, 0.0f };
 
 
 
@@ -52,6 +54,7 @@ va desde .1 a 100. Es decir, lo que esté situado a más de 100 unidades de la cám
 
 int inicializa_gl(void)
 {
+
 
 
 	
@@ -125,6 +128,9 @@ int inicializa_gl(void)
 
 	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
 	
 	
 				
@@ -133,4 +139,42 @@ int inicializa_gl(void)
 	
 }
 
+
+int logo(void) {
+
+	  float angulo=0;
+		GLfloat Ambient0[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		GLfloat Diffuse0[4];
+
+		Diffuse0[3] = 1.0f;
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, Ambient0);
+	
+		glMatrixMode(GL_MODELVIEW);
+		while (angulo<720) {
+			Diffuse0[0]=angulo/720.0f;
+			Diffuse0[1]=(angulo-360)/720.0f;
+			Diffuse0[2]=angulo/360.0f;
+			glLightfv(GL_LIGHT0, GL_DIFFUSE, Diffuse0);
+	   	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glLoadIdentity();
+			glRotatef(angulo,1.0f,1.0f,0.0f);
+			glLightfv(GL_LIGHT0, GL_POSITION, LightPosition0);	
+			glLoadIdentity();
+			glTranslatef(0.0f,0.0f,-20);
+			glRotatef(90.0f,1.0f,0.0f,0.0f);
+			glRotatef(-180.0f,0.0f,1.0f,0.0f);
+			glRotatef(-angulo,0.0f,0.0f,1.0f);
+			W1_C();
+			SDL_GL_SwapBuffers();
+			angulo++;
+		}
+		glLoadIdentity();
+		glLightfv(GL_LIGHT0, GL_POSITION, LightPosition0);	
+	  glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient0);
+	  glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDiffuse0);
+
+		return 0;
+
+}
 

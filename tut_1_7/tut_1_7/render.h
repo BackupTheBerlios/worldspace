@@ -17,3 +17,4 @@
 
 
 extern int inicializa_gl(void);
+extern int logo(void);

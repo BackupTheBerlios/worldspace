@@ -53,7 +53,7 @@ install_location=
 type=DATA
 
 [tut_1_7/Makefile.am]
-files=tut_1_7/opengl.h,tut_1_7/main.c,tut_1_7/estructuras.h,tut_1_7/w3d_api.h,tut_1_7/ini_sys.c,tut_1_7/sys_data.h,tut_1_7/Makefile,tut_1_7/render.c,tut_1_7/render.h
+files=tut_1_7/opengl.h,tut_1_7/main.c,tut_1_7/estructuras.h,tut_1_7/w3d_api.h,tut_1_7/ini_sys.c,tut_1_7/sys_data.h,tut_1_7/Makefile,tut_1_7/render.c,tut_1_7/render.h,tut_1_7/logo.c
 sub_dirs=
 type=prog_main
 
@@ -72,6 +72,12 @@ install_location=
 type=HEADER
 
 [tut_1_7/ini_sys.c]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[tut_1_7/logo.c]
 dist=true
 install=false
 install_location=
