@@ -1,0 +1,8 @@
+madIVS
+------------
+
+Importador/exportador de modelos.
+
+- Importa modelos vía plugins
+- Visualiza los modelos
+- Exporta modelos MAD

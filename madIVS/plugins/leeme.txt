@@ -1,0 +1,11 @@
+Plugins
+------------------
+
+- Linux & gcc
+
+gcc -shared -Wl,-soname,<plugin.so> -o <plugin.so> <plugin.c> -DLINUX
+
+- Dev C++
+
+
+- MS Visual C++
