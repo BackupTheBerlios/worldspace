@@ -17,39 +17,26 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <stdarg.h>
+#include <time.h>
+#include <errno.h>
 
 #include "w3d_base.h"
 #include "globales.h"
+#include "conf_parser.h"
+
+#ifdef _LINUX
+#define FICH_LOG "/.w3d.log"
+#define FICH_INI "/.w3d.ini"
+#endif
+#ifdef _WIN32
+#define FICH_LOG "w3d.log"
+#define FICH_INI "w3d.ini"
+#endif
 
 /*!
-Valores de configuracion inicial.
-!*/
-#define WXSCREEN      640
-#define WYSCREEN      480
-#define WNBITS        16
-#define WALLSCREEN    0
-#define WDIR_GENERAL  "ws_datos"
-#define WDIR_TEXTURAS "texturas"
-#define WDIR_FUENTES  "fuentes"
-#define WDIR_MODELOS  "modelos"
-#define WDIR_ESPACIOS "espacios"
-#define WDIR_NODIR    "no_hay_directorio"
-/*!
-Patrones para leer la configuracion inicial del fichero ini.
-!*/
-#define PXSCREEN      "Xtam  = "
-#define PYSCREEN      "Ytam  = "
-#define PNBITS        "bpp    = "
-#define PALLSCREEN    "FullScreen = "
-#define PDIR_GENERAL  "DirGeneral  = "
-#define PDIR_TEXTURAS "DirTexturas = "
-#define PDIR_FUENTES  "DirFuentes  = "
-#define PDIR_MODELOS  "DirModelos  = "
-#define PDIR_ESPACIOS "DirEspacios = "
-
-/*!
-================================== DECLARACION DE VARIABLES
+========================= DECLARACION DE VARIABLES
 !*/
 
 /*
@@ -72,6 +59,10 @@ Nivel de traza
 */
 char nivel_traza = 0;
 
+/*!
+Hora a la que inicio el programa
+*/
+time_t hora_inicio;
 /*!
 ================================== FUNCIONES
 !*/
@@ -102,37 +93,85 @@ Esta función inicializa el sistema de logs
 */
 int ini_sis_log()
 {
-    int i;
+    int i, estado;
+    char c_fich_log[LON_BUFF];
 
     for (i = 0; i < 79; i++)
         cad_traza[i] = ' ';
 
     cad_traza[i] = '\0';
 
-    if (!(salida_log = fopen("w3d.log", "wt")))
-        return NO;
-    else {
-        log_msj
-            ("           WorldSpace 3D. copyright 2003 Grupo WorldSpace            \n");
-        log_msj
-            ("=====================================================================\n");
-        log_msj
-            ("              Distribuido bajo/Distributed under GNU GPL             \n");
-        log_msj
-            ("=====================================================================\n");
-        log_msj
-            ("This program is free software; you can redistribute it and/or modify \n");
-        log_msj
-            ("it under the terms of the GNU General Public License as published by \n");
-        log_msj
-            ("the Free Software Foundation; either version 2 of the License, or    \n");
-        log_msj
-            ("(at your option) any later version.                                  \n");
-        log_msj
-            ("=====================================================================\n");
+#ifdef _LINUX
+    strcpy(c_fich_log, getenv("HOME"));
+    strcat(c_fich_log, FICH_LOG);
+#endif
+#ifdef _WIN32
+    strcpy(c_fich_log, FICH_LOG);
+#endif
+
+    if (!(salida_log = fopen(c_fich_log, "wa"))) {
+
+        salida_log = stdout;
+        estado = NO;
+    } else
+        estado = SI;
+
+    log_msj
+        ("           WorldSpace 3D. copyright 2003 Grupo WorldSpace            \n");
+    log_msj
+        ("=====================================================================\n");
+    log_msj
+        ("              Distribuido bajo/Distributed under GNU GPL             \n");
+    log_msj
+        ("=====================================================================\n");
+    log_msj
+        ("This program is free software; you can redistribute it and/or modify \n");
+    log_msj
+        ("it under the terms of the GNU General Public License as published by \n");
+    log_msj
+        ("the Free Software Foundation; either version 2 of the License, or    \n");
+    log_msj
+        ("(at your option) any later version.                                  \n");
+    log_msj
+        ("=====================================================================\n");
+
+    return estado;
+
+}
+
+/*!
+Guarda de la configuracion actual
+*/
+int graba_conf()
+{
+
+    FILE *fl_conf;
+    char c_fich[LON_BUFF];
+
+    T_FUNC_IN;
+
+#ifdef _LINUX
+    strcpy(c_fich, getenv("HOME"));
+    strcat(c_fich, FICH_INI);
+#endif
+#ifdef _WIN32
+    strcpy(c_fich, FICH_INI);
+#endif
+
+    if ((fl_conf = fopen(c_fich, "wt"))) {
+        fprintf(fl_conf, "# Generado por WorldSpace 3D a %s\n",
+                ctime(&hora_inicio));
+        fprintf(fl_conf, "%s\t\t\t%d\n", PXSCREEN, configuracion.Xtam);
+        fprintf(fl_conf, "%s\t\t\t%d\n", PYSCREEN, configuracion.Ytam);
+        fprintf(fl_conf, "%s\t\t\t%d\n", PNBITS, configuracion.bpp);
+        fprintf(fl_conf, "%s\t\t\t%d\n", PALLSCREEN,
+                configuracion.FullScreen);
+        fprintf(fl_conf, "%s\t\t\t%s\n", PDIR_GENERAL,
+                configuracion.sDirGeneral);
+        fclose(fl_conf);
     }
 
-    return SI;
+    T_FUNC_OUT return SI;
 
 }
 
@@ -144,14 +183,44 @@ int establece_conf()
 {
 
     FILE *f_conf;
+    char c_fich[LON_BUFF];
 
     T_FUNC_IN;
 
-    if ((f_conf = abre_fichero("w3d.ini", "rt"))) {
+#ifdef _LINUX
+    strcpy(c_fich, getenv("HOME"));
+    strcat(c_fich, FICH_INI);
+#endif
+#ifdef _WIN32
+    strcpy(c_fich, FICH_INI);
+#endif
+
+    if ((f_conf = fopen(c_fich, "rt"))) {
         /*
            Por Hacer: Parsear este fichero
            y establecer las variables de configuracion
          */
+        configuracion.Xtam = establece_var_conf_numero(f_conf, PXSCREEN);
+        if (!configuracion.Xtam)
+            configuracion.Xtam = WXSCREEN;
+        configuracion.Ytam = establece_var_conf_numero(f_conf, PYSCREEN);
+        if (!configuracion.Ytam)
+            configuracion.Ytam = WYSCREEN;
+        configuracion.bpp = establece_var_conf_numero(f_conf, PNBITS);
+        if (!configuracion.bpp)
+            configuracion.bpp = WNBITS;
+        configuracion.FullScreen =
+            establece_var_conf_numero(f_conf, PALLSCREEN);
+        if (!configuracion.FullScreen)
+            configuracion.FullScreen = WALLSCREEN;
+
+        strcpy(configuracion.sDirGeneral,
+               establece_var_conf_cadena(f_conf, PDIR_GENERAL));
+        if (!configuracion.sDirGeneral)
+            strcpy(configuracion.sDirGeneral, WDIR_GENERAL);
+
+        fclose(f_conf);
+
     } else {
         /* Cargamos la configuración por defecto */
         configuracion.Xtam = WXSCREEN;
@@ -163,6 +232,7 @@ int establece_conf()
         strcpy(configuracion.sDirFuentes, WDIR_FUENTES);
         strcpy(configuracion.sDirModelos, WDIR_MODELOS);
         strcpy(configuracion.sDirEspacios, WDIR_ESPACIOS);
+        graba_conf();
 
     }
 
@@ -177,8 +247,12 @@ mensajes del sistema.
 */
 int ini_bios(int iArg, char **cArg)
 {
-    T_FUNC_IN if (!ini_sis_log())
-         return NO;
+    T_FUNC_IN hora_inicio = time(NULL);
+
+    if (!ini_sis_log())
+        log_msj
+            ("[KO] Sistema de logs no abierto, usando salida estandar\n");
+
     else
         log_msj("[OK] Sistema de logs abierto\n");
 
@@ -217,7 +291,7 @@ FILE *abre_fichero(char *nombre, char *modo)
     strcpy(nombre_completo, configuracion.sDirGeneral);
     strcat(nombre_completo, "/");
     strcat(nombre_completo, nombre);
-    log_msj("[bios.c] Abriendo %s\n", nombre);
+    log_msj("[bios.c] Abriendo %s\n", nombre_completo);
     tmp = fopen(nombre_completo, modo);
     if (!tmp)
         log_msj("[KO] Error abriendo %s\n", nombre);

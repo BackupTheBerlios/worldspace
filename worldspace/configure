@@ -37,8 +37,10 @@ CC=gcc
 CCPP=g++
 BINARY=w3d_x86.exe
 
+EXCEP=$*
 
-C_SOURCES=`find -name *.c`
+
+C_SOURCES=`find -name *.c |grep -v $EXCEP`
 echo "C : " $C_SOURCES
 
 CPP_SOURCES=`find -name *.cpp`

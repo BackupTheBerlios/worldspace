@@ -80,7 +80,8 @@ int logo(void)
         glRotatef(0.0f, 1.0f, 0.0f, 0.0f);
         glRotatef(0.0f, 0.0f, 1.0f, 0.0f);
         glRotatef(-angulo / 2, 1.0f, 1.0f, 1.0f);
-        render_mad(logo);
+        if (logo != NULL)
+            render_mad(logo);
         SDL_GL_SwapBuffers();
         angulo += 2.0f;
 

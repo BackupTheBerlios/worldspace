@@ -90,7 +90,7 @@ int ini_display(void)
     y_size = configuracion.Ytam;
 
     if (SDL_Init(SDL_INIT_VIDEO) != 1)
-        log_msj("[OK] ]Subsistema SDL_video inicializado\n");
+        log_msj("[OK] Subsistema SDL_video inicializado\n");
     else {
         log_msj("[KO] Error inesperado en SDL_Init: %s\n", SDL_GetError());
         _return NO;
