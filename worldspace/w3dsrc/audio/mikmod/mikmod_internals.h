@@ -20,7 +20,7 @@
 
 /*==============================================================================
 
-  $Id: mikmod_internals.h,v 1.1 2003/04/11 12:09:52 lordloki Exp $
+  $Id: mikmod_internals.h,v 1.2 2003/04/21 10:37:45 lordloki Exp $
 
   MikMod sound library internal definitions
 
@@ -55,11 +55,10 @@ static char *strdup(const char *str)
 }
 #endif
 
-#ifdef WIN32
+#ifdef _WIN32
 #ifndef __STDC__
 #define __STDC__
 #endif
-#pragma warning(disable:4761)
 #endif
 
 #ifdef __cplusplus
@@ -114,7 +113,7 @@ extern void* _mm_calloc(size_t,size_t);
 #define MUTEX_UNLOCK(name)	\
 	if(_mm_mutex_##name)	\
 		DosReleaseMutexSem(_mm_mutex_##name)
-#elif defined(WIN32)
+#elif defined(_WIN32)
 #include <windows.h>
 #define DECLARE_MUTEX(name)	\
 	extern HANDLE _mm_mutex_##name

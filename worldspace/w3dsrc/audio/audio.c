@@ -28,7 +28,7 @@ int ini_audio(void)
 #ifdef _LINUX
   if ((Device = alcOpenDevice((ALubyte *) "'alsa")) == NULL) {
     log_msj("No existe ALSA Backend\n");
-    if ((Device = alcOpenDevice((ALubyte *) "sdl")) == NULL) {
+    if ((Device = alcOpenDevice((ALubyte *) "'sdl")) == NULL) {
       log_msj("No existe SDL Backend\n");
 #endif
 #ifdef _WIN32

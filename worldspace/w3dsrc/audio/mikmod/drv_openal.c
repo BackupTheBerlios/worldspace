@@ -20,7 +20,7 @@
 
 /*==============================================================================
 
-  $Id: drv_openal.c,v 1.1 2003/04/11 12:09:52 lordloki Exp $
+  $Id: drv_openal.c,v 1.2 2003/04/21 10:37:45 lordloki Exp $
 
   Driver for output via openal.
 
@@ -122,7 +122,7 @@ static BOOL Openal_Init(void)
 					sprintf( devspec, "'(( sampling-rate %d ))", md_mixfreq );
 						
 					/* FIXME: used passed params */
-					device = alcOpenDevice( (const ALubyte *) devspec );
+					device = alcOpenDevice( (ALubyte *) devspec );
 					if(device == NULL)
 					{
 							_mm_errno = MMERR_OPENING_AUDIO;
@@ -267,7 +267,7 @@ static ALboolean sourceIsPlaying(ALuint sid)
 {
 		ALint state;
 
-		alGetSourceiv(sid, AL_SOURCE_STATE, &state);
+		alGetSourcei(sid, AL_SOURCE_STATE, &state);
 
 		if(state == AL_PLAYING) {
 				return AL_TRUE;
