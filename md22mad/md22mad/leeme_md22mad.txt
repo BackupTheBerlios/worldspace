@@ -1,0 +1,48 @@
+*******************************************************************************
+* Proyecto WorldSpace 3D                                                      *
+* http://usuarios.tripod.es/worldspace                                        *
+* -------------------------------------                                       *
+*                                                                             *
+* Esta aplicación es 'free-software' (software libre); puedes redistribuirla  *    
+* y/o modificarla bajo los términso de la GNU General Public License (Licen-  *
+* cias General Pública) tanto la versión 2 de la Licencia como alguna versión *
+* superior.                                                                   *
+*                                                                             *
+* Además, el autor no se hace responsable de ningún daño que pueda ocasionar  *
+* aplicación                                                                  *
+*******************************************************************************
+
+Aplicación:  
+	md22mad
+Versión:
+	0.90 (beta)
+Versión de estructuras:
+	0.20
+Versión de Motor:
+	---
+Función:
+	Realiza una conversión entre modelos nativos del Quake2 y modelos nativos
+	del proyecyo WorldSpace 3d
+Autor:
+	neuralgya (q3arena@ciudadfutura.com)
+
+
+La línea de comandos es md22mad fich.md2 [factor de conversión].
+- El factor de conversión controla el tamaño del modelo convertido
+- Se convierte sólo el primer frame del modelo MD2
+- Se coge el 1er skin (PCX) y se renombra a TGA
+- La conversión e PCX a TGA se realiza con programas externos
+- Además es necesario escalar la textura/skin a un tamaño de 256x256 para
+  poder ser utilizado en OpenGL. El programa así lo requiere y lo avisa
+
+Está en fase beta todavía, así si encontráis algún bug mandarme un e-mail.
+
+NOTAS: La textura debe ser TGA SIN COMPRIMIR de 24 bits CON CANAL ALPHA y de tamaño:
+32x32 o 64x64 o 128x128 o 256x256
+
+
+
+BUGS conocidos:
+
+- Ninguno
+

@@ -1,0 +1,17 @@
+[Project]
+FileName=C:\proyectos\w3d\md22mad\md22mad.dev
+Name=md2tomad
+Use_gpp=0
+UnitCount=2
+ResFiles=C:\proyectos\w3d\md22mad\rsrc.rc
+NoConsole=0
+IsDll=0
+Icon=C:\archivos de programa\devcpp\Bin\Mainicon.ico
+CompilerOptions=-DFECHA=20020330
+IncludeDirs=
+ObjFile=
+[Unit1]
+FileName=C:\proyectos\w3d\md22mad\md22mad\estructuras.h
+[Unit2]
+FileName=C:\proyectos\w3d\md22mad\md22mad\md2_mad.c
+FileTime=746074830

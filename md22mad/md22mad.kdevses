@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE KDevPrjSession ><KDevPrjSession>
+ <Mainframe MaximizeMode="1" />
+ <DocsAndViews NumberOfDocuments="9" >
+  <Doc0 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/agulon/md22mad/md22mad/Md22mad.c" >
+   <View0 Top="0" Width="759" Attach="0" Height="375" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  </Doc0>
+  <Doc1 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/agulon/md22mad/md22mad/Makefile" >
+   <View0 Top="0" Width="94" Attach="0" Height="1" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  </Doc1>
+  <Doc2 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/agulon/md22mad/md22mad/leeme_md22mad.txt" >
+   <View0 Top="0" Width="759" Attach="0" Height="375" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  </Doc2>
+  <Doc3 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/agulon/md22mad/md22mad/estructuras.h" >
+   <View0 Top="0" Width="759" Attach="0" Height="375" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  </Doc3>
+  <Doc4 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="17" FileName="/home/agulon/worldspace/worldspace/Makefile" >
+   <View0 Top="0" Width="759" Attach="0" Height="375" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  </Doc4>
+  <Doc5 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="51" FileName="/home/agulon/md22mad/md22mad/md22mad.c" >
+   <View0 Top="0" Width="759" Attach="0" Height="375" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  </Doc5>
+  <Doc6 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="23" FileName="/usr/local/w3d/md22mad/md22mad/md22mad.c" >
+   <View0 Top="0" Width="759" Attach="0" Height="375" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  </Doc6>
+  <Doc7 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/agulon/w3d/md22mad/md22mad/md22mad.c" >
+   <View0 Top="0" Width="759" Attach="0" Height="375" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />
+  </Doc7>
+  <Doc8 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/agulon/w3d/md22mad/md22mad/estructuras.h" >
+   <View0 Top="0" Width="759" Attach="0" Height="375" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  </Doc8>
+ </DocsAndViews>
+</KDevPrjSession>
