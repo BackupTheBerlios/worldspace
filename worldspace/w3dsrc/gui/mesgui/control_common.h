@@ -29,6 +29,13 @@
 #include "font.h"
 #include "misc.h"
 
+/*
+No compila en MINGW32 sin esto
+*/
+#ifdef WIN32
+#define uint unsigned int
+#endif
+
 #define TO_X			4	// text offset
 #define TO_Y			2
 #define DRAG_THRESHOLD	4	// how much the mouse moves before it starts dragging

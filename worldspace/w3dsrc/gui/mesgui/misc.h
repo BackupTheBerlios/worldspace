@@ -23,5 +23,11 @@
 char shiftize(char c);
 bool printable_key(char c);
 
+/*
+No compila en MINGW32 sin esto
+*/
+#ifdef WIN32
+#define uint unsigned int
+#endif
 #endif
 

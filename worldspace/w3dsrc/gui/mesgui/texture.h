@@ -22,5 +22,8 @@
 
 unsigned int *LoadTexture(const char* filename,int type=1);
 void ReloadTextures();
-
+#ifdef WIN32
+#define GL_BGR_EXT 0x80E0
+#define GL_BGRA_EXT 0x80E1
+#endif
 #endif
