@@ -31,7 +31,6 @@ typedef struct {
 } miFic_imagen;
 
 int    carga_imagen        ( miFic_imagen * pFic_imagen );
-void   cambia_dirImagenes  ( char * sDirNuevo );
 char * tipo_imagen         ( int iTipo );
 char * directorio          ( char * sDir, char * sFormat, ... );
 //==========================================================================

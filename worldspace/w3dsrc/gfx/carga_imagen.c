@@ -35,7 +35,6 @@ static char * vsFicImagen [] = {
 };
 
 //==========================================================================
-static SDL_Surface * pFicBmp = NULL;   // Para imagenes BMP
 static char sAux1[LON_BUFF];           // Buffer auxiliar.
 static char sAux2[LON_BUFF];           // Buffer auxiliar.
 //==========================================================================
@@ -50,25 +49,27 @@ static char sAux2[LON_BUFF];           // Buffer auxiliar.
 // Este módulo está relacionado con las texturas, por ello tampoco voy a
 // utilizar las devoluciones de SI(1) y NO(0)
 //==========================================================================
-int carga_imagen  ( miFic_imagen * pFic_imagen )
+int carga_imagen  ( miFic_imagen * prFic_imagen )
 {
 	T_FUNC_IN;
 
-    if (pFic_imagen->sFichero == NULL)
+    if (prFic_imagen->sFichero == NULL)
 	{	_return -1;	}
 	else
 	{
-		char sCadena  [LON_BUFF/4];
-		char sColaFic [8];
-		int  i;
+		char   sCadena  [LON_BUFF/4];
+		char   sColaFic [8];
+		int    i, iAncho, iAlto;
+		void * imagen = NULL;
 
 		//---------------------------------------------------
 		// Primero extraemos la extension del fichero
 		//---------------------------------------------------
-		mInicio(sColaFic);
-		mInicio(sCadena );
-
-		strcpy (sColaFic, pFic_imagen->sFichero + strlen(pFic_imagen->sFichero)-7);   // Extraemos la cola del nombre del fichero
+		mInicio (sColaFic);
+		mInicio (sCadena);
+		strcpy  (sColaFic,
+			prFic_imagen->sFichero +
+			strlen(prFic_imagen->sFichero)-7);  // Extraemos la cola del nombre del fichero
 		uStrtoken (sCadena, sColaFic, ".");    // El primero se queda con la izquierda
 		uStrtoken (sCadena, NULL    , ".");    // El segundo se queda con la extensión
 		//---------------------------------------------------
@@ -78,70 +79,39 @@ int carga_imagen  ( miFic_imagen * pFic_imagen )
 			if ( ! strcmp(sCadena, vsFicImagen[i]) ) break;
 		}
 		//---------------------------------------------------
-
-		switch (i)  // En 'i' tenemos el valor representativo de la extensión del fichero
+		switch (i)
 		{
 			case FBMP:
-				{
-					if (pFicBmp!=NULL)
-					{
-						SDL_FreeSurface (pFicBmp);
-						pFicBmp = NULL;
-					}
-					pFicBmp = carga_bmp (pFic_imagen->sFichero);
-					if (pFicBmp==NULL)
-					{	_return -1; }
-					pFic_imagen->iTipo  = FBMP;
-					pFic_imagen->iAncho = pFicBmp->w;
-					pFic_imagen->iAlto  = pFicBmp->h;
-					pFic_imagen->pDatos = pFicBmp->pixels;
-				}
+				imagen = carga_bmp (prFic_imagen->sFichero, &iAncho, &iAlto );
 				break;
 
 			case FTGA:
-				{
-					int iAncho, iAlto;
-					void * imagen;
-					imagen = carga_tga (pFic_imagen->sFichero, &iAncho, &iAlto );
-					if (imagen==NULL)
-					{	_return -1; }
-					pFic_imagen->iTipo  = FTGA;
-					pFic_imagen->iAncho = iAncho;
-					pFic_imagen->iAlto  = iAlto;
-					pFic_imagen->pDatos = imagen;
-				}
+				imagen = carga_tga (prFic_imagen->sFichero, &iAncho, &iAlto );
 				break;
 
+			// Tenemos que crear la funcion y tener ficheros de prueba
 			case FRGB:
-				{/*
-					int iAncho, iAlto;
-					void * imagen;
-					imagen = read_rgb_texture(pFic_imagen->sNomfic, &iAncho, &iAlto);
-					if (imagen==NULL) return -1;
-					pFic_imagen->iTipo  = FRGB;
-					pFic_imagen->iAncho = iAncho;
-					pFic_imagen->iAlto  = iAlto;
-					pFic_imagen->pDatos = imagen;
-				*/}
+				// imagen = read_rgb_texture(prFic_imagen->sNomfic, &iAncho, &iAlto);
 				break;
 
 			case FBW :
-				{/*
-					int iAncho, iAlto;
-					void * imagen;
-					imagen = read_alpha_texture(pFic_imagen->sNomfic, &iAncho, &iAlto);
-					pFic_imagen->iTipo  = FBW;
-					pFic_imagen->iAncho = iAncho;
-					pFic_imagen->iAlto  = iAlto;
-					pFic_imagen->pDatos = imagen;
-				*/}
+				// imagen = read_alpha_texture(prFic_imagen->sNomfic, &iAncho, &iAlto);
 				break;
 
 			default:// Fichero no reconocido
 			    log_msj ("\n Extensión de fichero de imagen no reconocida: %s", sCadena);
-			    _return -1;
+				_return -1;
 		}
+		//---------------------------------------------------
+		if (imagen==NULL)
+		{	_return -1; }
+		//---------------------------------------------------
+		prFic_imagen->iTipo  = i;
+		prFic_imagen->iAncho = iAncho;
+		prFic_imagen->iAlto  = iAlto;
+		prFic_imagen->pDatos = imagen;
 	}
+
 	_return 0;  // Todo ha ido bien.
 }
 
@@ -193,6 +163,6 @@ char * directorio ( char * sDir, char * sFormat, ... )
 }
 
 
-// ==================================================================
+//==========================================================================
 //  Fin de carga_imagen.c
-// ==================================================================
+//==========================================================================
