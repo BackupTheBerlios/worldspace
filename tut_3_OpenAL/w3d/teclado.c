@@ -101,7 +101,7 @@ if (keys[SDLK_w]) {
 
           /* Reproducimos sonido laser */
           if ( audio_on == 1){
-              ReproducirSonido ( 0,disparo_laser.posicion, (disparo_laser.direccion),1.0f, 1.0f,10.0f, AL_FALSE);
+              ReproducirSonido ( 0,disparo_laser.posicion, disparo_laser.direccion,1.0f, 1.0f,10.0f, AL_FALSE);
           }
     }
 }
@@ -115,7 +115,9 @@ if (keys[SDLK_w]) {
 		  glShadeModel(GL_SMOOTH);
 	}
     if (keys[SDLK_m]) {
-		  ReproducirMusica ( );
+		 if ( musica_on == 0 ){
+              ReproducirMusica ( );
+         }
 	}
     if (keys[SDLK_n]){
         if ( audio_on == 1 ){

@@ -7,6 +7,7 @@
 #include "init_sys.h"
 #include "teclado.h"
 #include "render.h"
+#include "opengl.h"
 
 /* Cabeceras necesarias para decodificar ficheros OGG Vorbis */
 #include <vorbis/codec.h>
@@ -53,7 +54,7 @@ ALuint frecuencia; /* Utilizados en la carga de archivos OGG */
 ALuint bitrate; /* Utilizados en la carga de archivos OGG */
 ALenum formato; /* Utilizado en la carga de archivos OGG */
 int tamanyo_cancion; /* Utilizado en la carga de archivos OGG */
-ALuint streambuffers[NUM_BUFFER_MUSICA]; /* Utilizado en la carga de archivos OGG */
+ALuint streambuffers[]; /* Utilizado en la carga de archivos OGG */
 int NUM_BUFFER_MUSICA;
 ALuint streamsource[1]; /* Utilizado en la carga de archivos OGG */
 ALuint streamvacios;
@@ -61,10 +62,10 @@ static ALuint estado;
 static ALuint buffer[NUM_SONIDOS];
 static ALuint source[NUM_SONIDOS];
 static ALuint entornos[NUM_ENTORNOS];
-ALshort waveout [BUFFER_MUSICA];  /* Donde almacenamos los OGG Vorbis decodificados */
+ALshort waveout [];  /* Donde almacenamos los OGG Vorbis decodificados */
 int BUFFER_MUSICA;
 OggVorbis_File buff;
-SDL_Thread *threadmusica = NULL; /* Thread de audio */
+SDL_Thread *thread1musica = NULL; /* Thread de audio */
 int audio_on = 0;
 int musica_on =0;
 int musica_decodificada = 0;
@@ -86,6 +87,7 @@ int InicializarAudio(){
 
 	/* Asignamos el mejor dispositivo de audio disponible */
 #ifdef _LINUX
+
 	if (( Device = alcOpenDevice ((ALubyte* ) "waveOut" )) == NULL){
 		fprintf ( logs,"No existe WaveOut Backend\n");
 		if (( Device = alcOpenDevice (( ALubyte* ) "SDL" )) == NULL ){
@@ -252,6 +254,7 @@ void  CargaSonido (  char *fichero_wav, int identificador ){
 	alSourcei ( source[identificador], AL_BUFFER, buffer[identificador]);
 
 }
+
 
 
 
@@ -432,15 +435,15 @@ void CargarMusica ( char *fichero_ogg ){
       	en vez de lo que hacemos ahora. Corrijeme */
       	/* Preferiblemente usa archivos con un bitrate superior a 92 kbps. Una cantidad inferior a
       	esto podria hacer que el archivo no se reprodujera correctamente */
-     	if (((informacion->bitrate) >= 16000) & ((informacion->bitrate) < 48000)){
+     	if (((informacion->bitrate_nominal) >= 16000) & ((informacion->bitrate_nominal) < 48000)){
         	NUM_BUFFER_MUSICA = 4;
         	BUFFER_MUSICA = 4096;
      	}
-     	else if (((informacion->bitrate) >= 48000) & ((informacion->bitrate) < 92000)){
+     	else if (((informacion->bitrate_nominal) >= 48000) & ((informacion->bitrate_nominal) < 92000)){
         	NUM_BUFFER_MUSICA = 50;
         	BUFFER_MUSICA = 512;
      	}
-     	else if ((informacion->bitrate) >= 92000){
+     	else if ((informacion->bitrate_nominal) >= 92000){
         	NUM_BUFFER_MUSICA = 200;
         	BUFFER_MUSICA = 256;
      	}
@@ -456,23 +459,6 @@ void CargarMusica ( char *fichero_ogg ){
      	}
 
 }
-/********************************************************
-Funcion       : ReproducirMusica ( )
-Objetivo      : reproduce la musica seleccionada
-Parametros : No hay que pasarle parametros
-********************************************************/
-
-void ReproducirMusica (  ){
-
-    	musica_on=1;
-    
-    	/* Creamos thread independiente para la musica */
-    	threadmusica = SDL_CreateThread (ActualizarMusica, NULL);
-    	if (threadmusica == NULL) {
-		fprintf(logs,"No podemos crear el thread para la musica.\n");
-    	}
-}
-
 
 /******************************************************
 Funcion       : PararMusica ( )
@@ -523,16 +509,13 @@ Parametros : No hay que pasarle parametros
 
 void ActualizarMusica (  ){
 
-    	int cont=0;
-    	int contador=0;
+    	int cont = 0;
+    	int contador = 0;
     	int i;
     	int posicion = 0;
-	ALboolean bufferacabado = AL_FALSE;
-    
-
-	
-	/* Rellenamos los buffers creados con la musica decodificada */
-	for ( i=0; i < NUM_BUFFER_MUSICA ; i++){
+     
+     /* Rellenamos los buffers creados con la musica decodificada */
+     for ( i=0; i < NUM_BUFFER_MUSICA ; i++){
 		cont = ov_read ( &buff, (char *)&waveout[posicion], BUFFER_MUSICA , 0, 2, 1, &current_section ) / 2;
         	contador += cont;
              	alBufferData ( streambuffers[i], formato, waveout , BUFFER_MUSICA , frecuencia );
@@ -565,37 +548,68 @@ void ActualizarMusica (  ){
 	/* A partir de aqui es donde realmente empieza el Streaming*/
 	while ( contador < tamanyo_cancion ){
 
- 		/* Comprobamos estado de los buffers */
+            /* Comprobamos estado de los buffers */
         	alGetSourcei ( streamsource[0], AL_BUFFERS_PROCESSED, &buffers_vacios);
         
        		/* Si algun buffer esta vacio, lo rellenamos */
        		if ( buffers_vacios > 0 ){
          
-			while ( buffers_vacios ){
+               while ( buffers_vacios ){
 				
-				/* Desasignamos buffers para rellenarlos */
+                    /* Desasignamos buffers para rellenarlos */
           			alSourceUnqueueBuffers ( streamsource[0], 1, &streambuffers );
           			if ( (alGetError( )) != AL_NO_ERROR ){
               				fprintf ( logs,"No va el streaming\n");
           			}
-				
-				if ( !bufferacabado){		
+					/* Descomprimimos datos en el buffer intermedio */	
 			   		cont = ov_read ( &buff, (char *)&waveout, BUFFER_MUSICA, 0, 2, 1, &current_section);
-                			contador += cont;
-              				alBufferData ( streambuffers, formato, waveout, BUFFER_MUSICA, frecuencia );
+                	contador += cont;
+                    /* Los  anyadimos en el buffer */
+              		alBufferData ( streambuffers, formato, waveout, BUFFER_MUSICA, frecuencia );
 					if ((alGetError()) != AL_NO_ERROR ){
 						fprintf ( logs, "No se puede añadir datos al buffer\n");
 					}
-					
-          				/* Asignamos de nuevo los buffers al streamsource */
-          				alSourceQueueBuffers ( streamsource[0], 1, &streambuffers );
-          				buffers_vacios --;
-        			}
-				else
-				{
-					
-      				}
-			}
-		}
-	}
+          			/* Asignamos de nuevo los buffers al streamsource */
+          			alSourceQueueBuffers ( streamsource[0], 1, &streambuffers );
+          			buffers_vacios --;
+                    /* Compruebo si se ha acabado la cancion */
+                    if ( contador < tamanyo_cancion){
+                        break;
+                    }
+                }
+             }
+     }
+
+     /* Cuando se acaba la cancion, paramos todo y borramos buffers y fuentes */
+     alSourceStopv(1, streamsource);
+     if (alGetError() != AL_NO_ERROR){
+              fprintf ( logs,"No se pueden parar el streamsource\n");
+     }
+     alDeleteSources(1, streamsource);
+     if (alGetError() != AL_NO_ERROR){
+             fprintf ( logs,"No se puede borrar el stremsource\n");
+     }
+     alDeleteBuffers(NUM_BUFFER_MUSICA, streambuffers);
+     if (alGetError() != AL_NO_ERROR){
+             fprintf ( logs,"No se pueden borrar los buffers\n");
+     }
+
+     musica_on = 0;
+}
+
+/********************************************************
+Funcion       : ReproducirMusica ( )
+Objetivo      : reproduce la musica seleccionada
+Parametros : No hay que pasarle parametros
+********************************************************/
+
+void ReproducirMusica (  ){
+
+    	musica_on=1;
+
+    	/* Creamos thread independiente para la musica */
+    	thread1musica = SDL_CreateThread (ActualizarMusica, NULL);
+    	if (thread1musica == NULL) {
+		fprintf(logs,"No podemos crear el thread para la musica.\n");
+    	}
 }

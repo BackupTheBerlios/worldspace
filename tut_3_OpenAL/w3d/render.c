@@ -24,6 +24,7 @@
 
 
 
+
 /*!         |
       			| Y+
 			      |
@@ -87,7 +88,7 @@ char *f_texturas[]={		"texturas/textura.tga",
 /*! Un par de fuentes... */
 FUENTE *fuentes[2];	
 /* Thread de audio */
-SDL_Thread *threadmusica = NULL;
+
 
 
 GLfloat LightAmbient1[] = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -110,7 +111,6 @@ int carga_texturas(void) {
 		textura=(GLuint)malloc(n_texturas*sizeof(GLuint));
 
     glGenTextures (n_texturas, textura);	
-
 
 		for (i=0;i<n_texturas;i++) {
 	    textura_datos=(char *)CargaTGA(f_texturas[i],&tam_x,&tam_y);
@@ -338,11 +338,7 @@ int init_gl(void)
     }
 
 
-    /* Creamos thread independiente para la musica */
-    threadmusica = SDL_CreateThread (ThreadMusica, NULL);
-    if (threadmusica == NULL) {
-	    fprintf(logs,"No podemos crear el thread para la musica.\n");
-    }
+   
 
 	fprintf(logs,"OpenGL inicializado sin errores críticos...\n");  			
 	
@@ -434,6 +430,7 @@ void gl_renderiza_escena(void) {
         auxiliar_objeto[3][0]=disparo_laser.posicion[0];
         auxiliar_objeto[3][1]=disparo_laser.posicion[1];
         auxiliar_objeto[3][2]=disparo_laser.posicion[2];
+
         glLoadMatrixf(&auxiliar_objeto);
         glBindTexture(GL_TEXTURE_2D, textura[5]);
         aux2=0.5f;
@@ -447,6 +444,7 @@ void gl_renderiza_escena(void) {
        	glLoadIdentity();
 
       if ( audio_on == 1){                // Actualizamos posicion de la fuente de laser
+
           ActualizarSource ( 0, auxiliar_objeto[3]);
        }
     }

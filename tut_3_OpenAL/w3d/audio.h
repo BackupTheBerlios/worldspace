@@ -42,6 +42,7 @@ extern void ThreadMusica ( );
 
 extern int musica_decodificada;
 extern int audio_on;
+extern int musica_on;
 
 
 #endif
