@@ -101,7 +101,7 @@ int ini_display(void)
     SDL_WM_GrabInput(SDL_GRAB_OFF);
 
     /* Hacemos que el ratón se ponga en el centro de la pantalla */
-    SDL_WarpMouse(configuracion.Xtam / 2, configuracion.Ytam / 2);
+    SDL_WarpMouse( (Uint16) (configuracion.Xtam / 2), (Uint16) (configuracion.Ytam / 2) );
 
     log_msj("[OK] SDL preparado\n");
 
