@@ -49,7 +49,7 @@ do
 done
 echo>>Makefile.kk
 echo -n -e "\t">>Makefile.kk
-echo -n $CCPP -I$INCLUDE -o $BINARY "\$(LIBS)" "\$(LDFLAGS)" " " >>Makefile.kk
+echo -n $CCPP -I$INCLUDE -o $BINARY " " >>Makefile.kk
 for i in $C_SOURCES
 do
         echo -n $i  |sed s/.c$/.o/ >>Makefile.kk
@@ -60,6 +60,7 @@ do
 		        echo -n $i  |sed s/.cpp$/.o/ >>Makefile.kk
 			        echo -n " ">>Makefile.kk
 				done
+echo -n " " "\$(LIBS)" "\$(LDFLAGS)" " " >>Makefile.kk 
 echo "">>Makefile.kk
 echo "clean:">>Makefile.kk
 echo -n -e "\t">>Makefile.kk

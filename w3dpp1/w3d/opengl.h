@@ -25,7 +25,7 @@ El makefile de Linux define la variable LINUX, leyendo el
 compilador de Linux la otra parte
 */
 
-#ifdef _WIN32W3D							// Para windows
+#ifdef _WIN32							// Para windows
 #include <windows.h>
 #endif
 

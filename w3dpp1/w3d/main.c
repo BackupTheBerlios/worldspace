@@ -31,8 +31,19 @@ la misma
 
 */
 
-int main(void)
+
+#ifdef _LINUX
+int main(int argc, char *argv[])
 {
+#endif
+#ifdef _WIN32
+int WINAPI WinMain( HINSTANCE	hInstance,
+					HINSTANCE	hPrevInstance,
+					LPSTR		lpCmdLine,
+					int 		nCmdShow)
+{
+#endif
+
     /*
        Lo primero, inicializar el sistema básico (bios) del sistema.
 
