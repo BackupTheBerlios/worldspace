@@ -28,7 +28,7 @@ int ini_audio(void)
 #ifdef _LINUX
   if ((Device = alcOpenDevice((ALubyte *) "alsa")) == NULL) {
     log_msj("No existe ALSA Backend\n");
-    if ((Device = alcOpenDevice((ALubyte *) "emu10k1")) == NULL) {
+    if ((Device = alcOpenDevice((ALubyte *) "sdl")) == NULL) {
       log_msj("No existe Sound Blaster Live Backend\n");
 #endif
 #ifdef _WIN32
@@ -40,7 +40,7 @@ int ini_audio(void)
       if ((Device = alcOpenDevice((ALubyte *) "waveout")) == NULL) {
         log_msj("No existe waveout Backend\n");
         if ((Device = alcOpenDevice(NULL)) == NULL) {
-          log_msj ("No hay disponible ningun dispositivo de audio\n");
+          log_msj ("[KO] No hay disponible ningun dispositivo de audio\n");
           return NO;
         }
       }
@@ -51,12 +51,12 @@ int ini_audio(void)
   if (Device != NULL) {
     Context = alcCreateContext(Device, NULL);      /* Creamos */
     if (alcGetError(Device) != ALC_NO_ERROR) {
-      log_msj ("No se puede crear un contexto para el sistema de audio\n");
+      log_msj ("[KO] No se puede crear un contexto para el sistema de audio\n");
       return NO;
     }
     alcMakeContextCurrent(Context);       /* Asignamos */
     if (alcGetError(Device) != ALC_NO_ERROR) {
-      log_msj ("No se puede asignar el contexto para el sistema de audio\n");
+      log_msj ("[KO] No se puede asignar el contexto para el sistema de audio\n");
       return NO;
     }
   }
