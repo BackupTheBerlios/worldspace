@@ -68,13 +68,14 @@ int main(int iArg, char *vArg[])
 #endif  // _WIN32
 //==================================================================
 	int iError = 0;
+	int iAudio_OK= NO;
 
     if (ini_bios(iArg, vArg))
 	{
         if (ini_display())
 		{
-            if (ini_audio())
-            {
+            iAudio_OK=ini_audio();
+
 	            if (
                        ( carga_listaFuentes(&vListaFuentes)   )
                   /*|| ( carga_listaTexturas(&vListaTexturas) ) Lista de texturas */
@@ -88,9 +89,11 @@ int main(int iArg, char *vArg[])
 					else            iError = 1;
 				}
 	            cerrar_texturas();
-                cerrar_audio();
-			}
-			else iError = 1;
+                if (iAudio_OK)
+			cerrar_audio();
+
+
+
             cerrar_display();
 		}
 		else iError = 1;
