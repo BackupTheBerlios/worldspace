@@ -4,7 +4,7 @@
 //
 //  begin     : sat apr 12 2003 / sab 12 abr 2003
 //  copyright : (C) 2003 by Grupo WorldSpace
-//  email     : eric (erocafull@jazzfree.com)
+//  email     : eric@users.berlios.de
 //==========================================================================
 //                                                                         *
 //   This program is free software; you can redistribute it and/or modify  *
