@@ -62,6 +62,7 @@ int logo(void)
 	iAncho = configuracion.Xtam;
 	iAlto = configuracion.Ytam;
 	fAngulo = fIter = fInc = fSize = 0.0f;
+
     
     while (fIter < 1000.0f)
 	{
@@ -91,28 +92,31 @@ int logo(void)
 
         SDL_GL_SwapBuffers();
 
-        intervalo=SDL_GetTicks()-taux;
-        taux = SDL_GetTicks();
 
-		fInc = (float)((intervalo*720)/5000.0f);
-		fIter += fInc;
-        if (fAngulo < 720.0f) fAngulo += fInc;
-	    if (fSize   < 3.0f  )   fSize += 0.01f;
 
-        Diffuse0[0] = fAngulo / 720.0f;
-        Diffuse0[1] = (fAngulo - 360) / 720.0f;
+
+        Diffuse0[0] = fAngulo / 1000.0f;
+        Diffuse0[1] = (fAngulo - 360) / 1000.0f;
         Diffuse0[2] = fAngulo / 360.0f;
 
-		fFondo[0] = (fFondo[0]>0.0f)? fFondo[0] - 0.002f : 0.0f;
-		fFondo[1] = (fFondo[1]>0.0f)? fFondo[1] - 0.001f : 0.0f;
-		fFondo[2] = (fFondo[2]>0.0f)? fFondo[2] - 0.001f : 0.0f;
+	fFondo[0] = (fFondo[0]>0.0f)? fFondo[0] - 0.002f : 0.0f;
+	fFondo[1] = (fFondo[1]>0.0f)? fFondo[1] - 0.001f : 0.0f;
+	fFondo[2] = (fFondo[2]>0.0f)? fFondo[2] - 0.001f : 0.0f;
 
         SDL_PollEvent(&event);
         keys = SDL_GetKeyState(NULL);
         if (keys[SDLK_ESCAPE]) {
             break;
         }
+
+	intervalo=SDL_GetTicks()-taux;
+        taux = SDL_GetTicks();
+	fInc = (float)((intervalo*1000.0f)/5000.0f);
+	fIter += fInc;
+        if (fAngulo < 720.0f) fAngulo += fInc;
+	    if (fSize   < 3.0f  )   fSize += 0.01f;
     }
+
     glDisable(GL_LIGHT0);
     glDisable(GL_LIGHTING);
 
