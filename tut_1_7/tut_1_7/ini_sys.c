@@ -188,7 +188,8 @@ int sys_init_display(void)
     if (logo()==0)
 			sys_msg("[OK]\t\t\tLogo W3D. ¿Has visto eso?\n");
 
-		return 0;
+		SDL_Quit();
+		return -1;
 
 
 }

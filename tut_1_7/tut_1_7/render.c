@@ -180,15 +180,15 @@ int logo(void) {
 			glRotatef(angulo,1.0f,1.0f,0.0f);
 			glLightfv(GL_LIGHT0, GL_POSITION, LightPosition0);	
 			glLoadIdentity();
-			glTranslatef(0.0f,0.0f,-20);
+			glTranslatef(0.0f,0.0f,-(angulo/34.28)+1.0f);
 			glRotatef(90.0f,1.0f,0.0f,0.0f);
 			glRotatef(-180.0f,0.0f,1.0f,0.0f);
-			glRotatef(-angulo,0.0f,0.0f,1.0f);
+			glRotatef(-angulo/2,1.0f,1.0f,1.0f);
 			W1_C();
 			SDL_GL_SwapBuffers();
 
      /* Render a fichero */
-     sprintf(shotname,"shot%.3d.jpg",n);
+     sprintf(shotname,"shot%.4d.jpg",n);
 
 /*     glPixelStorei (GL_UNPACK_ALIGNMENT, 4);
      glPixelStorei (GL_UNPACK_SKIP_ROWS, 0);
@@ -207,8 +207,46 @@ int logo(void) {
      n++;
     /* Fin de Render a fichero */
 
-     angulo+=1.0f;
+     angulo+=0.5f;
 		}
+
+    while (angulo<1440) {
+			Diffuse0[0]-=0.004f;
+			Diffuse0[1]-=0.002f;
+			Diffuse0[2]-=0.01f;
+			glLightfv(GL_LIGHT0, GL_DIFFUSE, Diffuse0);
+	   	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glLoadIdentity();
+			glTranslatef(0.0f,0.0f,-20.0f);
+			glRotatef(90.0f,1.0f,0.0f,0.0f);
+			glRotatef(-180.0f,0.0f,1.0f,0.0f);
+
+			W1_C();
+			SDL_GL_SwapBuffers();
+
+     /* Render a fichero */
+     sprintf(shotname,"shot%.4d.jpg",n);
+
+/*     glPixelStorei (GL_UNPACK_ALIGNMENT, 4);
+     glPixelStorei (GL_UNPACK_SKIP_ROWS, 0);
+     glPixelStorei (GL_UNPACK_SKIP_PIXELS, 0);
+     glPixelStorei (GL_UNPACK_ROW_LENGTH, 0);
+     glReadPixels (0, 0, config.SCREEN_SIZE_X, config.SCREEN_SIZE_Y, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+     ilLoadL(IL_RAW, pixels, 640*480*3);
+     shot=fopen(shotname,"wb");
+     fwrite(pixels,640*480*3,1,shot);
+     fclose(shot);  */
+
+     ilutGLScreen();
+     ilSave(IL_JPG,shotname );
+
+
+     n++;
+    /* Fin de Render a fichero */
+
+     angulo+=2.0f;
+		}
+
 		glLoadIdentity();
 		glLightfv(GL_LIGHT0, GL_POSITION, LightPosition0);	
 	  glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient0);
