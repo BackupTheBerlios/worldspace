@@ -1,0 +1,6 @@
+Fichero generado por WorldSpace3D. Modificar con cuidado
+
+Resolución horz.(X)	 640
+Resolución vert.(Y)	 480
+Pantalla completa	 0
+Directorio base	 ws_datos
