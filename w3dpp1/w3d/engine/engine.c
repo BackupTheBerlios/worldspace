@@ -338,8 +338,25 @@ int renderiza_escena()
     glEnable(GL_LIGHTING);
     glLoadIdentity();
 
+
+    /* Renderizamos una nave de prueba */
+
     render_mad(nave);
-    print_p(def,IZQUIERDA,config.SCREEN_SIZE_Y,.25f,"Velocidad %f m/s",velocidad*10);
+
+    /* Establecemos la guía */
+    glDisable(GL_TEXTURE_2D);
+    glDisable(GL_CULL_FACE);
+    glDisable(GL_LIGHTING);
+    glLoadIdentity();
+    glLineWidth(5.0f);
+    glColor3f(0.0f,1.0f,1.0f);
+    glBegin(GL_LINES);
+    	glVertex3f(camara[3][0] + camara[2][0], camara[3][1] + camara[2][1], camara[3][2] + camara[2][2]);
+	glVertex3f(nave->x,nave->y,nave->z);
+    glEnd();
+
+    glEnable(GL_TEXTURE_2D);
+    print_p(def,IZQUIERDA,config.SCREEN_SIZE_Y,.25f,"Velocidad %f m/s %f,%f,%f",velocidad*10,nave->x,nave->y,nave->z);
 
 
     glFlush();
