@@ -141,8 +141,8 @@ Objetivo      : Pausa la musica seleccionada
 Parametros : No hay que pasarle parametros
 ******************************************************/
 
-void pausar_musica (  ){
-
+int pausar_musica (void){
+     return SI;
 
 }
 
@@ -155,7 +155,7 @@ Objetivo      : Esta funcion elimina la musica para poder cargar otro archivo OG
 Parametros : No hay que pasarle parametros
 ************************************************************************************************/
 
-int resetear_musica (  ){
+int resetear_musica (void){
 
      /* Cuando queremos cambiar la cancion, paramos todo y borramos buffers y fuentes */
      alSourceStopv(1, streamsource);
@@ -191,7 +191,7 @@ Objetivo      : Esta funcion rellena los buffers segun se van vaciando. Hay que 
 Parametros : No hay que pasarle parametros
 ******************************************************************************************************/
 
-int  actualizar_musica (  ){
+int  actualizar_musica ( void ){
   
     int cont = 0, cancion_acabada = 0;
     ALuint buffer_intercambio;
@@ -200,7 +200,7 @@ int  actualizar_musica (  ){
 	/* A partir de aqui es donde realmente empieza el Streaming*/
 	while ( cancion_acabada == NO ){
       /* Comprobamos estado de los buffers */
-      alGetSourceiv ( streamsource[0], AL_BUFFERS_PROCESSED, &buffers_vacios);
+      alGetSourcei ( streamsource[0], AL_BUFFERS_PROCESSED, &buffers_vacios);
       /* Si algun buffer esta vacio, lo rellenamos */
       if ( buffers_vacios > 0 ){
         while ( buffers_vacios ){
@@ -230,7 +230,7 @@ int  actualizar_musica (  ){
         alSourcePlay(streamsource[0]);
       }
     }
-    return SI;
+    return SI;    
 }
 
 /********************************************************
@@ -245,7 +245,7 @@ int repeticion ---> -1 bucle infinito y 1,2,3.... numero de veces
 int reproducir_musica ( int repeticion ){	
   
     /* Creamos thread independiente para la musica */
-    threadmusica = SDL_CreateThread (actualizar_musica, NULL);
+    threadmusica = SDL_CreateThread ((void *)actualizar_musica, NULL);
     if (threadmusica == NULL) {
       log_msj ("[KO] No podemos crear el thread para la musica.\n");
       return NO;

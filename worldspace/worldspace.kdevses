@@ -3,14 +3,14 @@
 <KDevPrjSession>
 <LastCompileConfig>(Predeterminado)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
- <DocsAndViews NumberOfDocuments="24" >
+ <DocsAndViews NumberOfDocuments="23" >
 <Doc0 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/lordloki/hacking/worldspace/lang/en.configure" >
 <View0 Top="0" Width="815" Attach="1" Height="399" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc0>
   <Doc1 CursorPosLine="50" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="23" FileName="/home/lordloki/hacking/worldspace/w3dsrc/audio/audio.c" >
 <View0 Top="0" Width="96" Attach="1" Height="26" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc1>
   <Doc2 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/lordloki/hacking/worldspace/w3dsrc/bios/conf_parser.c" >
 <View0 Top="0" Width="815" Attach="1" Height="399" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc2>
-  <Doc3 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/lordloki/hacking/worldspace/w3dsrc/audio.h" >
+  <Doc3 CursorPosLine="222" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/lordloki/hacking/worldspace/w3dsrc/audio.h" >
 <View0 Top="0" Width="815" Attach="1" Height="399" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc3>
   <Doc4 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/lordloki/hacking/worldspace/configure" >
 <View0 Top="0" Width="815" Attach="1" Height="399" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc4>
@@ -48,7 +48,5 @@
 <View0 Top="0" Width="815" Attach="1" Height="399" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc20>
   <Doc21 CursorPosLine="9" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="26" FileName="/home/lordloki/hacking/worldspace/w3dsrc/audio/alut.h" >
 <View0 Top="0" Width="815" Attach="1" Height="399" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc21>
-  <Doc22 CursorPosLine="210" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="61" FileName="/home/lordloki/hacking/worldspace/w3dsrc/audio/musica_ogg.c" >
-<View0 Top="0" Width="815" Attach="1" Height="399" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />  </Doc22>
-  <Doc23 Type="CDocBrowser" NumberOfViews="1" FileName="/usr/share/doc/HTML/en/kdevelop/tutorial/index-5.html" >
-<View Top="0" Width="815" Attach="1" Height="399" Left="0" Focus="0" Type="KHTMLView" MinMaxMode="0" />  </Doc23> </DocsAndViews></KDevPrjSession>
+  <Doc22 CursorPosLine="202" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="18" FileName="/home/lordloki/hacking/worldspace/w3dsrc/audio/musica_ogg.c" >
+<View0 Top="0" Width="815" Attach="1" Height="399" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />  </Doc22> </DocsAndViews></KDevPrjSession>

@@ -171,3 +171,52 @@ extern void configurar_entorno ( ALsizei identificador, ALenum modelo,
                          ALfloat reverb_delay, ALfloat diffusion,
                          ALfloat density, ALfloat high_frequency_reference );
 
+/********************************************************
+Funcion       : reproducir_musica ( )
+Objetivo      : reproduce la musica seleccionada
+Parametros :
+
+int repeticion ---> -1 bucle infinito y 1,2,3.... numero de veces
+                            que se repite
+********************************************************/
+
+extern int reproducir_musica ( int repeticion );
+
+/******************************************************************************************************
+Funcion       : actualizar_musica (  )
+Objetivo      : Esta funcion rellena los buffers segun se van vaciando. Hay que llamarla
+                    muy muy a menudo ya que es la que realmente realiza el streaming.
+                    Preferiblemente hay que incluirla en un thread independiente.
+Parametros : No hay que pasarle parametros
+******************************************************************************************************/
+
+extern int  actualizar_musica (void);
+
+/***********************************************************************************************
+Funcion      : resetear_musica (  )
+
+Objetivo      : Esta funcion elimina la musica para poder cargar otro archivo OGG
+Parametros : No hay que pasarle parametros
+************************************************************************************************/
+
+extern int resetear_musica (void);
+
+/******************************************************
+Funcion       : pausar_musica ( )
+Objetivo      : Pausa la musica seleccionada
+Parametros : No hay que pasarle parametros
+******************************************************/
+
+extern int pausar_musica (void);
+
+/*****************************************************************************************
+Funcion       : cargar_musica ( char *fichero_ogg )
+Objetivo      : Esta funcion decodifica un fichero ogg y lo pasa a un buffer
+                    en formato wav
+Parametros : Hay que pasarle 2 parametros
+
+char *fichero_ogg --> Nombre del archivo de musica que queremos cargar
+
+*****************************************************************************************/
+
+extern int cargar_musica ( char *fichero_ogg );
