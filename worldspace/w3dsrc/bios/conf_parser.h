@@ -5,6 +5,7 @@
     begin                : dom feb 9 2003
     copyright            : (C) 2003 by Grupo WorldSpace
     email                : neuralgya@users.berlios.de
+                           eric@users.berlios.de  / erocafull@jazzfree.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -16,8 +17,10 @@
  *                                                                         *
  ***************************************************************************/
 
+#ifndef _CONF_PARSER_H_
+#define _CONF_PARSER_H_
+//==========================================================================
 #include <stdio.h>
-
 
 /*!
 Valores de configuracion inicial.
@@ -30,6 +33,7 @@ Valores de configuracion inicial.
 #define WDIR_TEXTURAS "texturas"
 #define WDIR_FUENTES  "fuentes"
 #define WDIR_MODELOS  "modelos"
+#define WDIR_SONIDOS  "sonidos"
 #define WDIR_ESPACIOS "espacios"
 #define WDIR_NODIR    "no_hay_directorio"
 /*!
@@ -43,8 +47,20 @@ Patrones para leer la configuracion inicial del fichero ini.
 #define PDIR_TEXTURAS "DirTexturas"
 #define PDIR_FUENTES  "DirFuentes"
 #define PDIR_MODELOS  "DirModelos"
+#define PDIR_SONIDOS  "DirSonidos"
 #define PDIR_ESPACIOS "DirEspacios"
 
+//==========================================================================
+int    establece_var_conf_numero  ( FILE * fl_fichero, char *s_token);
+char * establece_var_conf_cadena  ( FILE * fl_fichero, char *s_token);
+//==========================================================================
+char * copia_cadena               ( char * sCadena );
+void   strtoken                   ( char * sDes, char * sOri, char * sSep );
+//==========================================================================
+#endif   // _CONF_PARSER_H_
 
-extern int establece_var_conf_numero(FILE * fl_fichero, char *s_token);
-extern char *establece_var_conf_cadena(FILE * fl_fichero, char *s_token);
+
+//==========================================================================
+//  Fin de conf_parser.h
+//==========================================================================
+

@@ -21,9 +21,9 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+#include "memoria.h"
 #include "w3d_base.h"
 #include "globales.h"
-
 #include "conf_parser.h"
 
 #define SEPARADORES "#=:, \t\n"
@@ -35,11 +35,12 @@ int establece_var_conf_numero(FILE * fl_fichero, char *s_token)
     char token[LON_BUFF];
     char valor[LON_BUFF];
     char s_aux[LON_BUFF];
-    int i_ini_token = 0;
-    int i_fin_token = 0;
-    int i_ini_valor = 0;
-    int i_fin_valor = 0;
-    int i, j, k = NO;
+    int  i_ini_token = 0;
+    int  i_fin_token = 0;
+    int  i_ini_valor = 0;
+    int  i_fin_valor = 0;
+    int  j, k = NO;
+	unsigned int i;
 
     T_FUNC_IN while (!feof(fl_fichero)) {
         if (fgets(s_linea, LON_BUFF, fl_fichero) != NULL) {
@@ -108,12 +109,13 @@ char *establece_var_conf_cadena(FILE * fl_fichero, char *s_token)
     char token[LON_BUFF];
     char valor[LON_BUFF];
     char s_aux[LON_BUFF];
-    int i_ini_token = 0;
-    int i_fin_token = 0;
-    int i_ini_valor = 0;
-    int i_fin_valor = 0;
-    int i, j;
-    char *k = NULL;
+    int  i_ini_token = 0;
+    int  i_fin_token = 0;
+    int  i_ini_valor = 0;
+    int  i_fin_valor = 0;
+    int  j;
+    char * k = NULL;
+	unsigned int i;
 
     T_FUNC_IN while (!feof(fl_fichero)) {
         if (fgets(s_linea, LON_BUFF, fl_fichero) != NULL) {
@@ -175,3 +177,75 @@ char *establece_var_conf_cadena(FILE * fl_fichero, char *s_token)
 
     T_FUNC_OUT return k;
 }
+
+
+//==========================================================================
+//    email : eric@users.berlios.de  / erocafull@jazzfree.com
+//==========================================================================
+//  Función de copia de cadenas. A diferencia de 'strcpy' asigna
+//  memoria al destino. 'sCadena' debe de tener fin de cadena '\0'
+//  para calcular bien su longitud.
+//==========================================================================
+char * copia_cadena ( char * sCadena )
+{
+	char * sDestino;
+
+	sDestino = (char *) dar_m (strlen(sCadena)+1);
+	strcpy (sDestino, sCadena);
+
+	return sDestino;
+}
+
+
+//==========================================================================
+//    email : eric@users.berlios.de  / erocafull@jazzfree.com
+//==========================================================================
+//  Función strtoken, al igual que 'strtok' separa una cadena
+//  por separadores. Con dos diferencias:
+//  - no modifica la cadena origen.
+//  - 'strtok' toma dos separadores como uno solo, aquí se toman como
+//    dos tokens.
+//  Por esta última diferencia no se utiliza 'strtok'.
+//==========================================================================
+static char * sCadOrigen = NULL;   // Debería liberarse al final. ¿ Cómo ?
+static int    iLonOrigen = 0;      // Longitud de 'sOrigen'
+static int    iCurOrigen = 0;      // Posicion en 'sOrigen'
+//==========================================================================
+void strtoken ( char * sDestino, char * sOrigen, char * sSep )
+{
+	if (sOrigen != NULL)
+	{
+		iLonOrigen   = strlen (sOrigen);
+		iCurOrigen = 0;
+		sCadOrigen = (char *) liberar_m (sCadOrigen);
+		sCadOrigen = (char *) copia_cadena (sOrigen);
+	}
+
+	if (sCadOrigen != NULL)
+	{
+		int iLonSep, i, k, iCurAnterior;
+		iLonSep = strlen(sSep);
+		iCurAnterior = iCurOrigen;
+		for ( i=iCurOrigen, k=0; i<iLonOrigen; i++, k++ )
+		{
+			if ( !strncmp(sCadOrigen+i, sSep, iLonSep) )
+			{
+				//if (!strcmp(sSep,"\n"))  k = ((k==0)? 0: k-1);
+				strncpy (sDestino, sCadOrigen + iCurOrigen, k );
+				iCurOrigen = i + iLonSep;
+				break;
+			}
+		}
+		if (iCurOrigen == iCurAnterior) // Si no cambia es que no lo encuentra.
+		{
+			strcpy(sDestino,sCadOrigen+iCurOrigen);  // Toda la cadena o el resto de ella.
+		}
+	}
+}
+
+
+
+//==========================================================================
+//  Fin de conf_parser.c
+//==========================================================================
+
