@@ -52,6 +52,10 @@ int logo(void)
     T_FUNC_IN SDL_Event event;
     Uint8 *keys;
 
+    int taux;
+    int intervalo;
+    
+
     modelo *logo;
     float angulo = 0;
     GLfloat Ambient0[] = { 0.0f, 0.0f, 1.0f, 0.0f };
@@ -73,6 +77,8 @@ int logo(void)
 
     reproducir_sonido(1, SonPosition, SonVelocidad,1.0,1.0,100.0,AL_FALSE);
 
+    taux = SDL_GetTicks();
+    
     while (angulo < 720) {
         Diffuse0[0] = angulo / 720.0f;
         Diffuse0[1] = (angulo - 360) / 720.0f;
@@ -89,9 +95,12 @@ int logo(void)
         if (logo != NULL)
             render_mad(logo);
         SDL_GL_SwapBuffers();
-        angulo += 2.0f;
 
-        SDL_PollEvent(&event);
+        intervalo=SDL_GetTicks()-taux;
+        angulo += (float)((intervalo*720)/5000.0f);
+        taux = SDL_GetTicks();
+
+      SDL_PollEvent(&event);
         keys = SDL_GetKeyState(NULL);
         if (keys[SDLK_ESCAPE]) {
             //print("ESC\n");

@@ -1,9 +1,21 @@
 [./Makefile.am]
-files=./src.kdevprj
+files=./configure,./worldspace.kdevprj,./indentar.sh,./VERSION,./worldspace.kdevprj
 sub_dirs=lang,w3dsrc,
 type=normal
 
-[./src.kdevprj]
+[./VERSION]
+dist=true
+install=false
+install_location=
+type=DATA
+
+[./configure]
+dist=true
+install=false
+install_location=
+type=DATA
+
+[./indentar.sh]
 dist=true
 install=false
 install_location=
@@ -16,26 +28,26 @@ cflags=
 cppflags=
 cxxflags=\s-O0
 ldadd=
-ldflags=\s  \s
+ldflags=\s\s
 libtool_dir=
 path_to_bin_program=..
 
 [General]
 AMChanged=false
-author=Grupo WorldSpace
-configure_args=\s--build=i386-linux --host=i386-linux --target=i386-linux\s
+author=agulon
+configure_args=
 dir_where_make_will_be_called=./
-email=neuralgya@users.berlios.de
+email=agulon@neuresix
 kdevprj_version=1.3
 lfv_open_groups=Headers,Others,Sources
-make_options=\s-w -j1
-makefiles=./Makefile.am,w3dsrc/Makefile.am,w3dsrc/engine/Makefile.am,w3dsrc/input/Makefile.am,w3dsrc/display/Makefile.am,w3dsrc/bios/Makefile.am,w3dsrc/gfx/Makefile.am,w3dsrc/ui/Makefile.am,w3dsrc/ui/libgli/Makefile.am,w3dsrc/ui/libgli/include/Makefile.am,lang/Makefile.am,w3dsrc/audio/Makefile.am,Makefile.am
-modifyMakefiles=false
+make_options=\s-j1
+makefiles=./Makefile.am,w3dsrc/Makefile.am,w3dsrc/engine/Makefile.am,w3dsrc/bios/Makefile.am,lang/Makefile.am,w3dsrc/display/Makefile.am
+modifyMakefiles=true
 project_name=worldspace
 project_type=normal_empty
 short_info=
 sub_dir=
-version=0.1
+version=
 version_control=None
 workspace=1
 
@@ -48,105 +60,22 @@ Translations=*.ts,*.po,
 User Interface=*.ui,*.kdevdlg,*.rc,
 groups=Headers,Sources,GNU,Translations,User Interface,Others
 
-[Makefile.am]
-files=indentar.sh,Makefile.conf.linux,Makefile.conf.windows,VERSION,worldspace.kdevprj,configure,worldspace.kdevses
-sub_dirs=w3dsrc
-type=normal
-
-[Makefile.conf.linux]
-dist=true
-install=false
-install_location=
-type=DATA
-
-[Makefile.conf.windows]
-dist=true
-install=false
-install_location=
-type=DATA
-
-[VERSION]
-dist=true
-install=false
-install_location=
-type=DATA
-
-[configure]
-dist=true
-install=false
-install_location=
-type=DATA
-
-[indentar.sh]
-dist=true
-install=false
-install_location=
-type=DATA
-
-[lang/Makefile.am]
-files=lang/en.configure,lang/es.configure
-sub_dirs=
-type=normal
-
 [lang/en.configure]
 dist=true
 install=false
 install_location=
-type=DATA
+type=SCRIPT
 
 [lang/es.configure]
 dist=true
 install=false
 install_location=
-type=DATA
+type=PO
 
 [w3dsrc/Makefile.am]
-files=w3dsrc/main.c,w3dsrc/bios.h,w3dsrc/w3d_base.h,w3dsrc/sdl_gl.h,w3dsrc/globales.h,w3dsrc/audio.h,w3dsrc/display.h,w3dsrc/engine.h
-sub_dirs=ui,gfx,bios,display,input,engine,audio
-type=static_library
-
-[w3dsrc/audio.h]
-dist=true
-install=false
-install_location=
-type=HEADER
-
-[w3dsrc/audio/Makefile.am]
-files=w3dsrc/audio/audio.c,w3dsrc/audio/alut.c,w3dsrc/audio/alut.h,w3dsrc/audio/efectos.c,w3dsrc/audio/musica_ogg.c
-sharedlib_LDFLAGS=-version-info 0:0:0
-sharedlib_rootname=audio
-sub_dirs=
-type=static_library
-
-[w3dsrc/audio/alut.c]
-dist=true
-install=false
-install_location=
-type=SOURCE
-
-[w3dsrc/audio/alut.h]
-dist=true
-install=false
-install_location=
-type=HEADER
-
-[w3dsrc/audio/audio.c]
-dist=true
-install=false
-install_location=
-type=SOURCE
-
-[w3dsrc/audio/efectos.c]
-dist=true
-install=false
-install_location=
-type=SOURCE
-
-[w3dsrc/audio/musica_ogg.c]
-dist=true
-install=false
-install_location=
-type=SOURCE
+files=w3dsrc/w3d_base.h,w3dsrc/engine.h,w3dsrc/bios.h,w3dsrc/sdl_gl.h,w3dsrc/main.c,w3dsrc/globales.h,w3dsrc/display.h
+sub_dirs=bios,engine,display
+type=normal
 
 [w3dsrc/bios.h]
 dist=true
@@ -155,27 +84,15 @@ install_location=
 type=HEADER
 
 [w3dsrc/bios/Makefile.am]
-files=w3dsrc/bios/bios.c,w3dsrc/bios/conf_parser.c,w3dsrc/bios/conf_parser.h
+files=w3dsrc/bios/bios.c,
 sub_dirs=
-type=static_library
+type=normal
 
 [w3dsrc/bios/bios.c]
 dist=true
 install=false
 install_location=
 type=SOURCE
-
-[w3dsrc/bios/conf_parser.c]
-dist=true
-install=false
-install_location=
-type=SOURCE
-
-[w3dsrc/bios/conf_parser.h]
-dist=true
-install=false
-install_location=
-type=HEADER
 
 [w3dsrc/display.h]
 dist=true
@@ -185,6 +102,8 @@ type=HEADER
 
 [w3dsrc/display/Makefile.am]
 files=w3dsrc/display/display.c
+sharedlib_LDFLAGS=-version-info 0:0:0
+sharedlib_rootname=display
 sub_dirs=
 type=static_library
 
@@ -207,9 +126,9 @@ install_location=
 type=HEADER
 
 [w3dsrc/engine/Makefile.am]
-files=w3dsrc/engine/3d_base.h,w3dsrc/engine/engine.c,w3dsrc/engine/mad.c,w3dsrc/engine/mad.h
+files=w3dsrc/engine/mad.c,w3dsrc/engine/mad.h,w3dsrc/engine/engine.c,w3dsrc/engine/3d_base.h,
 sub_dirs=
-type=static_library
+type=normal
 
 [w3dsrc/engine/engine.c]
 dist=true
@@ -229,19 +148,11 @@ install=false
 install_location=
 type=HEADER
 
-[w3dsrc/gfx/Makefile.am]
-sub_dirs=
-type=normal
-
 [w3dsrc/globales.h]
 dist=true
 install=false
 install_location=
 type=HEADER
-
-[w3dsrc/input/Makefile.am]
-sub_dirs=
-type=normal
 
 [w3dsrc/main.c]
 dist=true
@@ -255,32 +166,8 @@ install=false
 install_location=
 type=HEADER
 
-[w3dsrc/ui/Makefile.am]
-sub_dirs=libgli,
-type=normal
-
-[w3dsrc/ui/libgli/Makefile.am]
-sub_dirs=include,
-type=normal
-
-[w3dsrc/ui/libgli/include/Makefile.am]
-sub_dirs=
-type=normal
-
 [w3dsrc/w3d_base.h]
 dist=true
 install=false
 install_location=
 type=HEADER
-
-[worldspace.kdevprj]
-dist=true
-install=false
-install_location=
-type=DATA
-
-[worldspace.kdevses]
-dist=true
-install=false
-install_location=
-type=DATA
