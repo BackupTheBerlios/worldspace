@@ -27,11 +27,12 @@
 modelo *carga_mad(char *file)
 {
     FILE *f_object;
-    int j;
+    uint j;
     cara *tri;
     char filename[LON_BUFF];
     char magic;
     modelo *modelo_1;
+
     modelo_1 = (modelo *) malloc(sizeof(modelo));
     strcpy(filename, "modelos");
     strcat(filename, "/");
@@ -68,8 +69,11 @@ modelo *carga_mad(char *file)
 
 int render_mad(modelo * mad)
 {
-    int j;
-    T_FUNC_IN for (j = 0; j < mad->n_caras; j++) {
+    uint j;
+
+    T_FUNC_IN;
+	
+	for (j = 0; j < mad->n_caras; j++) {
 
 /*if (mad->n_textura != 0)
             
