@@ -43,16 +43,13 @@
 
 
 const ItemVal M_Open_T =    40000;
-
 const ItemVal M_T_Wire =    40001;
-
+const ItemVal M_T_NULL =    99999;
 const ItemVal M_T_Tex =     40002;
-
 const ItemVal M_T_Sol =     40003;
-
 const ItemVal M_Ficheros =  40004;
-
 const ItemVal M_Ver =       40005;
+const ItemVal M_T_Luces =     40006;
 
 
 
@@ -129,6 +126,7 @@ const ItemVal M_Ver =       40005;
 
 
       };
+
 
 
 

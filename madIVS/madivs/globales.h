@@ -43,6 +43,7 @@ extern char **extensiones;
 extern char textura_cargada;
 extern char modelo_cargado;
 extern char modo_dibujo;
+extern char luces;
 
 extern modelo *model;
 

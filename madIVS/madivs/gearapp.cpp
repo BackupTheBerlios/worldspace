@@ -18,6 +18,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
+extern int ww,hh;
+
 char RUNPATH[2048];         // Path de ejecución.
 
 //=========================>>> gearApp::gearApp <<<==========================
@@ -217,7 +219,7 @@ int AppMain(int argc, char** argv)
 
      printf("RUNPATH : %s\n", RUNPATH);
     
-    (void) theApp->NewAppWin(0, "madIVS", 300, 300);
+    (void) theApp->NewAppWin(0, "madIVS", ww,hh);
     vNoticeDialog note(theApp);
 //    note.Notice(RUNPATH);
     if (argc>1) {

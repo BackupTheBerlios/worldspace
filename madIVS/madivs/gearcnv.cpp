@@ -38,13 +38,14 @@ static int poo = 0;
 char textura_cargada=0;
 char modelo_cargado=0;
 char modo_dibujo=0;
+char luces=1;
 
 char raton_pulsado=0;
 int rX=0;
 int rY=0;
 
-int ww=300;
-int hh=300;
+int ww=512;
+int hh=384;
 
 
     /* Un poco de luz*/
@@ -107,7 +108,8 @@ void display(void)
 	glEnd();
 				glColor3f(1.0f,1.0f,1.0f);
 
-  	glEnable(GL_LIGHTING);	
+  	if (luces==1)
+      glEnable(GL_LIGHTING);	
     if (textura_cargada!=0)
     	glEnable(GL_TEXTURE_2D);
 
@@ -135,7 +137,7 @@ void display(void)
         }
         else if (modo_dibujo==1){
           glLineWidth(1);
-          glBegin(GL_LINES);
+          glBegin(GL_LINE_LOOP);
         }
         else if (modo_dibujo==3) {
           glLineWidth(6);
