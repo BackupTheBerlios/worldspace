@@ -9,6 +9,9 @@
 !*/
 ALCdevice *Device = NULL;       /* Dispositivo de sonido */
 ALCcontext *Context = NULL;    /* Contexto */
+#ifdef _LINUX
+int attrlist[] = { ALC_FREQUENCY, 44100,ALC_REFRESH, 120, ALC_SYNC, AL_FALSE, 0 };
+#endif
 
 /*!
 ================================== DECLARACION DE FUNCIONES
@@ -26,10 +29,10 @@ int ini_audio(void)
   T_FUNC_IN
         /* Asignamos el mejor dispositivo de audio disponible */ 
 #ifdef _LINUX
-  if ((Device = alcOpenDevice((ALubyte *) "alsa")) == NULL) {
-    log_msj("No existe ALSA Backend\n");
-    if ((Device = alcOpenDevice((ALubyte *) "sdl")) == NULL) {
-      log_msj("No existe Sound Blaster Live Backend\n");
+  if ((Device = alcOpenDevice((ALubyte *) "'((sampling-rate 44100))")) == NULL) {
+    log_msj("No existe sampling Backend\n");
+    if ((Device = alcOpenDevice((ALubyte *) "alsa")) == NULL) {
+      log_msj("No existe ALSA Backend\n");
 #endif
 #ifdef _WIN32
   if ((Device = alcOpenDevice((ALubyte *) "DirectSound3D")) == NULL) {
@@ -49,7 +52,12 @@ int ini_audio(void)
          
   /* Creamos un contexto y lo asignamos (comprobando si hay errores) */ 
   if (Device != NULL) {
+#ifdef _WIN32
     Context = alcCreateContext(Device, NULL);      /* Creamos */
+#endif
+#ifdef _LINUX
+    Context = alcCreateContext(Device, attrlist);      /* Creamos */
+#endif
     if (alcGetError(Device) != ALC_NO_ERROR) {
       log_msj ("[KO] No se puede crear un contexto para el sistema de audio\n");
       return NO;
