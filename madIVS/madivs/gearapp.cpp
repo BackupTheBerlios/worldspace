@@ -224,9 +224,20 @@ int AppMain(int argc, char** argv)
 //    note.Notice(RUNPATH);
     if (argc>1) {
             char msg[1024];
-            //sprintf(msg,"Vamos a cargar %s (runpath %s)",argv[1],RUNPATH);
-            //note.Notice(msg);
-            if (importar_modelo(0,argv[1])!=1) {
+            char *extension;
+            int plugin_elegido=0;
+            /* Hay que decidir con que plugin cargarlo */
+            extension=&argv[1][strlen(argv[1])-3];
+            printf("Extension: %s\n",extension);
+            for (int i=0;i<numero_plugins;i++)
+              if (strstr(plugins[i].extension,extension)==NULL)
+                continue;
+              else
+                  plugin_elegido=i;
+
+
+
+            if (importar_modelo(plugin_elegido,argv[1])!=1) {
                         sprintf(msg,"No pude importar %s",argv[1]);
                         note.Notice(msg);
                         modelo_cargado=0;

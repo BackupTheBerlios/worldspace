@@ -19,6 +19,8 @@
 #define VERSION_MIN 1
 
 #include "estructuras.h"
+#include <v/vbglcnv.h>
+
 
 #ifndef _PLUGIN_INFO
 #define _PLUGIN_INFO
@@ -36,6 +38,7 @@ typedef struct plugin_info_tag {
 #endif
 
 extern plugin_info *plugins;
+extern int numero_plugins;
 extern char **extensiones;
 
 /* Flags*/
@@ -46,6 +49,8 @@ extern char modo_dibujo;
 extern char luces;
 
 extern modelo *model;
+
+extern GLuint textura;
 
 extern char RUNPATH[];
 

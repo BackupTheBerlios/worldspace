@@ -28,13 +28,16 @@ SRCS	=\
 	$(Src)/plugins.cpp\
 	$(Src)/gearapp.cpp\
 	$(Src)/gearcmdw.cpp\
-	$(Src)/gearcnv.cpp
+	$(Src)/gearcnv.cpp\
+	$(Src)/carga_tga.c
 
 EXOBJS	=\
+	$(oDir)/carga_tga.o\
 	$(oDir)/plugins.o\
 	$(oDir)/gearapp.o\
 	$(oDir)/gearcmdw.o\
-	$(oDir)/gearcnv.o
+	$(oDir)/gearcnv.o\
+
 
 ALLOBJS	=	$(EXOBJS)
 ALLBIN	=	$(Bin)/../madivs.exe
@@ -76,7 +79,9 @@ $(oDir)/gearcmdw.o: gearcmdw.cpp gearcmdw.h gearcnv.h
 $(oDir)/gearcnv.o: gearcnv.cpp gearcnv.h
 	$(CC) $(C_FLAGS) $(incDirs) -c -o $@ $<
 
-
 $(oDir)/plugins.o: plugins.cpp plugins.h
+	$(CC) $(C_FLAGS) $(incDirs) -c -o $@ $<
+
+$(oDir)/carga_tga.o: carga_tga.c carga_tga.h
 	$(CC) $(C_FLAGS) $(incDirs) -c -o $@ $<
 

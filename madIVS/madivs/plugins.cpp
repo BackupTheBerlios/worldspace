@@ -49,7 +49,7 @@ inline void *dlopen2(char *fich) {return (void *)dlopen(fich,RTLD_LAZY);}
 #endif
 
 char **extensiones;
-
+int numero_plugins;
 
 int buscar_plugins(char *dir,plugin_info *plug_tag) {
 
@@ -188,6 +188,7 @@ int buscar_plugins(char *dir,plugin_info *plug_tag) {
 
 
     plugins=plug_tag;
+    numero_plugins=n_plug_tag;
     if (n_plug_tag==0)
         return -1;
     else

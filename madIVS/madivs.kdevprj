@@ -54,9 +54,21 @@ install_location=
 type=DATA
 
 [madivs/Makefile.am]
-files=madivs/gearapp.cpp,madivs/gearapp.h,madivs/gearcmdw.cpp,madivs/gearcmdw.h,madivs/gearcnv.cpp,madivs/gearcnv.h,madivs/Makefile,madivs/plugins.h,madivs/plugins.cpp,madivs/globales.h,madivs/estructuras.h
+files=madivs/gearapp.cpp,madivs/gearapp.h,madivs/gearcmdw.cpp,madivs/gearcmdw.h,madivs/gearcnv.cpp,madivs/gearcnv.h,madivs/Makefile,madivs/plugins.h,madivs/plugins.cpp,madivs/globales.h,madivs/estructuras.h,madivs/carga_tga.c,madivs/carga_tga.h
 sub_dirs=
 type=prog_main
+
+[madivs/carga_tga.c]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[madivs/carga_tga.h]
+dist=true
+install=false
+install_location=
+type=HEADER
 
 [madivs/docs/Makefile.am]
 sub_dirs=

@@ -39,6 +39,7 @@ char textura_cargada=0;
 char modelo_cargado=0;
 char modo_dibujo=0;
 char luces=1;
+GLuint textura;
 
 char raton_pulsado=0;
 int rX=0;
@@ -58,7 +59,7 @@ double matriz_proyeccion_A[4][4];
 double matriz_modelview[4][4];
 float quaternion[4];
 float zoom=-1.0f;
-GLuint textura;
+
 
 
 typedef struct {
@@ -151,6 +152,7 @@ void display(void)
         glNormal3f(model->triangulos[j].vertices[0].Nx,
                    model->triangulos[j].vertices[0].Ny,
                    model->triangulos[j].vertices[0].Nz);
+
 
         glVertex3f(view_x1, view_y1, view_z1);
 

@@ -26,6 +26,10 @@
 #include "plugins.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+
+#include "carga_tga.h"
+#include <v/vbglcnv.h>
 
 
 
@@ -254,6 +258,7 @@ extern modelo *model;
 
 //====================>>> gearAuxTimer::TimerTick <<<====================
 
+
   void gearAuxTimer::TimerTick()
 
   {
@@ -436,7 +441,44 @@ extern modelo *model;
 	    break;
 
 	  }	//@V@:EndCase
+	case M_Open_T:
 
+	  {
+
+      char fich_imp[1024]="";
+      int indice=0;
+      int tam_x, tam_y;
+      char *textura_datos;
+      vFileSelect importar(this);
+      char msg[1024];
+      vNoticeDialog note(this);
+      char *extensiones[]={"*.tga",0};
+  	  importar.FileSelect("Importar textura...",fich_imp,1023,extensiones,indice);
+
+
+      if (textura_cargada!=1)
+        glGenTextures(0, &textura);
+      textura_datos = (char *) CargaTGA(fich_imp, &tam_x, &tam_y);
+      if (tam_x != tam_y)
+          return ;
+      if (textura_datos == NULL) {
+         return ;
+      }
+
+      glBindTexture(GL_TEXTURE_2D, textura);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                    GL_LINEAR_MIPMAP_LINEAR);
+      gluBuild2DMipmaps(GL_TEXTURE_2D, 4, tam_x, tam_y, GL_RGBA,
+                      GL_UNSIGNED_BYTE, textura_datos);
+      free(textura_datos);
+
+      textura_cargada=1;
+
+
+	    break;
+
+	  }	//@V@:EndCase
 
 
 	//@V@:Case M_Save
@@ -485,11 +527,19 @@ extern modelo *model;
 
 	  {
 
-      modo_dibujo=0;    //Wireframe
+      modo_dibujo=0;    //Solido
 	    break;
 
 	  }	//@V@:EndCase
 
+	case M_T_Tex:
+
+	  {
+
+      modo_dibujo=3;    //Textura
+	    break;
+
+	  }	//@V@:EndCase
 
 
 
