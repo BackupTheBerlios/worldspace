@@ -104,7 +104,7 @@ int ini_display(void)
                 }
         }
         if ( resolucion_ok == NO ){
-                fprintf(logs, "La resolucion del fichero w3d.ini no es válida, prueba con alguna de estas:\n");
+                log_msj("La resolucion del fichero w3d.ini no es válida, prueba con alguna de estas:\n");
                 for (i=0;resoluciones[i];++i){
                                 log_msj(" %d x %d \n", resoluciones[i]->w, resoluciones[i]->h);
                 }
@@ -115,17 +115,14 @@ int ini_display(void)
             SDL_SetVideoMode(x_size, y_size, 16,
                              SDL_OPENGL | SDL_FULLSCREEN);
         if (!screen) {
-            log_msj
-                ("[KO] No se pudo inicializar OpenGL en pantalla completa %s\n",
-                 SDL_GetError());
+            log_msj("[KO] No se pudo inicializar OpenGL en pantalla completa %s\n", SDL_GetError());
             SDL_Quit();
             _return NO;
         }
     } else {
         screen = SDL_SetVideoMode(x_size, y_size, 16, SDL_OPENGL);
         if (!screen) {
-            log_msj("[KO] No se pudo inicializar OpenGL en ventana %s\n",
-                    SDL_GetError());
+            log_msj("[KO] No se pudo inicializar OpenGL en ventana %s\n", SDL_GetError());
             SDL_Quit();
             _return NO;
         }
