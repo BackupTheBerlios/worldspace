@@ -1,0 +1,25 @@
+BUILD:=$(shell echo $$((`cat VERSION`+1)) )
+UPDATEV:= $(shell echo $$((`cat VERSION`+1)) >VERSION )
+
+CC := gcc
+CCPP := c++
+RANLIB ?= ranlib
+LIBS ?=
+SHAREDLIBS ?=
+CFLAGS ?= -O
+LDFLAGS ?=
+SHAREDFLAGS ?= -shared
+PREFIX ?= /usr/local
+BINDIR ?= $(PREFIX)/bin
+LIBDIR ?= $(PREFIX)/lib
+INCLUDEDIR ?= $(PREFIX)/include 
+MANDIR ?= $(PREFIX)/man
+CONFDIR ?= $(PREFIX)/etc
+INSTALL_GROUP ?= root
+INSTALL_USER ?= root
+SHAREDFLAGS := $(SHAREDFLAGS)
+LIBS := $(LIBS) -Wl,-Bstatic -lV -lVgl -Wl,-Bdynamic -lXm -lXp -lXt -lXext -lX11 -ldl  -lGLU -lGL
+SHAREDLIBS := $(SHAREDLIBS)
+CFLAGS := $(CFLAGS) -g -ggdb -Wall -DBUILD=$(BUILD) -DLINUX  -Wold-style-cast
+LDFLAGS := -L/usr/X11R6/lib -L/usr/lib $(LDFLAGS)
+
