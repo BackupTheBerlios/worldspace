@@ -5,7 +5,7 @@ COMPILERFLAGS =  -g -ggdb    -Wall -D_LINUX
 CC = gcc
 
 CFLAGS = $(COMPILERFLAGS) $(INCLUDE)
-LIBRARIES = -lX11 -lXi -lXmu  -lGL -lGLU -lm -lpthread -lSDL -lXxf86dga -lXv -lXxf86vm
+LIBRARIES = -lX11 -lXi -lXmu  -lGL  -lm -lpthread -lSDL -lXxf86dga -lXv -lXxf86vm  -lIL -lILU -lILUT -lGLU
 
 FUENTES= ini_sys.c main.c render.c logo.c
 

@@ -9,6 +9,9 @@
 #include "sys_data.h"
 
 #include <stdlib.h>
+#include "IL/il.h"
+#include "IL/ilu.h"
+#include "IL/ilut.h"
 
 extern void W1_C(void);
 
@@ -51,6 +54,7 @@ Esto hace que a medida que las cosas estén más lejos se van haciendo más pequeña
 hará que lo que veamos sea más realista. Además, los dos últimos parámetros sirven para indicar que el rango de visivilidad
 va desde .1 a 100. Es decir, lo que esté situado a más de 100 unidades de la cámara no se verá
 */
+
 
 int inicializa_gl(void)
 {
@@ -145,13 +149,28 @@ int logo(void) {
 	  float angulo=0;
 		GLfloat Ambient0[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		GLfloat Diffuse0[4];
+    GLbyte pixels[640*480*3];
+    FILE  *shot;
+    char shotname[1024];
+    int n=0;
+    int ilshot;
 
 		Diffuse0[3] = 1.0f;
 
     glLightfv(GL_LIGHT0, GL_AMBIENT, Ambient0);
 	
 		glMatrixMode(GL_MODELVIEW);
-		while (angulo<720) {
+
+		ilInit();
+    iluInit();
+    ilutInit();
+    ilutRenderer(ILUT_OPENGL);
+
+    ilGenImages(1,&ilshot);
+    ilBindImage(ilshot);
+
+
+    while (angulo<720) {
 			Diffuse0[0]=angulo/720.0f;
 			Diffuse0[1]=(angulo-360)/720.0f;
 			Diffuse0[2]=angulo/360.0f;
@@ -167,7 +186,28 @@ int logo(void) {
 			glRotatef(-angulo,0.0f,0.0f,1.0f);
 			W1_C();
 			SDL_GL_SwapBuffers();
-			angulo++;
+
+     /* Render a fichero */
+     sprintf(shotname,"shot%.3d.jpg",n);
+
+/*     glPixelStorei (GL_UNPACK_ALIGNMENT, 4);
+     glPixelStorei (GL_UNPACK_SKIP_ROWS, 0);
+     glPixelStorei (GL_UNPACK_SKIP_PIXELS, 0);
+     glPixelStorei (GL_UNPACK_ROW_LENGTH, 0);
+     glReadPixels (0, 0, config.SCREEN_SIZE_X, config.SCREEN_SIZE_Y, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+     ilLoadL(IL_RAW, pixels, 640*480*3);
+     shot=fopen(shotname,"wb");
+     fwrite(pixels,640*480*3,1,shot);
+     fclose(shot);  */
+
+     ilutGLScreen();
+     ilSave(IL_JPG,shotname );
+
+
+     n++;
+    /* Fin de Render a fichero */
+
+     angulo+=1.0f;
 		}
 		glLoadIdentity();
 		glLightfv(GL_LIGHT0, GL_POSITION, LightPosition0);	
