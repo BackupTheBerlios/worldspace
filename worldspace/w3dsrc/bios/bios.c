@@ -216,8 +216,33 @@ int establece_conf()
 
         strcpy(configuracion.sDirGeneral,
                establece_var_conf_cadena(f_conf, PDIR_GENERAL));
-        if (!configuracion.sDirGeneral)
+        if (!configuracion.sDirGeneral[0])
             strcpy(configuracion.sDirGeneral, WDIR_GENERAL);
+
+        strcpy(configuracion.sDirTexturas,
+               establece_var_conf_cadena(f_conf, PDIR_TEXTURAS));
+        if (!configuracion.sDirTexturas[0])
+            strcpy(configuracion.sDirTexturas, WDIR_TEXTURAS);
+
+        strcpy(configuracion.sDirFuentes,
+               establece_var_conf_cadena(f_conf, PDIR_FUENTES));
+        if (!configuracion.sDirFuentes[0])
+            strcpy(configuracion.sDirFuentes, WDIR_FUENTES);
+
+        strcpy(configuracion.sDirModelos,
+               establece_var_conf_cadena(f_conf, PDIR_MODELOS));
+        if (!configuracion.sDirModelos[0])
+            strcpy(configuracion.sDirModelos, WDIR_MODELOS);
+
+        strcpy(configuracion.sDirSonidos,
+               establece_var_conf_cadena(f_conf, PDIR_SONIDOS));
+        if (!configuracion.sDirSonidos[0])
+            strcpy(configuracion.sDirSonidos, WDIR_SONIDOS);
+
+        strcpy(configuracion.sDirEspacios,
+               establece_var_conf_cadena(f_conf, PDIR_ESPACIOS));
+        if (!configuracion.sDirEspacios)
+            strcpy(configuracion.sDirEspacios, WDIR_ESPACIOS);
 
         fclose(f_conf);
 
@@ -227,10 +252,11 @@ int establece_conf()
         configuracion.Ytam = WYSCREEN;
         configuracion.bpp = WNBITS;
         configuracion.FullScreen = WALLSCREEN;
-        strcpy(configuracion.sDirGeneral, WDIR_GENERAL);
+        strcpy(configuracion.sDirGeneral , WDIR_GENERAL );
         strcpy(configuracion.sDirTexturas, WDIR_TEXTURAS);
-        strcpy(configuracion.sDirFuentes, WDIR_FUENTES);
-        strcpy(configuracion.sDirModelos, WDIR_MODELOS);
+        strcpy(configuracion.sDirFuentes , WDIR_FUENTES );
+        strcpy(configuracion.sDirModelos , WDIR_MODELOS );
+        strcpy(configuracion.sDirSonidos , WDIR_SONIDOS );
         strcpy(configuracion.sDirEspacios, WDIR_ESPACIOS);
         graba_conf();
 
