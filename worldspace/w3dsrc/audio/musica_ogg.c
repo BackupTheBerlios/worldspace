@@ -29,14 +29,10 @@
 
 
 ALenum formato; /* Utilizado en la carga de archivos OGG */
-ALuint streamvacios;
 OggVorbis_File buff;
-
-int musica_decodificada = 0;
+ALint estado;
 int buffers_vacios = 0;
 int current_section = -1;
-int numero_total=0;
-int streambuffer_vacio = 0 ;
 vorbis_info *informacion = NULL;
 ALuint streambuffers[NUM_BUFFER_MUSICA]; /* Utilizado en la carga de archivos OGG */
 ALshort waveout [BUFFER_MUSICA];  /* Donde almacenamos los OGG Vorbis decodificados */
@@ -55,8 +51,8 @@ char *fichero_ogg --> Nombre del archivo de musica que queremos cargar
 
 int cargar_musica ( char *fichero_ogg ){
 
-	/* Variables locales */
-	FILE *fichero;
+    /* Variables locales */
+    FILE *fichero;
     char filename[LON_BUFF];
     ALint error;
     int i, cont, posicion = 0;
@@ -68,26 +64,26 @@ int cargar_musica ( char *fichero_ogg ){
     log_msj("[musica_ogg.c] Cargando musica %s\n", filename);
 
     /* Abrimos fichero para lectura */
-	if ( ( fichero = abre_fichero ( filename, "rb" )) == NULL ){
+    if ( ( fichero = abre_fichero ( filename, "rb" )) == NULL ){
       log_msj( "[KO] No se puede cargar fichero %s\n", fichero_ogg );
       return NO;
-	}
+    }
 
-	/* Accedemos al fichero ogg */
-	if( ov_open ( fichero, &buff, NULL, 0 ) < 0) {
+    /* Accedemos al fichero ogg */
+    if( ov_open ( fichero, &buff, NULL, 0 ) < 0) {
       log_msj("[KO] Esto no es un fichero ogg.\n" );
       return NO;
-	}
+    }
 
-	/* Obtenemos formato, frecuencia */
-	informacion = ov_info ( &buff, -1);
+    /* Obtenemos formato, frecuencia */
+    informacion = ov_info ( &buff, -1);
 	
     /* Adjudicamos valores, que son necesarios para una correcta reproduccion*/
     if ((informacion->channels) == 2){
       formato = AL_FORMAT_STEREO16;
-	} else {
+    }else {
       formato = AL_FORMAT_MONO16;
-	}
+    }
     
     /* Generamos  buffers para hacer el streaming */
     alGenBuffers ( NUM_BUFFER_MUSICA, streambuffers);
@@ -135,8 +131,15 @@ Objetivo      : Pausa la musica seleccionada
 Parametros : No hay que pasarle parametros
 ******************************************************/
 
-int pausar_musica (void){
-     return SI;
+int pausar_musica (int pausa){
+ 
+   if (pausa == 1){
+     alSourcePause(streamsource[0]);
+   }
+   if (pausa == 0){
+     alSourcePlay(streamsource[0]);
+   }
+   return SI;
 
 }
 
@@ -189,10 +192,9 @@ int  actualizar_musica ( void ){
   
     int cont = 0, cancion_acabada = 0;
     ALuint buffer_intercambio;
-    ALint estado;
     
-	/* A partir de aqui es donde realmente empieza el Streaming*/
-	while ( cancion_acabada == NO ){
+    /* A partir de aqui es donde realmente empieza el Streaming*/
+    while ( cancion_acabada == NO ){
       /* Comprobamos estado de los buffers */
       alGetSourcei ( streamsource[0], AL_BUFFERS_PROCESSED, &buffers_vacios);
       /* Si algun buffer esta vacio, lo rellenamos */
@@ -218,13 +220,22 @@ int  actualizar_musica ( void ){
           buffers_vacios --;
         }
       }
-      /* Si ocurre buffer underrun lo ponemos en marcha de nuevo */
+      /* Si ocurre buffer underrun lo ponemos en marcha de nuevo o si esta en pausa lo paramos*/
       alGetSourcei(streamsource[0], AL_SOURCE_STATE, &estado);
       if (estado != AL_PLAYING){
-        alSourcePlay(streamsource[0]);
-      }
-    }
-    return SI;    
+        if (estado != AL_PAUSED){
+          alSourcePlay(streamsource[0]);
+        }else{
+          while (estado == AL_PAUSED){
+            alGetSourcei(streamsource[0], AL_SOURCE_STATE, &estado);
+            SDL_Delay(10);
+          }
+        }
+      }    
+      /* Para sincronizar mejor la musica y que no se imponga al thread principal */
+      SDL_Delay(20);
+  }
+  return SI;    
 }
 
 /********************************************************
