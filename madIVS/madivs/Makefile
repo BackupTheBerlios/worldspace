@@ -22,7 +22,7 @@ incDirs	=	-I/usr/X11R6/include \
 	-I$(HOMEV)/includex
 
 LIBS	=	-Wl,-Bstatic -lV -lVgl -Wl,-Bdynamic -lXm -lXp -lXt -lXext -lX11 -ldl  -lGLU -lGL
-C_FLAGS	=	-O -g -ggdb -DLINUX
+C_FLAGS	=	-O -g -ggdb -DLINUX  -Wall
 
 SRCS	=\
 	$(Src)/plugins.cpp\
@@ -69,6 +69,7 @@ cleanall:	cleanobjs cleanbin
 
 $(Bin)/../madivs.exe: $(EXOBJS)
 	$(CC) -o $(Bin)/../madivs.exe $(EXOBJS) $(incDirs) $(libDirs) $(LIBS)
+
 
 $(oDir)/gearapp.o: gearapp.cpp gearapp.h gearcmdw.h gearcnv.h
 	$(CC) $(C_FLAGS) $(incDirs) -c -o $@ $<

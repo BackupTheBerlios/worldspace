@@ -93,12 +93,6 @@ extern modelo *model;
 
     static vMenu VerMenu[] =
 
-
-
-
-
-
-
       {
 
 	{"&Wireframe", M_T_Wire, isSens, notChk, noKeyLbl, noKey, noSub},
@@ -108,7 +102,15 @@ extern modelo *model;
 	{"&Información", M_Info, isSens, notChk, noKeyLbl, noKey, noSub},
 
 	{NULL}
+};
 
+
+static vMenu TransformacionesMenu[] =
+      {
+
+	{"Escalar", M_Escalar, isSens, notChk, noKeyLbl, noKey, noSub},
+	{"Rotar", M_Rotar, isSens, notChk, noKeyLbl, noKey, noSub},
+	{NULL}
       };
 
 //@V@:EndPulldownMenu
@@ -123,7 +125,7 @@ extern modelo *model;
 
 	{"&Fichero", M_Ficheros, isSens, notUsed, notUsed, noKey, &FileMenu[0]},
 	{"&Ver", M_Ver, isSens, notUsed, notUsed, noKey, &VerMenu[0]},
-
+  {"&Transformaciones", M_Ver, isSens, notUsed, notUsed, noKey, &TransformacionesMenu[0]},
 	{NULL}
 
       };
@@ -296,7 +298,6 @@ extern modelo *model;
 	{C_IconButton,M_T_Wire,0,"Wireframe",&icono_wire,CA_None,isSens,NoFrame,0,0},
   {C_IconButton,M_T_Sol,0,"Sólido",&icono_solid,CA_None,isSens,NoFrame,0,0},
   {C_IconButton,M_T_Tex,0,"Textura",&icono_text,CA_None,isSens,NoFrame,0,0},
-  {C_Label, M_T_NULL,0,"Escala",NoList,CA_None,isSens,NoFrame,0,0, 0,0},
   {C_IconButton,M_T_Luces,0,"Luces",&icono_luz,CA_None,isSens,NoFrame,0,0},
 	{C_EndOfList,0,0,0,0,CA_None,0,0,0}
 
@@ -365,6 +366,7 @@ extern modelo *model;
     _auxTimer->TimerSet(30);		// 30 ms second intervals
 
     // Associated dialogs
+
 
 
 
@@ -713,15 +715,16 @@ extern modelo *model;
 	//@V@:Case M_Copy
 
 
-	case M_Copy:
+	case M_Escalar:
 
 	  {
 
 	    vNoticeDialog note(this);
 
-	    note.Notice("Copy");
+	    note.Notice("No implementado");
 
 	    break;
+
 
 	  }	//@V@:EndCase
 
@@ -729,13 +732,13 @@ extern modelo *model;
 
 	//@V@:Case M_Paste
 
-	case M_Paste:
+	case M_Rotar:
 
 	  {
 
 	    vNoticeDialog note(this);
 
-	    note.Notice("Paste");
+	    note.Notice("No implementado");
 
 	    break;
 

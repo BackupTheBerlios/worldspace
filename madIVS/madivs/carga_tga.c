@@ -23,7 +23,8 @@ typedef struct
 }
 Imagen;
 
-typedef char byte;
+typedef unsigned char byte;
+typedef GLubyte rgbapacket[4];
 typedef struct pcx_header_tag
 {
 
@@ -43,6 +44,8 @@ typedef struct pcx_header_tag
 pcx_h;
 
 
+
+
 /*! Carga un TGA en memoria. El TGA debe cumplir las siguientes características:
 Ser de 24 bits + Canal ALPHA. (32 bits) y SIN COMPRIMIR
 El tamaño debe ser cuadrado (x=y) y 32x32 o 64x64 o 128x128 o 256x256
@@ -52,6 +55,7 @@ void *
 CargaTGA (char filename[], int *tam_x, int *tam_y)
 {
   GLubyte TGAheader[12] = { 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+  GLubyte TGAheaderc[12] = { 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
   GLubyte TGAcompare[12];
   GLubyte header[6];
   GLuint bytesPerPixel;
@@ -61,8 +65,16 @@ CargaTGA (char filename[], int *tam_x, int *tam_y)
   Imagen texture;
   GLubyte *aux;
 
+  GLubyte *data;
+  GLubyte *datos;
+  byte buffer;
+  rgbapacket buf;
+  byte count;
+  byte done = 0;
+  unsigned int tc, j,totalc,lines;
+
   char aux2[2048];
-  FILE *fichero;
+  FILE *fichero,*output;
 
 
 
@@ -73,84 +85,184 @@ CargaTGA (char filename[], int *tam_x, int *tam_y)
 
   fread (TGAcompare, 1, sizeof (TGAcompare), fichero);
 
-  if (memcmp (TGAheader, TGAcompare, sizeof (TGAheader)) != 0)
+  if (memcmp (TGAheader, TGAcompare, sizeof (TGAheader)) == 0)
+    {
+
+      /* Esto es un TGA no comprimido */
+      /* Leemos la cabecera */
+
+      fread (header, 1, sizeof (header), fichero);
+
+      /* Determinamos el tamaño */
+
+      texture.width = header[1] * 256 + header[0];
+      texture.height = header[3] * 256 + header[2];
+
+
+      /* Vemos las características y comprobamos si son correctas */
+      if (texture.width <= 0 ||
+	  texture.height <= 0 ||
+	  texture.width > 256 ||
+	  texture.height != texture.width || (header[4] != 32))
+	{
+	  fclose (fichero);
+	  return NULL;
+	}
+
+
+      /* Calculamos la memoria que será necesaria */
+
+      texture.bpp = header[4];
+      bytesPerPixel = texture.bpp / 8;
+      imageSize = texture.width * texture.height * bytesPerPixel;
+
+
+      /* Reservamos memoria */
+      texture.imageData = (GLubyte *) malloc (imageSize);
+
+      /* Cargamos y hacemos alguna comprobaciones */
+
+      if (texture.imageData == NULL ||
+	  fread (texture.imageData, 1, imageSize, fichero) != imageSize)
+	{
+	  if (texture.imageData != NULL)
+	    free (texture.imageData);
+
+	  fclose (fichero);
+	  return NULL;
+	}
+
+
+      /* El TGA viene en formato BGR, lo pasamos a RGB */
+      for (i = 0; i < (GLuint) (imageSize); i += bytesPerPixel)
+	{
+	  temp = texture.imageData[i];
+	  texture.imageData[i] = texture.imageData[i + 2];
+	  texture.imageData[i + 2] = temp;
+	}
+
+
+      fclose (fichero);
+
+      /* Ahora, cambiamos el orden de las líneas, como si hiciesemos
+         un flip vertical. */
+
+      aux = (GLubyte *) malloc (imageSize);
+      for (i = 0; i < texture.height; i++)
+	memcpy (&aux[imageSize - ((i + 1) * texture.width * 4)],
+		&texture.imageData[i * texture.width * 4], texture.width * 4);
+
+      /* tam devolverá el tamaño */
+      *tam_x = texture.width;
+      *tam_y = texture.height;
+      /* Liberamos memoria */
+      free (texture.imageData);
+
+      /* Todo fue bien! */
+      return aux;
+    }
+  else if (memcmp (TGAheaderc, TGAcompare, sizeof (TGAheader)) == 0)
+    {
+
+      /* Esto es un TGA comprimido */
+      /* Leemos la cabecera */
+
+      fread (header, 1, sizeof (header), fichero);
+
+      /* Determinamos el tamaño */
+
+      texture.width = header[1] * 256 + header[0];
+      texture.height = header[3] * 256 + header[2];
+
+
+      /* Vemos las características y comprobamos si son correctas */
+      if (texture.width <= 0 ||
+	  texture.height <= 0 ||
+	  texture.width > 256 ||
+	  texture.height != texture.width || (header[4] != 32))
+	{
+	  fclose (fichero);
+	  return NULL;
+	}
+
+
+      /* Calculamos la memoria que será necesaria */
+
+      texture.bpp = header[4];
+      bytesPerPixel = texture.bpp / 8;
+      imageSize = texture.width * texture.height * bytesPerPixel;
+      *tam_x = texture.width;
+      *tam_y = texture.height;
+
+
+
+
+      /* Reservamos memoria */
+      data = (GLubyte *) malloc (imageSize);
+
+      /* Cargamos y hacemos alguna comprobaciones */
+
+       output=fopen("salida.pnm","wb");
+      fprintf(output,"P6\n256 256\n255\n");
+
+
+      fread (&buffer, 1, 1, fichero);
+
+      tc = 0;
+      totalc=0;lines=0;
+
+      /* Compresión RLE */
+      while (!feof(fichero))
+  	{
+	  if ((buffer > 127))        // Paquete RLE
+	    {
+	      /* Los siguientes 7 bits indican cuantas veces repetir el siguiente pixel */
+	      count = buffer & 127;
+        count++;
+        fread (&buf, sizeof(rgbapacket), 1, fichero); // Leemos el pixel
+    	  for (j = 0; j < count; j++)
+	      {
+
+          data[tc] = buf[2];
+	        tc++;
+	        data[tc] = buf[1];
+	        tc++;
+	        data[tc] = buf[0];
+	        tc++;
+	        data[tc] = buf[3];
+          tc++;
+        }
+	    }
+	  else {                            // Paquete RAW
+        count = buffer & 127;
+        count++;
+        fread (&data[tc],4,count , fichero); // Leemos count pixels
+        tc+=count*4;
+	
+    }
+        fread (&buffer, 1, 1, fichero);
+	
+  }
+
+
+/* Ahora, cambiamos el orden de las líneas, como si hiciesemos
+         un flip vertical. */
+
+      aux = (GLubyte *) malloc (imageSize);
+      for (i = 0; i < texture.height; i++)
+	memcpy (&aux[imageSize - ((i + 1) * texture.width * 4)],
+		&data[i * texture.width * 4], texture.width * 4);
+
+   free(data);
+   return aux;
+
+
+
+}
+
+
+  else
     return NULL;
-
-  /* Leemos la cabecera */
-
-  fread (header, 1, sizeof (header), fichero);
-
-  /* Determinamos el tamaño */
-
-  texture.width = header[1] * 256 + header[0];
-  texture.height = header[3] * 256 + header[2];
-
-
-  /* Vemos las características y comprobamos si son correctas */
-  if (texture.width <= 0 ||
-      texture.height <= 0 ||
-      texture.width > 256 ||
-      texture.height != texture.width || (header[4] != 32))
-    {
-      fclose (fichero);
-      return NULL;
-    }
-
-
-  /* Calculamos la memoria que será necesaria */
-
-  texture.bpp = header[4];
-  bytesPerPixel = texture.bpp / 8;
-  imageSize = texture.width * texture.height * bytesPerPixel;
-
-
-  /* Reservamos memoria */
-  texture.imageData = (GLubyte *) malloc (imageSize);
-
-  /* Cargamos y hacemos alguna comprobaciones */
-
-  if (texture.imageData == NULL ||
-      fread (texture.imageData, 1, imageSize, fichero) != imageSize)
-    {
-      if (texture.imageData != NULL)
-	free (texture.imageData);
-
-      fclose (fichero);
-      return NULL;
-    }
-
-
-  /* El TGA viene en formato BGR, lo pasamos a RGB */
-  for (i = 0; i < (GLuint) (imageSize); i += bytesPerPixel)
-    {
-      temp = texture.imageData[i];
-      texture.imageData[i] = texture.imageData[i + 2];
-      texture.imageData[i + 2] = temp;
-    }
-
-
-  fclose (fichero);
-
-  /* Ahora, cambiamos el orden de las líneas, como si hiciesemos
-     un flip vertical. */
-
-  aux = (GLubyte *) malloc (imageSize);
-  for (i = 0; i < texture.height; i++)
-    memcpy (&aux[imageSize - ((i + 1) * texture.width * 4)],
-	    &texture.imageData[i * texture.width * 4], texture.width * 4);
-
-
-
-//      aux=texture.imageData;
-
-  /* tam devolverá el tamaño */
-  *tam_x = texture.width;
-  *tam_y = texture.height;
-  /* Liberamos memoria */
-  free (texture.imageData);
-
-  /* Todo fue bien! */
-  return aux;
 }
 
 

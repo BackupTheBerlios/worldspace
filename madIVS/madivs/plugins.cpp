@@ -36,6 +36,10 @@
 #define CargaFuncion GetProcAddress
 #define CierraDLL while(0==1){;}
 HINSTANCE hDll;
+typedef char * (FAR WINAPI *DLLCHAR) (void);
+typedef int * (FAR WINAPI *DLLINT) (void);
+typedef int (FAR WINAPI *DLL_IMPORTAR_MODELO)(char *,void*);
+
 #endif
 
 #ifdef LINUX
@@ -44,7 +48,9 @@ void *hDll;
 inline void *dlopen2(char *fich) {return (void *)dlopen(fich,RTLD_LAZY);}
 #define CargaDLL dlopen2
 #define CargaFuncion dlsym
-
+typedef char * (* DLLCHAR)(void);
+typedef int * (* DLLINT)(void);
+typedef int (* DLL_IMPORTAR_MODELO)(char *,void*);
 #define CierraDLL dlclose(hDll)
 #endif
 
@@ -65,12 +71,14 @@ int buscar_plugins(char *dir,plugin_info *plug_tag) {
     /* Funciones a importar de la librería dinámica */
 
 
-      char  *(*mostrar_nombre)(void);
-      char  *(*mostrar_autor)(void);
-      char  *(*mostrar_info)(void);
-      int   *(*mostrar_fecha)(void);
-      int   *(*mostrar_version)(void);
-      char  *(*mostrar_extension)(void);
+      DLLCHAR mostrar_nombre;
+      DLLCHAR mostrar_autor;
+      DLLCHAR mostrar_info;
+      DLLINT  mostrar_fecha;
+      DLLINT  mostrar_version;
+      DLLCHAR mostrar_extension;
+
+
 
 
     /* Leemos el directorio de plug_tag */
@@ -95,25 +103,25 @@ int buscar_plugins(char *dir,plugin_info *plug_tag) {
 
       if(hDll!=NULL)
       {
-
-      mostrar_nombre=(char *(*)())CargaFuncion(hDll,"mostrar_nombre");
+      mostrar_nombre=(DLLCHAR)CargaFuncion(hDll,"mostrar_nombre");
       printf("\n%s\n",(*mostrar_nombre)());
 
-      mostrar_autor=(char *(*)())CargaFuncion(hDll,"mostrar_autor");
+
+      mostrar_autor=(DLLCHAR)CargaFuncion(hDll,"mostrar_autor");
       printf("%s\n",(*mostrar_autor)());
 
-      mostrar_info=(char *(*)())CargaFuncion(hDll,"mostrar_info");
+      mostrar_info=(DLLCHAR)CargaFuncion(hDll,"mostrar_info");
       printf("%s\n",(*mostrar_info)());
 
-      mostrar_version=(int *(*)())CargaFuncion(hDll,"mostrar_version");
+      mostrar_version=(DLLINT)CargaFuncion(hDll,"mostrar_version");
       tmp=(*mostrar_version)();
       printf("Versión: %d.%d.%d  ",tmp[0],tmp[1],tmp[2]);
 
-      mostrar_fecha=(int *(*)())CargaFuncion(hDll,"mostrar_fecha");
+      mostrar_fecha=(DLLINT)CargaFuncion(hDll,"mostrar_fecha");
       tmp=(*mostrar_fecha)();
       printf("%d/%d/%d\n",tmp[0],tmp[1],tmp[2]);
 
-      mostrar_extension=(char *(*)())CargaFuncion(hDll,"mostrar_extension");
+      mostrar_extension=(DLLCHAR)CargaFuncion(hDll,"mostrar_extension");
       printf("Extensiones: %s\n\n",(*mostrar_extension)());
 
       n_plug_tag++;
@@ -155,28 +163,28 @@ int buscar_plugins(char *dir,plugin_info *plug_tag) {
 
       if(hDll!=NULL)
       {
-      mostrar_nombre=(char *(*)())CargaFuncion(hDll,"mostrar_nombre");
+      mostrar_nombre=(DLLCHAR)CargaFuncion(hDll,"mostrar_nombre");
       strcpy(plug_tag[n_plug_tag].nombre,(*mostrar_nombre)());
 
-      mostrar_autor=(char *(*)())CargaFuncion(hDll,"mostrar_autor");
+      mostrar_autor=(DLLCHAR)CargaFuncion(hDll,"mostrar_autor");
       strcpy(plug_tag[n_plug_tag].autor,(*mostrar_autor)());
 
-      mostrar_info=(char *(*)())CargaFuncion(hDll,"mostrar_info");
+      mostrar_info=(DLLCHAR)CargaFuncion(hDll,"mostrar_info");
       strcpy(plug_tag[n_plug_tag].info,(*mostrar_info)());
 
-      mostrar_version=(int *(*)())CargaFuncion(hDll,"mostrar_version");
+      mostrar_version=(DLLINT)CargaFuncion(hDll,"mostrar_version");
       tmp=(*mostrar_version)();
       plug_tag[n_plug_tag].version[0]=tmp[0];
       plug_tag[n_plug_tag].version[1]=tmp[1];
       plug_tag[n_plug_tag].version[2]=tmp[2];
 
-      mostrar_version=(int *(*)())CargaFuncion(hDll,"mostrar_fecha");
+      mostrar_version=(DLLINT)CargaFuncion(hDll,"mostrar_fecha");
       tmp=(*mostrar_fecha)();
       plug_tag[n_plug_tag].fecha[0]=tmp[0];
       plug_tag[n_plug_tag].fecha[1]=tmp[1];
       plug_tag[n_plug_tag].fecha[2]=tmp[2];
 
-      mostrar_extension=(char *(*)())CargaFuncion(hDll,"mostrar_extension");
+      mostrar_extension=(DLLCHAR)CargaFuncion(hDll,"mostrar_extension");
       strcpy(plug_tag[n_plug_tag].extension,(*mostrar_extension)());
 
       strcpy(plug_tag[n_plug_tag].fich,fich_dll);
@@ -207,7 +215,8 @@ int buscar_plugins(char *dir,plugin_info *plug_tag) {
 
 int importar_modelo(int n_plugin,char *file) {
 
-      int (*importar_modelo_dll)(char *,void *);
+      DLL_IMPORTAR_MODELO importar_modelo_dll;
+
       void *libc;
       void *model_tag;
       int ok;
@@ -221,7 +230,7 @@ int importar_modelo(int n_plugin,char *file) {
       }
 
 
-      importar_modelo_dll=(int(*)(char *,void *))CargaFuncion(hDll,"importar_modelo");
+      importar_modelo_dll=(DLL_IMPORTAR_MODELO)CargaFuncion(hDll,"importar_modelo");
 
 
       printf("Dirección de memoria madvis %d\n",(int)&model_tag);

@@ -52,6 +52,8 @@ const ItemVal M_Ficheros =  40004;
 const ItemVal M_Ver =       40005;
 const ItemVal M_T_Luces =     40006;
 const ItemVal M_Info =     40008;
+const ItemVal M_Rotar =     40100;
+const ItemVal M_Escalar =     40101;
 
 
 
