@@ -47,8 +47,6 @@ Aqui definimos el nº de sonidos, musicas, entornos y listeners que vamos a utili
 #endif
 #define NUM_MUSICAS   1
 
-
-
 /*!
 ============================================== MACROS
 !*/
@@ -56,9 +54,16 @@ Aqui definimos el nº de sonidos, musicas, entornos y listeners que vamos a utili
 /*!
 Control de indentacion de las trazas
 !*/
-#define T_FUNC_IN nivel_traza++;
-#define T_FUNC_OUT nivel_traza--;
-#define _return T_FUNC_OUT return
+#define T_FUNC_IN   nivel_traza++;
+#define T_FUNC_OUT  nivel_traza--;
+#define _return     T_FUNC_OUT return
+
+#define mInicio(s)  memset((s), 0, sizeof(s))
+
+#ifdef WIN32
+typedef unsigned int  uint;
+typedef unsigned char byte;
+#endif // WIN32
 
 /*!
 Estructura para guardar la configuración
@@ -68,10 +73,11 @@ typedef struct config_tag {
     int Ytam;
     int FullScreen;
     int bpp;
-    char sDirGeneral[LON_BUFF];
+    char sDirGeneral [LON_BUFF];
     char sDirTexturas[LON_BUFF];
-    char sDirFuentes[LON_BUFF];
-    char sDirModelos[LON_BUFF];
+    char sDirFuentes [LON_BUFF];
+    char sDirModelos [LON_BUFF];
+    char sDirSonidos [LON_BUFF];
     char sDirEspacios[LON_BUFF];
 } estr_config;
 
