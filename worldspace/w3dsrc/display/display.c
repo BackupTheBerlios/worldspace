@@ -65,6 +65,9 @@ static const char *cursor_xpm[] = {
 static SDL_Cursor *init_system_cursor(const char *image[]);
 SDL_Cursor *cursor;
 SDL_Rect **resoluciones;
+
+extern double matriz_proyeccion[4][4];
+extern double matriz_proyeccion_ortogonal[4][4];
 /*!
 
 int sis_ini_display(void)
@@ -159,6 +162,35 @@ int cerrar_display(void)
     T_FUNC_IN SDL_Quit();
 
     _return SI;
+}
+
+/*!
+Cambia la resolucion del contexto gráfico
+*/
+int cambiar_display( int xdis, int ydis, int pan_completa){
+
+  configuracion.Xtam = xdis;
+  configuracion.Ytam = ydis;
+  configuracion.FullScreen = pan_completa;
+  
+  if (config.FULLSCREEN == 1){
+    screen =  SDL_SetVideoMode ( configuracion.Xtam, configuracion.Ytam, 16, SDL_OPENGL | SDL_FULLSCREEN);
+  }
+  else {
+    screen =  SDL_SetVideoMode ( configuracion.Xtam, configuracion.Ytam, 16, SDL_OPENGL);
+  }
+
+  glViewport( 0, 0, ( GLsizei )configuracion.Xtam, ( GLsizei )configuracion.Ytam );
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  gluPerspective(45.0f,(GLfloat) configuracion.Xtam / (GLfloat) configuracion.Ytam, 0.01f, 100000.0f);
+  glGetDoublev(GL_PROJECTION_MATRIX, &matriz_proyeccion[0][0]);
+  glLoadIdentity();
+  glOrtho(0, configuracion.Xtam, 0, configuracion.Ytam, -100, 100);
+  glGetDoublev(GL_PROJECTION_MATRIX, &matriz_proyeccion_ortogonal[0][0]);
+  glLoadMatrixd(&matriz_proyeccion[0][0]);
+    
+  return SI;
 }
 
 /* Stolen from the mailing list */

@@ -28,10 +28,14 @@ A su vez, llamará a la inicialización de OpenGL.
 */
 extern int ini_display(void);
 
-
 /*!
 Cierre el contexto gráfico
 */
 extern int cerrar_display(void);
+
+/*!
+Cambia la resolucion del contexto gráfico
+*/
+extern int cambiar_display(int xdis, int ydis, int pan_completa);
 
 #endif
