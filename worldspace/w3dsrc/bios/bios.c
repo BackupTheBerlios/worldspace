@@ -77,7 +77,7 @@ int log_msj(char *cadena, ...)
     va_list ap;                 // puntero a la lista de argumentos (los ...)
 
     va_start(ap, cadena);       // Busca variables en el texto
-    vsprintf(texto, cadena, ap);        // y las sustituye por su valor
+    vsprintf(texto, cadena, ap);// y las sustituye por su valor
     va_end(ap);                 // almacenando el resultado en text
 
     fprintf(salida_log, &cad_traza[79 - nivel_traza * 2]);
