@@ -33,5 +33,4 @@ extern int cerrar_bios(void);
 Wrapper para fopen, que inserta al nombre del fichero
 el directorio de los datos
 */
-extern FILE *abre_fichero(char *nombre,char *modo);
-
+extern FILE *abre_fichero(char *nombre, char *modo);

@@ -18,7 +18,7 @@
 
 #ifndef _GLOBALES_
 #define _GLOBALES_
- 
+
 #include "w3d_base.h"
 #include <stdio.h>
 
@@ -37,13 +37,13 @@ extern char nivel_traza;
 /*!
 Salida de logs
 */
-extern int log_msj(char *cadena,...);
+extern int log_msj(char *cadena, ...);
 
 /*!
 Wrapper para fopen, que inserta al nombre del fichero
 el directorio de los datos
 */
-extern FILE *abre_fichero(char *nombre,char *modo);
+extern FILE *abre_fichero(char *nombre, char *modo);
 
 
 

@@ -68,9 +68,9 @@ Estructura de un vector
 !*/
 
 typedef struct vector_tag {
-float x, y, z;
-float u, v;
-float Nx, Ny, Nz;          // Normales
+    float x, y, z;
+    float u, v;
+    float Nx, Ny, Nz;           // Normales
 } vertice;
 
 
@@ -79,7 +79,7 @@ Estructura de un triangulo o cara
 !*/
 
 typedef struct tag_face {
-vertice vertices[3];      		 // Puntos del triángulo
+    vertice vertices[3];        // Puntos del triángulo
 } cara;
 
 
@@ -88,7 +88,7 @@ Estructura de un modelo
 !*/
 
 typedef struct tag_object {
-unsigned int n_caras;      		// Numero de caras
+    unsigned int n_caras;       // Numero de caras
     cara *triangulos;           // Matriz de caras
     char id_textura[16];        // Fichero de textura
     unsigned int n_textura;     // Identificación de textura
@@ -99,4 +99,3 @@ unsigned int n_caras;      		// Numero de caras
 
 
 #endif
-

@@ -19,6 +19,4 @@
 #include "w3d_base.h"
 
 extern modelo *carga_mad(char *file);
-extern int render_mad(modelo *mad);
-
-
+extern int render_mad(modelo * mad);

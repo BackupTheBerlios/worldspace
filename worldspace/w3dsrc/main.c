@@ -20,8 +20,6 @@
 #include "display.h"
 #include "engine.h"
 
- 
-
 /*!
 ==================================================================
 Inicio de la aplicación. Punto de entrada.
@@ -31,15 +29,12 @@ Inicio de la aplicación. Punto de entrada.
 int main(int iArg, char **vArg)
 {
 
-
-    ini_bios(iArg,vArg);
+    ini_bios(iArg, vArg);
     ini_display();
     ini_gl(SI);
 
     cerrar_display();
     cerrar_bios();
-    
-
 
     return SI;
 }

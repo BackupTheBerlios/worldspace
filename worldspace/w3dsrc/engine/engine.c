@@ -15,7 +15,6 @@
  *                                                                         *
  ***************************************************************************/
 
-
 #include <math.h>
 #include <stdlib.h>
 
@@ -27,7 +26,6 @@
 /*!
 ================================== DECLARACION DE VARIABLES
 !*/
-
 
 /*!
 Matrices de proyección. aquí se guardan un par de matrices de proyección.
@@ -43,7 +41,6 @@ posición del observador, osea, nosotros
 
 float camara[4][4];
 
-
 /*!
   Esta función muestra un logo por pantalla para demostrar que la inicialización
   gráfica OpenGL ha sido satisfactoria
@@ -51,9 +48,7 @@ float camara[4][4];
 int logo(void)
 {
 
-	T_FUNC_IN
-	
-    SDL_Event event;
+    T_FUNC_IN SDL_Event event;
     Uint8 *keys;
 
     modelo *logo;
@@ -96,8 +91,6 @@ int logo(void)
             break;
         }
 
-
-
     }
     glDisable(GL_LIGHT0);
     glDisable(GL_LIGHTING);
@@ -105,12 +98,9 @@ int logo(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    T_FUNC_OUT
-    
-    return SI;
+    T_FUNC_OUT return SI;
 
 }
-
 
 /*!
 Inicialización propia de OpenGL
@@ -127,9 +117,7 @@ int ini_gl(char show_logo)
 
     /* Esto resetea la matriz de modelado y la de la camara */
 
-    T_FUNC_IN
-    
-    glMatrixMode(GL_PROJECTION);
+    T_FUNC_IN glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -148,12 +136,10 @@ int ini_gl(char show_logo)
     glOrtho(0, configuracion.Xtam, 0, configuracion.Ytam, -100, 100);
     glGetDoublev(GL_PROJECTION_MATRIX, &matriz_proyeccion_ortogonal[0][0]);
 
-
     glLoadMatrixd(&matriz_proyeccion[0][0]);
 
     log_msj("[engine.c] Matrices de proyección creadas\n");
 
-    
     /* Ahora establecemos el color de fondo por defecto. Está en formato RGBA y lo ponemos a negro */
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -169,12 +155,10 @@ int ini_gl(char show_logo)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-
     /* Esta función sirve para optimizar el renderizado, y se utiliza para muchas cosas. En este caso es para
        hacer un buen cálculo de la perspectiva perdiendo un poco de rendimiento */
 
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
 
     /* Smooth shading */
     glShadeModel(GL_SMOOTH);
@@ -193,24 +177,17 @@ int ini_gl(char show_logo)
         logo();
 
     log_msj("[OK] OpenGL inicializado\n");
-    
-    T_FUNC_OUT
-    
-    return SI;
 
+    T_FUNC_OUT return SI;
 
 }
-
 
 int ini_engine()
 {
 
-	T_FUNC_IN
-	
-    SDL_ShowCursor(0);
+    T_FUNC_IN SDL_ShowCursor(0);
     SDL_WM_GrabInput(SDL_GRAB_ON);
     ini_gl(NO);
-
 
     glGetFloatv(GL_MODELVIEW_MATRIX, &camara[0][0]);
     camara[2][2] = 1.0f;
@@ -219,30 +196,26 @@ int ini_engine()
     camara[3][2] = ((rand() % 100) - 50);
 
     /*
-    id_textura_crosshair = encola_textura("crosshair.tga", GL_RGBA);
-    id_textura_localizador = encola_textura("localizador.tga", GL_RGBA);
+       id_textura_crosshair = encola_textura("crosshair.tga", GL_RGBA);
+       id_textura_localizador = encola_textura("localizador.tga", GL_RGBA);
 
-    if (!genera_texturas(GL_LINEAR)) {
-        _sis_msj("\n\t\t\tError generando texturas [KO]");
-        return NO;
-    } else
-        _sis_msj("\n[OK]\t\t\tTexturas Generadas");
+       if (!genera_texturas(GL_LINEAR)) {
+       _sis_msj("\n\t\t\tError generando texturas [KO]");
+       return NO;
+       } else
+       _sis_msj("\n[OK]\t\t\tTexturas Generadas");
 
-    glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient0);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDiffuse0);
-    glLightfv(GL_LIGHT0, GL_POSITION, LightPosition0);
+       glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient0);
+       glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDiffuse0);
+       glLightfv(GL_LIGHT0, GL_POSITION, LightPosition0);
 
-    glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient1);
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse0);
+       glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient1);
+       glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse0);
 
+       glEnable(GL_LIGHT0);
+       glEnable(GL_LIGHT1);
 
-    glEnable(GL_LIGHT0);
-    glEnable(GL_LIGHT1);
+     */
 
-    */
-
-	T_FUNC_OUT
-	
-    return SI;
+    T_FUNC_OUT return SI;
 }
-

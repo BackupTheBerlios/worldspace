@@ -29,4 +29,3 @@ extern float camara[4][4];
 Inicialización propia de OpenGL
 !*/
 extern int ini_gl(char show_logo);
-

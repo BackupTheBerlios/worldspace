@@ -19,7 +19,7 @@
 #define _DISPLAY_
 
 
- 
+
 /*!
 int sis_ini_display(void)
 Inicialización del contexto OpenGL mediante SDL.
@@ -35,4 +35,3 @@ Cierre el contexto gráfico
 extern int cerrar_display(void);
 
 #endif
-

@@ -21,11 +21,9 @@ Este fichero no es oficial, el oficial será el proporcionado por Loki
  *                                                                         *
  ***************************************************************************/
 
-
 #include "w3d_base.h"
 #include "globales.h"
 #include "sdl_gl.h"
-
 
 /* XPM */
 static const char *cursor_xpm[] = {
@@ -69,8 +67,6 @@ static const char *cursor_xpm[] = {
     "0,0"
 };
 
-
-
 static SDL_Cursor *init_system_cursor(const char *image[]);
 SDL_Cursor *cursor;
 
@@ -86,20 +82,17 @@ A su vez, llamará a la inicialización de OpenGL.
 int ini_display(void)
 {
 
-
     unsigned short int x_size, y_size;
     SDL_Surface *screen;
     SDL_Surface *icon;
 
-    T_FUNC_IN
-    
-    x_size = configuracion.Xtam;
+    T_FUNC_IN x_size = configuracion.Xtam;
     y_size = configuracion.Ytam;
 
     if (SDL_Init(SDL_INIT_VIDEO) != 1)
         log_msj("[OK] ]Subsistema SDL_video inicializado\n");
     else {
-        log_msj("[KO] Error inesperado en SDL_Init: %s\n",SDL_GetError());
+        log_msj("[KO] Error inesperado en SDL_Init: %s\n", SDL_GetError());
         _return NO;
     }
 
@@ -110,14 +103,17 @@ int ini_display(void)
             SDL_SetVideoMode(x_size, y_size, 16,
                              SDL_OPENGL | SDL_FULLSCREEN);
         if (!screen) {
-            log_msj("[KO] No se pudo inicializar OpenGL en pantalla completa %s\n",SDL_GetError());
+            log_msj
+                ("[KO] No se pudo inicializar OpenGL en pantalla completa %s\n",
+                 SDL_GetError());
             SDL_Quit();
             _return NO;
         }
     } else {
         screen = SDL_SetVideoMode(x_size, y_size, 16, SDL_OPENGL);
         if (!screen) {
-			log_msj("[KO] No se pudo inicializar OpenGL en ventana %s\n",SDL_GetError());
+            log_msj("[KO] No se pudo inicializar OpenGL en ventana %s\n",
+                    SDL_GetError());
             SDL_Quit();
             _return NO;
         }
@@ -142,7 +138,6 @@ int ini_display(void)
 
     log_msj("[OK] SDL preparado\n");
 
-
     _return SI;
 
 }
@@ -152,14 +147,10 @@ Cierre el contexto gráfico
 */
 int cerrar_display(void)
 {
-    T_FUNC_IN
-    
-
-    SDL_Quit();
+    T_FUNC_IN SDL_Quit();
 
     _return SI;
 }
-
 
 /* Stolen from the mailing list */
 /* Creates a new mouse cursor from an XPM */
