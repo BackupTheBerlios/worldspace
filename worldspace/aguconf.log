@@ -1,0 +1,3 @@
+En el fichero incluído de w3dsrc/main.c:20:
+w3dsrc/w3d_base.h:21:13: aviso: no hay caractér de fin de línea al final del fichero
+w3dsrc/main.c:37:2: aviso: no hay caractér de fin de línea al final del fichero

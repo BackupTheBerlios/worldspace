@@ -1,0 +1,109 @@
+#!/bin/bash
+# Configurando y creando Makefile
+
+clear
+if test -z `echo $LANG`
+then
+	LANG=es
+else
+	if test -z `echo $LANG|grep es`
+	then 
+		W3DLANG=en
+	else
+		W3DLANG=es
+	fi
+fi
+
+source ./lang/$W3DLANG.configure
+	
+echo $L_TITLE
+echo
+TGT=linux
+echo $L_CHOOSE " : 1) Linux  2) Win32";read TGT
+if test -z $TGT
+then
+	export TGT="1"
+fi
+if test $TGT = "2"
+then
+	TAR="windows"
+else
+	TAR="linux"
+fi
+
+echo $L_TARGET  $TAR;
+
+CC=gcc
+CCPP=g++
+INCLUDE=./w3d/ui/libgli/include
+BINARY=w3d_x86.exe
+
+
+C_SOURCES=`find -name *.c`
+echo "C : " $C_SOURCES
+
+CPP_SOURCES=`find -name *.cpp`
+echo "C++: " $CPP_SOURCES
+
+for x in `find -type d`
+do
+	INCDIRS="$INCDIRS -I$x"
+done
+
+
+echo "#">Makefile.kk
+cat Makefile.conf.$TAR >>Makefile.kk
+echo CXXFLAGS := "\$(CXXFLAGS)" "\$(CFLAGS)" $INCDIRS>>Makefile.kk
+echo CFLAGS := "\$(CFLAGS)"  $INCDIRS>>Makefile.kk
+echo "ALL: "$BINARY>>Makefile.kk
+
+for i in $C_SOURCES
+do
+
+        echo $L_DEPENDS $i
+        $CC -I$INCLUDE -MM $i -I$INCLUDE 2>aguconf.log >>Makefile.kk
+        echo -n -e "\t">>Makefile.kk
+        echo $CC "\$(CFLAGS)" -c $i -o `echo $i|sed s/.c$/.o/`>>Makefile.kk
+
+done
+
+for i in $CPP_SOURCES
+do
+        echo $L_DEPENDS $i
+        $CCPP -MM $i -I$INCLUDE 2>aguconf.log >>Makefile.kk
+        echo -n -e "\t">>Makefile.kk
+        echo $CCPP "\$(CXXFLAGS)"  -c $i -o `echo $i|sed s/.c$/.o/`>>Makefile.kk
+done
+echo >>Makefile.kk
+echo -n $BINARY \:>>Makefile.kk
+for i in $C_SOURCES 
+do
+	echo -n $i  |sed s/.c$/.o/ >>Makefile.kk
+	echo -n " ">>Makefile.kk
+done
+for i in $CPP_SOURCES
+do
+        echo -n $i  |sed s/.cpp$/.o/ >>Makefile.kk
+        echo -n " ">>Makefile.kk
+done
+echo>>Makefile.kk
+echo -n -e "\t">>Makefile.kk
+echo -n $CCPP -I$INCLUDE -o $BINARY " " >>Makefile.kk
+for i in $C_SOURCES
+do
+        echo -n $i  |sed s/.c$/.o/ >>Makefile.kk
+	        echo -n " ">>Makefile.kk
+		done
+		for i in $CPP_SOURCES
+		do
+		        echo -n $i  |sed s/.cpp$/.o/ >>Makefile.kk
+			        echo -n " ">>Makefile.kk
+				done
+echo -n " " "\$(LIBS)" "\$(LDFLAGS)" " " >>Makefile.kk 
+echo "">>Makefile.kk
+echo -e "\t mv w3d_x86.exe ..">>Makefile.kk
+echo "clean:">>Makefile.kk
+echo -n -e "\t">>Makefile.kk
+echo "find -name '*.o'|xargs rm -f ;rm  ../$BINARY">>Makefile.kk
+cp Makefile.kk Makefile
+rm Makefile.kk
