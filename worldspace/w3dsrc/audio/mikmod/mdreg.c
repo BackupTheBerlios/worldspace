@@ -20,7 +20,7 @@
 
 /*==============================================================================
 
-  $Id: mdreg.c,v 1.1 2003/04/11 12:09:52 lordloki Exp $
+  $Id: mdreg.c,v 1.2 2003/04/29 21:55:50 lordloki Exp $
 
   Routine for registering all drivers in libmikmod for the current platform.
 
@@ -36,7 +36,7 @@
 
 void _mm_registeralldrivers(void)
 {
-	_mm_registerdriver(&drv_openal);		
+	_mm_registerdriver(&drv_sdl);		
 	_mm_registerdriver(&drv_nos);
 }
 

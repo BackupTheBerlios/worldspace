@@ -20,7 +20,7 @@
 
 /*==============================================================================
 
-  $Id: mikmod.h,v 1.1 2003/04/11 12:09:52 lordloki Exp $
+  $Id: mikmod.h,v 1.2 2003/04/29 21:55:50 lordloki Exp $
 
   MikMod sound library include file
 
@@ -657,7 +657,7 @@ MIKMODAPI extern struct MDRIVER drv_ultra;  /* Linux Ultrasound driver */
 MIKMODAPI extern struct MDRIVER drv_AF;     /* Dec Alpha AudioFile */
 MIKMODAPI extern struct MDRIVER drv_aix;    /* AIX audio device */
 MIKMODAPI extern struct MDRIVER drv_alsa;   /* Advanced Linux Sound Architecture (ALSA) */
-MIKMODAPI extern struct MDRIVER drv_openal;    /* OpenAL Driver */
+MIKMODAPI extern struct MDRIVER drv_sdl;    /* OpenAL-SDL Driver */
 MIKMODAPI extern struct MDRIVER drv_esd;    /* Enlightened sound daemon (EsounD) */
 MIKMODAPI extern struct MDRIVER drv_hp;     /* HP-UX audio device */
 MIKMODAPI extern struct MDRIVER drv_oss;    /* OpenSound System (Linux,FreeBSD...) */
