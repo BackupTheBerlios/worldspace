@@ -257,7 +257,7 @@ myinit(void)
     glShadeModel(GL_SMOOTH);    /* SMOOTH SHADING */
 
     glCullFace(GL_BACK);
-    glDisable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
     glLineWidth(6);
 
     glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);	

@@ -245,11 +245,11 @@ const ItemVal M_T_Wire =    2;
 const ItemVal M_T_NULL =    99;
 const ItemVal M_T_Tex =     3;
 const ItemVal M_T_Sol =     4;
-const ItemVal M_Ficheros =  5;
-const ItemVal M_Ver =       6;
+const ItemVal M_Ficheros =  500;
+const ItemVal M_Ver =       501;
 const ItemVal M_T_Luces =     7;
 const ItemVal M_Info =     8;
-const ItemVal M_Trans =       9;
+const ItemVal M_Trans =      502;
 const ItemVal M_Rotar =     10;
 const ItemVal M_Escalar =     11;
 

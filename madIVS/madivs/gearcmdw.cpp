@@ -199,9 +199,9 @@ static vMenu TransformacionesMenu[] =
 
     static vMenu StandardMenu[] =
       {
-	{"&Fichero", M_Ficheros, isSens, notUsed, notUsed, noKey, &FileMenu[0]},
-	{"&Ver", M_Ver, isSens, notUsed, notUsed, noKey, &VerMenu[0]},
-    {"&Transformaciones", M_Trans, isSens, notUsed, notUsed, noKey, &TransformacionesMenu[0]},
+	{"Fichero", M_Ficheros, isSens, notChk, noKeyLbl, noKey, &FileMenu[0]},
+	{"Ver", M_Ver, isSens,  notChk, noKeyLbl, noKey,&VerMenu[0]},
+    	{"Transformaciones", M_Trans, isSens, notChk, noKeyLbl, noKey, &TransformacionesMenu[0]},
 	{NULL}
       };
 

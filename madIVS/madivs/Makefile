@@ -11,7 +11,7 @@ CC  	=	g++
 WRES	=	windres
 
 HOMEV	=	$(HOME)/v
-VPATH	=	$(HOMEV)/include
+VPATH	=	/usr/include
 oDir	=	.
 Bin	=	.
 Src	=	.
@@ -22,7 +22,7 @@ incDirs	=	-I/usr/X11R6/include \
 	-I$(HOMEV)/includex
 
 LIBS	=	-Wl,-Bstatic -lV -lVgl -Wl,-Bdynamic -lXm -lXp -lXt -lXext -lX11 -ldl  -lGLU -lGL
-C_FLAGS	=	-O -g -ggdb -DLINUX  -Wall
+C_FLAGS	=	-O -g -ggdb -DLINUX  -Wall -Wold-style-cast 
 
 SRCS	=\
 	$(Src)/plugins.cpp\
