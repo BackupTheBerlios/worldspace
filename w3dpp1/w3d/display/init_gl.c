@@ -47,28 +47,29 @@ int logo(void)
     logo = carga_mad("logo.mad");
 
     while (angulo < 720) {
-	Diffuse0[0] = angulo / 720.0f;
-	Diffuse0[1] = (angulo - 360) / 720.0f;
-	Diffuse0[2] = angulo / 360.0f;
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, Diffuse0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-	glRotatef(angulo, 1.0f, 1.0f, 0.0f);
-	glLoadIdentity();
-	glTranslatef(0.0f, 0.0f, -(angulo / 34.28) + 1.0f);
-	glRotatef(0.0f, 1.0f, 0.0f, 0.0f);
-	glRotatef(0.0f, 0.0f, 1.0f, 0.0f);
-	glRotatef(-angulo / 2, 1.0f, 1.0f, 1.0f);
-	render_mad(logo);
-	SDL_GL_SwapBuffers();
-	angulo += 2.0f;
+        Diffuse0[0] = angulo / 720.0f;
+        Diffuse0[1] = (angulo - 360) / 720.0f;
+        Diffuse0[2] = angulo / 360.0f;
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, Diffuse0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glLoadIdentity();
+        glRotatef(angulo, 1.0f, 1.0f, 0.0f);
+        glLoadIdentity();
+        glTranslatef(0.0f, 0.0f, -(angulo / 34.28) + 1.0f);
+        glRotatef(0.0f, 1.0f, 0.0f, 0.0f);
+        glRotatef(0.0f, 0.0f, 1.0f, 0.0f);
+        glRotatef(-angulo / 2, 1.0f, 1.0f, 1.0f);
+        render_mad(logo);
+        SDL_GL_SwapBuffers();
+        angulo += 2.0f;
 
-	SDL_PollEvent(&event);
-	keys = SDL_GetKeyState(NULL);
-	if (keys[SDLK_ESCAPE]) {
-	    //print("ESC\n");
-	    break;
-	}
+        SDL_PollEvent(&event);
+        keys = SDL_GetKeyState(NULL);
+        if (keys[SDLK_ESCAPE]) {
+            //print("ESC\n");
+            break;
+        }
+        
 
 
     }
@@ -103,8 +104,8 @@ int gl_basic_ini(char show_logo)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(45.0f,
-		   (GLfloat) config.SCREEN_SIZE_X /
-		   (GLfloat) config.SCREEN_SIZE_Y, 0.01f, 100000.0f);
+                   (GLfloat) config.SCREEN_SIZE_X /
+                   (GLfloat) config.SCREEN_SIZE_Y, 0.01f, 100000.0f);
 
     /* Esto resetea la matriz de modelado y la de la camara */
 
@@ -150,11 +151,11 @@ int gl_basic_ini(char show_logo)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     if (show_logo)
-	if (logo())
-	    return SI;
-	else
-	    return NO;
-return SI;
+        if (logo())
+            return SI;
+        else
+            return NO;
+    return SI;
 
 
 }

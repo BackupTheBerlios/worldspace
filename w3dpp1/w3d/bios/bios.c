@@ -50,16 +50,16 @@ int init_bios(void)
  ***************************************************************************
 \n", BUILD);
     if (carga_conf()) {
-	fprintf(logs, "Configuración:\n");
-	fprintf(logs, "\tResolución horz.(X)\t %d\n",
-		config.SCREEN_SIZE_X);
-	fprintf(logs, "\tResolución vert.(Y)\t %d\n",
-		config.SCREEN_SIZE_Y);
-	fprintf(logs, "\tPantalla completa\t %d\n", config.FULLSCREEN);
-	fprintf(logs, "\tDirectorio base\t %s\n\n", config.dir);
+        fprintf(logs, "Configuración:\n");
+        fprintf(logs, "\tResolución horz.(X)\t %d\n",
+                config.SCREEN_SIZE_X);
+        fprintf(logs, "\tResolución vert.(Y)\t %d\n",
+                config.SCREEN_SIZE_Y);
+        fprintf(logs, "\tPantalla completa\t %d\n", config.FULLSCREEN);
+        fprintf(logs, "\tDirectorio base\t %s\n\n", config.dir);
     } else {
-	fprintf(logs, "Imposible cargar configuración:\n");
-	return NO;
+        fprintf(logs, "Imposible cargar configuración:\n");
+        return NO;
     }
 
 
@@ -82,32 +82,32 @@ int carga_conf(void)
 
     /* Carga de la configuración */
 
-    conf = fopen("w3_cfg.txt", "rt");	// Abre el fichero de configuración
+    conf = fopen("w3_cfg.txt", "rt");   // Abre el fichero de configuración
 
-    if (conf == NULL) {		// Si no existe lo crea con la configuración por defecto
-	config.SCREEN_SIZE_X = 640;
-	config.SCREEN_SIZE_Y = 480;
-	config.FULLSCREEN = 0;
-	strcpy(config.dir, "ws_datos");
-	conf = fopen("w3_cfg.txt", "wt");
-	fprintf(conf,
-		"Fichero generado por WorldSpace3D. Modificar con cuidado\n\n");
-	fprintf(conf, "Resolución horz.(X)\t %d\n", config.SCREEN_SIZE_X);
-	fprintf(conf, "Resolución vert.(Y)\t %d\n", config.SCREEN_SIZE_Y);
-	fprintf(conf, "Pantalla completa\t %d\n", config.FULLSCREEN);
-	fprintf(conf, "Directorio base\t %s\n", config.dir);
-	fclose(conf);
+    if (conf == NULL) {         // Si no existe lo crea con la configuración por defecto
+        config.SCREEN_SIZE_X = 640;
+        config.SCREEN_SIZE_Y = 480;
+        config.FULLSCREEN = 0;
+        strcpy(config.dir, "ws_datos");
+        conf = fopen("w3_cfg.txt", "wt");
+        fprintf(conf,
+                "Fichero generado por WorldSpace3D. Modificar con cuidado\n\n");
+        fprintf(conf, "Resolución horz.(X)\t %d\n", config.SCREEN_SIZE_X);
+        fprintf(conf, "Resolución vert.(Y)\t %d\n", config.SCREEN_SIZE_Y);
+        fprintf(conf, "Pantalla completa\t %d\n", config.FULLSCREEN);
+        fprintf(conf, "Directorio base\t %s\n", config.dir);
+        fclose(conf);
     } else {
-	fscanf(conf,
-	       "Fichero generado por WorldSpace3D. Modificar con cuidado\n\n");
-	fscanf(conf, "Resolución horz.(X)\t %d\n",
-	       &(short int) config.SCREEN_SIZE_X);
-	fscanf(conf, "Resolución vert.(Y)\t %d\n",
-	       &(short int) config.SCREEN_SIZE_Y);
-	fscanf(conf, "Pantalla completa\t %d\n",
-	       &(char) config.FULLSCREEN);
-	fscanf(conf, "Directorio base\t %s\n", config.dir);
-	fclose(conf);
+        fscanf(conf,
+               "Fichero generado por WorldSpace3D. Modificar con cuidado\n\n");
+        fscanf(conf, "Resolución horz.(X)\t %d\n",
+               &(short int) config.SCREEN_SIZE_X);
+        fscanf(conf, "Resolución vert.(Y)\t %d\n",
+               &(short int) config.SCREEN_SIZE_Y);
+        fscanf(conf, "Pantalla completa\t %d\n",
+               &(char) config.FULLSCREEN);
+        fscanf(conf, "Directorio base\t %s\n", config.dir);
+        fclose(conf);
     }
 
 
@@ -130,7 +130,7 @@ int cerrar_bios(void)
     FILE *conf;
     conf = fopen("w3_cfg.txt", "wt");
     fprintf(conf,
-	    "Fichero generado por WorldSpace3D. Modificar con cuidado\n\n");
+            "Fichero generado por WorldSpace3D. Modificar con cuidado\n\n");
     fprintf(conf, "Resolución horz.(X)\t %d\n", config.SCREEN_SIZE_X);
     fprintf(conf, "Resolución vert.(Y)\t %d\n", config.SCREEN_SIZE_Y);
     fprintf(conf, "Pantalla completa\t %d\n", config.FULLSCREEN);
@@ -164,13 +164,13 @@ FILE *abre_fichero(char *nombre, char *modo)
     _sis_msj("\n\t\t[bios]bios.c -> Cargando fichero ");
     _sis_msj(f_fich);
     aux = fopen(f_fich, modo);
-    if (aux!=NULL)
-	return aux;
+    if (aux != NULL)
+        return aux;
     else {
-	_sis_msj(" error abriendo ");
-	_sis_msj(f_fich);
-	_sis_msj(" ");
-	return NULL;
+        _sis_msj(" error abriendo ");
+        _sis_msj(f_fich);
+        _sis_msj(" ");
+        return NULL;
     }
     return NULL;
 

@@ -67,8 +67,8 @@ void *carga_tga(char f_imagen[], int *tam_x, int *tam_y)
 
 
     if (fichero == NULL) {
-	_sis_msj(" [KO]\n");
-	return NULL;
+        _sis_msj(" [KO]\n");
+        return NULL;
     }
     _sis_msj(" [OK]\n");
 
@@ -78,7 +78,7 @@ void *carga_tga(char f_imagen[], int *tam_x, int *tam_y)
     fread(TGAcompare, 1, sizeof(TGAcompare), fichero);
 
     if (memcmp(TGAheader, TGAcompare, sizeof(TGAheader)) != 0)
-	return NULL;
+        return NULL;
 
     /* Leemos la cabecera */
 
@@ -92,11 +92,11 @@ void *carga_tga(char f_imagen[], int *tam_x, int *tam_y)
 
     /* Vemos las características y comprobamos si son correctas */
     if (texture.width <= 0 ||
-	texture.height <= 0 ||
-	texture.width > 256 ||
-	texture.height != texture.width || (header[4] != 32)) {
-	fclose(fichero);
-	return NULL;
+        texture.height <= 0 ||
+        texture.width > 256 ||
+        texture.height != texture.width || (header[4] != 32)) {
+        fclose(fichero);
+        return NULL;
     }
 
 
@@ -113,20 +113,20 @@ void *carga_tga(char f_imagen[], int *tam_x, int *tam_y)
     /* Cargamos y hacemos alguna comprobaciones */
 
     if (texture.imageData == NULL ||
-	fread(texture.imageData, 1, imageSize, fichero) != imageSize) {
-	if (texture.imageData != NULL)
-	    free(texture.imageData);
+        fread(texture.imageData, 1, imageSize, fichero) != imageSize) {
+        if (texture.imageData != NULL)
+            free(texture.imageData);
 
-	fclose(fichero);
-	return NULL;
+        fclose(fichero);
+        return NULL;
     }
 
 
     /* El TGA viene en formato BGR, lo pasamos a RGB */
     for (i = 0; i < (GLuint) (imageSize); i += bytesPerPixel) {
-	temp = texture.imageData[i];
-	texture.imageData[i] = texture.imageData[i + 2];
-	texture.imageData[i + 2] = temp;
+        temp = texture.imageData[i];
+        texture.imageData[i] = texture.imageData[i + 2];
+        texture.imageData[i + 2] = temp;
     }
 
 
@@ -137,9 +137,9 @@ void *carga_tga(char f_imagen[], int *tam_x, int *tam_y)
 
     aux = (GLubyte *) malloc(imageSize);
     for (i = 0; i < texture.height; i++)
-	memcpy(&aux[imageSize - ((i + 1) * texture.width * 4)],
-	       &texture.imageData[i * texture.width * 4],
-	       texture.width * 4);
+        memcpy(&aux[imageSize - ((i + 1) * texture.width * 4)],
+               &texture.imageData[i * texture.width * 4],
+               texture.width * 4);
 
 
 

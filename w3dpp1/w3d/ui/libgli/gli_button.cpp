@@ -64,14 +64,14 @@ CGLI_Button::CGLI_Button()
 CGLI_Button::~CGLI_Button()
 {
     if (m_text)
-	delete[]m_text;
+        delete[]m_text;
 }
 
 // Set button text, which is showed on button
 void CGLI_Button::SetButtonText(char *text)
 {
     if (m_text)
-	delete[]m_text;
+        delete[]m_text;
 
     m_text = new char[strlen(text) + 1];
     strcpy(m_text, text);
@@ -93,7 +93,7 @@ void CGLI_Button::SetTextHeight(GLfloat text_height)
 
 // Set button color, when mouse is on button (but button is not pressed yet)
 void CGLI_Button::SetOnMouseColor(GLfloat r, GLfloat g, GLfloat b,
-				  GLfloat a)
+                                  GLfloat a)
 {
     m_mor = r;
     m_mog = g;
@@ -155,52 +155,52 @@ CGLI_ButtonOBJ::~CGLI_ButtonOBJ()
 }
 
 void CGLI_ButtonOBJ::SetVertexInfo(GLuint type, GLuint total,
-				   GLfloat * vertexes)
+                                   GLfloat * vertexes)
 {
     if (type == GLI_BUTTON_NORMAL) {
-	m_vert_total_n = total;
-	m_vert_n = vertexes;
+        m_vert_total_n = total;
+        m_vert_n = vertexes;
     } else {
-	m_vert_total_p = total;
-	m_vert_p = vertexes;
+        m_vert_total_p = total;
+        m_vert_p = vertexes;
     }
 }
 
 void CGLI_ButtonOBJ::SetNormalInfo(GLuint type, GLuint total,
-				   GLfloat * normals)
+                                   GLfloat * normals)
 {
     if (type == GLI_BUTTON_NORMAL) {
-	m_norm_total_n = total;
-	m_norm_n = normals;
+        m_norm_total_n = total;
+        m_norm_n = normals;
     } else {
-	m_norm_total_p = total;
-	m_norm_p = normals;
+        m_norm_total_p = total;
+        m_norm_p = normals;
     }
 }
 
 void CGLI_ButtonOBJ::SetTextureCoordInfo(GLuint type, GLuint total,
-					 GLfloat * tex_coord)
+                                         GLfloat * tex_coord)
 {
     if (type == GLI_BUTTON_NORMAL) {
-	m_textur_total_n = total;
-	m_textur_n = tex_coord;
+        m_textur_total_n = total;
+        m_textur_n = tex_coord;
     } else {
-	m_textur_total_p = total;
-	m_textur_p = tex_coord;
+        m_textur_total_p = total;
+        m_textur_p = tex_coord;
     }
 }
 
 void CGLI_ButtonOBJ::SetTriangleInfo(GLuint type, GLuint total,
-				     GLuint * triangles, GLuint tr_type)
+                                     GLuint * triangles, GLuint tr_type)
 {
     if (type == GLI_BUTTON_NORMAL) {
-	m_triangle_total_n = total;
-	m_triangles_n = triangles;
-	m_tr_type_n = tr_type;
+        m_triangle_total_n = total;
+        m_triangles_n = triangles;
+        m_tr_type_n = tr_type;
     } else {
-	m_triangle_total_p = total;
-	m_triangles_p = triangles;
-	m_tr_type_p = tr_type;
+        m_triangle_total_p = total;
+        m_triangles_p = triangles;
+        m_tr_type_p = tr_type;
     }
 }
 
@@ -209,63 +209,63 @@ void CGLI_ButtonOBJ::Draw()
     GLfloat *temp_vert, *temp_norm, *temp_tex;
     GLuint *temp_tr;
     GLuint temp_vert_total, temp_norm_total, temp_tex_total, temp_tr_total,
-	temp_tr_type;
+        temp_tr_type;
     GLuint components;
     GLuint *temp;
 
 //      if ((m_active_msg) && (m_mouse_state == GLI_MOUSE_BUTTON_DOWN)) // if object pressed
-    if (m_event_type == GLI_PRESSED)	// if object pressed
+    if (m_event_type == GLI_PRESSED)    // if object pressed
     {
-	//glColor4f(m_pr, m_pg, m_pb, m_pa);
+        //glColor4f(m_pr, m_pg, m_pb, m_pa);
 
-	temp_vert = m_vert_p;
-	temp_norm = m_norm_p;
-	temp_tex = m_textur_p;
-	temp_tr = m_triangles_p;
+        temp_vert = m_vert_p;
+        temp_norm = m_norm_p;
+        temp_tex = m_textur_p;
+        temp_tr = m_triangles_p;
 
-	temp_vert_total = m_vert_total_p;
-	temp_norm_total = m_norm_total_p;
-	temp_tex_total = m_textur_total_p;
-	temp_tr_total = m_triangle_total_p;
+        temp_vert_total = m_vert_total_p;
+        temp_norm_total = m_norm_total_p;
+        temp_tex_total = m_textur_total_p;
+        temp_tr_total = m_triangle_total_p;
 
-	temp_tr_type = m_tr_type_p;
+        temp_tr_type = m_tr_type_p;
     } else {
-	//glColor4f(m_r, m_g, m_b, m_a);
+        //glColor4f(m_r, m_g, m_b, m_a);
 
-	temp_vert = m_vert_n;
-	temp_norm = m_norm_n;
-	temp_tex = m_textur_n;
-	temp_tr = m_triangles_n;
+        temp_vert = m_vert_n;
+        temp_norm = m_norm_n;
+        temp_tex = m_textur_n;
+        temp_tr = m_triangles_n;
 
-	temp_vert_total = m_vert_total_n;
-	temp_norm_total = m_norm_total_n;
-	temp_tex_total = m_textur_total_n;
-	temp_tr_total = m_triangle_total_n;
+        temp_vert_total = m_vert_total_n;
+        temp_norm_total = m_norm_total_n;
+        temp_tex_total = m_textur_total_n;
+        temp_tr_total = m_triangle_total_n;
 
-	temp_tr_type = m_tr_type_n;
+        temp_tr_type = m_tr_type_n;
 
     }
 
     if (temp_tr_type == GLI_VERTEX)
-	components = 1;
+        components = 1;
     else if (temp_tr_type == GLI_VERTEX_NORMAL_TEXTURE)
-	components = 3;
+        components = 3;
     else
-	components = 2;
+        components = 2;
 
 
     temp = temp_tr;
 
     glBegin(GL_TRIANGLES);
     for (GLuint i = 0; i < temp_tr_total; i++) {
-	for (int j = 0; j < 3; j++) {
-	    glVertex3f(temp_vert[(*temp) * 3], temp_vert[(*temp) * 3 + 1],
-		       temp_vert[(*temp) * 3 + 2]);
-	    temp++;
-	    glNormal3f(temp_norm[(*temp) * 3], temp_norm[(*temp) * 3 + 1],
-		       temp_norm[(*temp) * 3 + 2]);
-	    temp++;
-	}
+        for (int j = 0; j < 3; j++) {
+            glVertex3f(temp_vert[(*temp) * 3], temp_vert[(*temp) * 3 + 1],
+                       temp_vert[(*temp) * 3 + 2]);
+            temp++;
+            glNormal3f(temp_norm[(*temp) * 3], temp_norm[(*temp) * 3 + 1],
+                       temp_norm[(*temp) * 3 + 2]);
+            temp++;
+        }
     }
 
     glEnd();
@@ -313,7 +313,7 @@ void CGLI_Button2D::SetBorderSize(GLfloat border)
 }
 
 void CGLI_Button2D::SetBorderColor(GLfloat r, GLfloat g, GLfloat b,
-				   GLfloat a)
+                                   GLfloat a)
 {
     m_br = r;
     m_bg = g;
@@ -322,7 +322,7 @@ void CGLI_Button2D::SetBorderColor(GLfloat r, GLfloat g, GLfloat b,
 }
 
 void CGLI_Button2D::SetShadowBorderColor(GLfloat r, GLfloat g, GLfloat b,
-					 GLfloat a)
+                                         GLfloat a)
 {
     m_sr = r;
     m_sg = g;
@@ -335,72 +335,72 @@ void CGLI_Button2D::Draw()
     GLboolean temp;
 
     // Draw button
-    if (m_event_type == GLI_PRESSED)	// if object has message
+    if (m_event_type == GLI_PRESSED)    // if object has message
     {
-	// Draw pressed button
-	glBegin(GL_QUADS);
+        // Draw pressed button
+        glBegin(GL_QUADS);
 
-	glColor4f(m_r, m_g, m_b, m_a);
-	glVertex3f(-m_width / 2 + m_border, -m_height / 2 + m_border,
-		   0.1f);
-	glVertex3f(m_width / 2 - m_border, -m_height / 2 + m_border, 0.1f);
-	glVertex3f(m_width / 2 - m_border, m_height / 2 - m_border, 0.1f);
-	glVertex3f(-m_width / 2 + m_border, m_height / 2 - m_border, 0.1f);
+        glColor4f(m_r, m_g, m_b, m_a);
+        glVertex3f(-m_width / 2 + m_border, -m_height / 2 + m_border,
+                   0.1f);
+        glVertex3f(m_width / 2 - m_border, -m_height / 2 + m_border, 0.1f);
+        glVertex3f(m_width / 2 - m_border, m_height / 2 - m_border, 0.1f);
+        glVertex3f(-m_width / 2 + m_border, m_height / 2 - m_border, 0.1f);
 
-	glColor4f(m_br, m_bg, m_bb, m_ba);
-	glVertex3f(-m_width / 2, -m_height / 2, 0);
-	glVertex3f(m_width / 2, -m_height / 2, 0);
-	glVertex3f(m_width / 2 - m_border, -m_height / 2 + m_border, 0.1f);
-	glVertex3f(-m_width / 2 + m_border, -m_height / 2 + m_border,
-		   0.1f);
+        glColor4f(m_br, m_bg, m_bb, m_ba);
+        glVertex3f(-m_width / 2, -m_height / 2, 0);
+        glVertex3f(m_width / 2, -m_height / 2, 0);
+        glVertex3f(m_width / 2 - m_border, -m_height / 2 + m_border, 0.1f);
+        glVertex3f(-m_width / 2 + m_border, -m_height / 2 + m_border,
+                   0.1f);
 
-	glColor4f(m_br, m_bg, m_bb, m_ba);
-	glVertex3f(m_width / 2, -m_height / 2, 0);
-	glVertex3f(m_width / 2, m_height / 2, 0);
-	glVertex3f(m_width / 2 - m_border, m_height / 2 - m_border, 0.1f);
-	glVertex3f(m_width / 2 - m_border, -m_height / 2 + m_border, 0.1f);
+        glColor4f(m_br, m_bg, m_bb, m_ba);
+        glVertex3f(m_width / 2, -m_height / 2, 0);
+        glVertex3f(m_width / 2, m_height / 2, 0);
+        glVertex3f(m_width / 2 - m_border, m_height / 2 - m_border, 0.1f);
+        glVertex3f(m_width / 2 - m_border, -m_height / 2 + m_border, 0.1f);
 
-	glColor4f(m_sr, m_sg, m_sb, m_sa);
-	glVertex3f(-m_width / 2, -m_height / 2, 0);
-	glVertex3f(m_width / 2, -m_height / 2, 0);
-	glVertex3f(m_width / 2, m_height / 2, 0);
-	glVertex3f(-m_width / 2, m_height / 2, 0);
+        glColor4f(m_sr, m_sg, m_sb, m_sa);
+        glVertex3f(-m_width / 2, -m_height / 2, 0);
+        glVertex3f(m_width / 2, -m_height / 2, 0);
+        glVertex3f(m_width / 2, m_height / 2, 0);
+        glVertex3f(-m_width / 2, m_height / 2, 0);
 
-	glEnd();
+        glEnd();
     } else {
-	// Draw unpressed button
-	glBegin(GL_QUADS);
+        // Draw unpressed button
+        glBegin(GL_QUADS);
 
-	if (m_event_type == GLI_ONOVER)
-	    glColor4f(m_mor, m_mog, m_mob, m_moa);
-	else
-	    glColor4f(m_r, m_g, m_b, m_a);
-	glVertex3f(-m_width / 2 + m_border, -m_height / 2 + m_border,
-		   0.1f);
-	glVertex3f(m_width / 2 - m_border, -m_height / 2 + m_border, 0.1f);
-	glVertex3f(m_width / 2 - m_border, m_height / 2 - m_border, 0.1f);
-	glVertex3f(-m_width / 2 + m_border, m_height / 2 - m_border, 0.1f);
+        if (m_event_type == GLI_ONOVER)
+            glColor4f(m_mor, m_mog, m_mob, m_moa);
+        else
+            glColor4f(m_r, m_g, m_b, m_a);
+        glVertex3f(-m_width / 2 + m_border, -m_height / 2 + m_border,
+                   0.1f);
+        glVertex3f(m_width / 2 - m_border, -m_height / 2 + m_border, 0.1f);
+        glVertex3f(m_width / 2 - m_border, m_height / 2 - m_border, 0.1f);
+        glVertex3f(-m_width / 2 + m_border, m_height / 2 - m_border, 0.1f);
 
-	glColor4f(m_sr, m_sg, m_sb, m_sa);
-	glVertex3f(-m_width / 2, -m_height / 2, 0);
-	glVertex3f(m_width / 2, -m_height / 2, 0);
-	glVertex3f(m_width / 2 - m_border, -m_height / 2 + m_border, 0.1f);
-	glVertex3f(-m_width / 2 + m_border, -m_height / 2 + m_border,
-		   0.1f);
+        glColor4f(m_sr, m_sg, m_sb, m_sa);
+        glVertex3f(-m_width / 2, -m_height / 2, 0);
+        glVertex3f(m_width / 2, -m_height / 2, 0);
+        glVertex3f(m_width / 2 - m_border, -m_height / 2 + m_border, 0.1f);
+        glVertex3f(-m_width / 2 + m_border, -m_height / 2 + m_border,
+                   0.1f);
 
-	glColor4f(m_sr, m_sg, m_sb, m_sa);
-	glVertex3f(m_width / 2, -m_height / 2, 0);
-	glVertex3f(m_width / 2, m_height / 2, 0);
-	glVertex3f(m_width / 2 - m_border, m_height / 2 - m_border, 0.1f);
-	glVertex3f(m_width / 2 - m_border, -m_height / 2 + m_border, 0.1f);
+        glColor4f(m_sr, m_sg, m_sb, m_sa);
+        glVertex3f(m_width / 2, -m_height / 2, 0);
+        glVertex3f(m_width / 2, m_height / 2, 0);
+        glVertex3f(m_width / 2 - m_border, m_height / 2 - m_border, 0.1f);
+        glVertex3f(m_width / 2 - m_border, -m_height / 2 + m_border, 0.1f);
 
-	glColor4f(m_br, m_bg, m_bb, m_ba);
-	glVertex3f(-m_width / 2, -m_height / 2, 0);
-	glVertex3f(m_width / 2, -m_height / 2, 0);
-	glVertex3f(m_width / 2, m_height / 2, 0);
-	glVertex3f(-m_width / 2, m_height / 2, 0);
+        glColor4f(m_br, m_bg, m_bb, m_ba);
+        glVertex3f(-m_width / 2, -m_height / 2, 0);
+        glVertex3f(m_width / 2, -m_height / 2, 0);
+        glVertex3f(m_width / 2, m_height / 2, 0);
+        glVertex3f(-m_width / 2, m_height / 2, 0);
 
-	glEnd();
+        glEnd();
     }
 
     // Draw button text
@@ -409,15 +409,15 @@ void CGLI_Button2D::Draw()
     // Color of text
     glColor4f(m_tr, m_tg, m_tb, m_ta);
 //      if ((m_active_msg) && (m_mouse_state == GLI_MOUSE_BUTTON_DOWN)) // if object pressed
-    if (m_event_type == GLI_PRESSED)	// if object pressed
-	glTranslatef(m_border, -m_border, 0.15f);	// Shift the text
+    if (m_event_type == GLI_PRESSED)    // if object pressed
+        glTranslatef(m_border, -m_border, 0.15f);       // Shift the text
     else
-	glTranslatef(0, 0, 0.15f);
+        glTranslatef(0, 0, 0.15f);
 
     if (m_text_height == 0)
-	glScalef(m_height / 2, m_height / 2, 1);
+        glScalef(m_height / 2, m_height / 2, 1);
     else
-	glScalef(m_text_height, m_text_height, 1);
+        glScalef(m_text_height, m_text_height, 1);
 
     // Save old centering and set text centering
     temp = m_pVectorFont->glfGetStringCentering();
@@ -439,7 +439,7 @@ CGLI_ButtonTexture::CGLI_ButtonTexture()
 
     // Set standard texture coordinates (template)
     for (int i = 0; i < 8; i++)
-	m_standard_coord[i] = 0;
+        m_standard_coord[i] = 0;
     m_standard_coord[2] = 1;
     m_standard_coord[4] = 1;
     m_standard_coord[5] = 1;
@@ -457,7 +457,7 @@ CGLI_ButtonTexture::~CGLI_ButtonTexture()
 }
 
 void CGLI_ButtonTexture::SetTexture(GLuint normal, GLuint pressed,
-				    GLuint onover)
+                                    GLuint onover)
 {
     m_normal = normal;
     m_pressed = pressed;
@@ -480,7 +480,7 @@ void CGLI_ButtonTexture::SetOnOverTexture(GLuint texture_number)
 }
 
 void CGLI_ButtonTexture::SetCoord(GLfloat * normal, GLfloat * pressed,
-				  GLfloat * onover)
+                                  GLfloat * onover)
 {
     m_normal_coord = normal;
     m_pressed_coord = pressed;
@@ -519,23 +519,23 @@ void CGLI_ButtonTexture::Draw()
     text_coord = m_normal_coord;
     // Choose texture, depending of button state
     if (m_event_type == GLI_PRESSED) {
-	if (m_pressed > 0) {
-	    glBindTexture(GL_TEXTURE_2D, m_pressed);
-	    text_coord = m_pressed_coord;
-	}
+        if (m_pressed > 0) {
+            glBindTexture(GL_TEXTURE_2D, m_pressed);
+            text_coord = m_pressed_coord;
+        }
     } else if (m_event_type == GLI_ONOVER) {
-	if (m_onover > 0) {
-	    glBindTexture(GL_TEXTURE_2D, m_onover);
-	    text_coord = m_onover_coord;
-	}
+        if (m_onover > 0) {
+            glBindTexture(GL_TEXTURE_2D, m_onover);
+            text_coord = m_onover_coord;
+        }
     } else {
-	if (m_normal > 0)
-	    glBindTexture(GL_TEXTURE_2D, m_normal);
+        if (m_normal > 0)
+            glBindTexture(GL_TEXTURE_2D, m_normal);
     }
 
     if ((m_but_shift == GL_TRUE) && (m_event_type == GLI_PRESSED)) {
-	glPushMatrix();
-	glTranslatef(m_but_shift_x, m_but_shift_y, m_but_shift_z);
+        glPushMatrix();
+        glTranslatef(m_but_shift_x, m_but_shift_y, m_but_shift_z);
     }
 
     glColor4f(m_r, m_g, m_b, m_a);
@@ -558,7 +558,7 @@ void CGLI_ButtonTexture::Draw()
     glEnd();
 
     if ((m_but_shift == GL_TRUE) && (m_event_type == GLI_PRESSED))
-	glPopMatrix();
+        glPopMatrix();
 
 }
 
@@ -582,7 +582,7 @@ CGLI_CheckBox2D::~CGLI_CheckBox2D()
 }
 
 void CGLI_CheckBox2D::SetCheckedColor(GLfloat r, GLfloat g, GLfloat b,
-				      GLfloat a)
+                                      GLfloat a)
 {
     m_cr = r;
     m_cg = g;
@@ -606,31 +606,31 @@ void CGLI_CheckBox2D::Draw()
     GLboolean temp;
 
     if (m_checked) {
-	glColor4f(m_cr, m_cg, m_cb, m_ca);
-	if (m_checkbox_type == GLI_CHECKBOX_CROSS) {
-	    glPushAttrib(GL_LINE_BIT);
-	    glLineWidth(2.0f);
-	    glBegin(GL_LINES);
-	    glVertex3f(-m_width / 3, -m_height / 3, 0.1f);
-	    glVertex3f(m_width / 3, m_height / 3, 0.1f);
-	    glVertex3f(-m_width / 3, m_height / 3, 0.1f);
-	    glVertex3f(m_width / 3, -m_height / 3, 0.1f);
-	    glEnd();
-	    glPopAttrib();
-	} else if (m_checkbox_type == GLI_CHECKBOX_SQUARE) {
-	    glBegin(GL_QUADS);
-	    glVertex3f(-m_width / 4, -m_height / 4, 0);
-	    glVertex3f(m_width / 4, -m_height / 4, 0);
-	    glVertex3f(m_width / 4, m_height / 4, 0);
-	    glVertex3f(-m_width / 4, m_height / 4, 0);
-	    glEnd();
-	}
+        glColor4f(m_cr, m_cg, m_cb, m_ca);
+        if (m_checkbox_type == GLI_CHECKBOX_CROSS) {
+            glPushAttrib(GL_LINE_BIT);
+            glLineWidth(2.0f);
+            glBegin(GL_LINES);
+            glVertex3f(-m_width / 3, -m_height / 3, 0.1f);
+            glVertex3f(m_width / 3, m_height / 3, 0.1f);
+            glVertex3f(-m_width / 3, m_height / 3, 0.1f);
+            glVertex3f(m_width / 3, -m_height / 3, 0.1f);
+            glEnd();
+            glPopAttrib();
+        } else if (m_checkbox_type == GLI_CHECKBOX_SQUARE) {
+            glBegin(GL_QUADS);
+            glVertex3f(-m_width / 4, -m_height / 4, 0);
+            glVertex3f(m_width / 4, -m_height / 4, 0);
+            glVertex3f(m_width / 4, m_height / 4, 0);
+            glVertex3f(-m_width / 4, m_height / 4, 0);
+            glEnd();
+        }
     }
 
     if (m_checked && m_checkbox_type == GLI_CHECKBOX_COLOR)
-	glColor4f(m_cr, m_cg, m_cb, m_ca);
+        glColor4f(m_cr, m_cg, m_cb, m_ca);
     else
-	glColor4f(m_r, m_g, m_b, m_a);
+        glColor4f(m_r, m_g, m_b, m_a);
 
     glBegin(GL_QUADS);
     glVertex3f(-m_width / 2, -m_height / 2, 0);
@@ -655,9 +655,9 @@ void CGLI_CheckBox2D::Draw()
     glTranslatef(m_width + m_width / 2, 0, 0);
 
     if (m_text_height == 0)
-	glScalef(m_height / 2, m_height / 2, 1);
+        glScalef(m_height / 2, m_height / 2, 1);
     else
-	glScalef(m_text_height, m_text_height, 1);
+        glScalef(m_text_height, m_text_height, 1);
 
     // Save old centering and set text centering
     temp = m_pVectorFont->glfGetStringCentering();
@@ -671,7 +671,7 @@ void CGLI_CheckBox2D::Draw()
 void CGLI_CheckBox2D::ProcessInternalCallBack(GLuint obj_id)
 {
     if (m_event_type == GLI_CLICKED) {
-	m_checked = !m_checked;
+        m_checked = !m_checked;
     }
 }
 
@@ -704,20 +704,20 @@ void CGLI_CheckBoxTexture::Draw()
 
     // Choose texture, depending of button state
     if (m_checked == GL_TRUE) {
-	if (m_pressed > 0) {
-	    glBindTexture(GL_TEXTURE_2D, m_pressed);
-	    text_coord = m_pressed_coord;
-	}
+        if (m_pressed > 0) {
+            glBindTexture(GL_TEXTURE_2D, m_pressed);
+            text_coord = m_pressed_coord;
+        }
     } else {
-	if (m_normal > 0)
-	    glBindTexture(GL_TEXTURE_2D, m_normal);
+        if (m_normal > 0)
+            glBindTexture(GL_TEXTURE_2D, m_normal);
     }
 
     if (m_event_type == GLI_ONOVER) {
-	if (m_onover > 0) {
-	    glBindTexture(GL_TEXTURE_2D, m_onover);
-	    text_coord = m_onover_coord;
-	}
+        if (m_onover > 0) {
+            glBindTexture(GL_TEXTURE_2D, m_onover);
+            text_coord = m_onover_coord;
+        }
     }
 
     glColor4f(m_r, m_g, m_b, m_a);
@@ -748,9 +748,9 @@ void CGLI_CheckBoxTexture::Draw()
     glTranslatef(m_width / 2 + m_width / 4, -m_height / 2, 0);
 
     if (m_text_height == 0)
-	glScalef(m_height, m_height, 1);
+        glScalef(m_height, m_height, 1);
     else
-	glScalef(m_text_height, m_text_height, 1);
+        glScalef(m_text_height, m_text_height, 1);
 
     // Save old centering and set text centering
     temp = m_pBitmapFont->glfGetStringCentering();
@@ -767,5 +767,5 @@ void CGLI_CheckBoxTexture::Draw()
 void CGLI_CheckBoxTexture::ProcessInternalCallBack(GLuint obj_id)
 {
     if (m_event_type == GLI_CLICKED)
-	m_checked = !m_checked;
+        m_checked = !m_checked;
 }

@@ -59,12 +59,12 @@ CGLI_Window2D::CGLI_Window2D()
 CGLI_Window2D::~CGLI_Window2D()
 {
     if (m_caption_text)
-	delete[]m_caption_text;
+        delete[]m_caption_text;
 }
 
 
 void CGLI_Window2D::SetWindowColor(GLfloat r, GLfloat g, GLfloat b,
-				   GLfloat a)
+                                   GLfloat a)
 {
     m_win_r = r;
     m_win_g = g;
@@ -75,7 +75,7 @@ void CGLI_Window2D::SetWindowColor(GLfloat r, GLfloat g, GLfloat b,
 }
 
 void CGLI_Window2D::SetCaptionColor(GLfloat r, GLfloat g, GLfloat b,
-				    GLfloat a)
+                                    GLfloat a)
 {
     m_cap_r = r;
     m_cap_g = g;
@@ -101,7 +101,7 @@ void CGLI_Window2D::SetCaptionText(char *text)
 }
 
 void CGLI_Window2D::SetCaptionTextColor(GLfloat r, GLfloat g, GLfloat b,
-					GLfloat a)
+                                        GLfloat a)
 {
     m_cap_tr = r;
     m_cap_tg = g;
@@ -120,7 +120,7 @@ void CGLI_Window2D::SetWindowType(GLuint win_type)
 void CGLI_Window2D::SetFontType(GLuint font_type)
 {
     if ((font_type == GLI_FONT_VECTOR) || (font_type == GLI_FONT_BITMAP))
-	m_font_type = font_type;
+        m_font_type = font_type;
 }
 
 void CGLI_Window2D::Draw()
@@ -131,7 +131,7 @@ void CGLI_Window2D::Draw()
     glGetBooleanv(GL_TEXTURE_2D, &texture2d);
 
     if (texture2d == GL_TRUE)
-	glDisable(GL_TEXTURE_2D);
+        glDisable(GL_TEXTURE_2D);
 
     // Draw frame
     CGLI_Frame::Draw();
@@ -141,9 +141,9 @@ void CGLI_Window2D::Draw()
     // Draw main window
     glColor4f(m_win_r, m_win_g, m_win_b, m_win_a);
     if (m_win_type == GLI_WINDOW_FILLED)
-	glBegin(GL_QUADS);
+        glBegin(GL_QUADS);
     else
-	glBegin(GL_LINE_LOOP);
+        glBegin(GL_LINE_LOOP);
     glVertex3f(-m_width / 2, -m_height / 2, 0);
     glVertex3f(m_width / 2, -m_height / 2, 0);
     glVertex3f(m_width / 2, m_height / 2 - m_cap_height, 0);
@@ -157,22 +157,22 @@ void CGLI_Window2D::Draw()
     glColor4f(m_cap_tr, m_cap_tg, m_cap_tb, m_cap_ta);
 
     if (m_font_type == GLI_FONT_VECTOR) {
-	glTranslatef(0, m_height / 2 - m_cap_height / 2, 0.15f);
-	glScalef(m_cap_height / 2, m_cap_height / 2, 1);
-	// Save old centering and set text centering
-	temp = m_pVectorFont->glfGetStringCentering();
-	m_pVectorFont->glfStringCentering(GL_TRUE);
-	m_pVectorFont->glfDrawSolidString(m_caption_text);
-	m_pVectorFont->glfStringCentering(temp);
+        glTranslatef(0, m_height / 2 - m_cap_height / 2, 0.15f);
+        glScalef(m_cap_height / 2, m_cap_height / 2, 1);
+        // Save old centering and set text centering
+        temp = m_pVectorFont->glfGetStringCentering();
+        m_pVectorFont->glfStringCentering(GL_TRUE);
+        m_pVectorFont->glfDrawSolidString(m_caption_text);
+        m_pVectorFont->glfStringCentering(temp);
     } else {
-	temp = m_pBitmapFont->glfGetStringCentering();
-	m_pBitmapFont->glfStringCentering(GL_TRUE);
-	glTranslatef(0, m_height / 2 - m_cap_height, -0.1f);
-	glScalef(m_cap_height, m_cap_height, 1);
-	m_pBitmapFont->glfStartBitmapDrawing();
-	m_pBitmapFont->glfDrawBString(m_caption_text);
-	m_pBitmapFont->glfStopBitmapDrawing();
-	m_pBitmapFont->glfStringCentering(temp);
+        temp = m_pBitmapFont->glfGetStringCentering();
+        m_pBitmapFont->glfStringCentering(GL_TRUE);
+        glTranslatef(0, m_height / 2 - m_cap_height, -0.1f);
+        glScalef(m_cap_height, m_cap_height, 1);
+        m_pBitmapFont->glfStartBitmapDrawing();
+        m_pBitmapFont->glfDrawBString(m_caption_text);
+        m_pBitmapFont->glfStopBitmapDrawing();
+        m_pBitmapFont->glfStringCentering(temp);
 
     }
     glPopMatrix();
@@ -187,7 +187,7 @@ void CGLI_Window2D::Draw()
     glEnd();
 
     if (texture2d == GL_TRUE)
-	glEnable(GL_TEXTURE_2D);
+        glEnable(GL_TEXTURE_2D);
 
 
 }
@@ -209,11 +209,11 @@ void CGLI_Window2D::UpdateObject()
 void CGLI_Window2D::DoAnimationTick()
 {
     if (m_in_minimization) {
-	m_scaling_factor -= 0.05f;
-	if (m_scaling_factor < 0) {
-	    m_scaling_factor = 0;
-	    m_in_minimization = GL_FALSE;
-	}
+        m_scaling_factor -= 0.05f;
+        if (m_scaling_factor < 0) {
+            m_scaling_factor = 0;
+            m_in_minimization = GL_FALSE;
+        }
     }
 }
 

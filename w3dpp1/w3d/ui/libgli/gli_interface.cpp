@@ -40,72 +40,72 @@
 //==///////////////////////////////////////////////////////////////////////////////==
 
 CGLI_Interface::CGLI_Interface()
-{				/* {{{ */
+{                               /* {{{ */
     m_pObjects = NULL;
     m_pTextures = NULL;
     m_set_matrix_flag = GL_FALSE;
 
     m_vfonts.glfLoadFontFromMemory(gli_arial1_font);
-}				/* }}} */
+}                               /* }}} */
 
 CGLI_Interface::~CGLI_Interface()
-{				/* {{{ */
+{                               /* {{{ */
     DeleteAllTextures();
-}				/* }}} */
+}                               /* }}} */
 
 void CGLI_Interface::AddObject(CGLI_Object * object)
-{				/* {{{ */
+{                               /* {{{ */
     // Add object to the head of list
     object->m_pNext = m_pObjects;
     m_pObjects = object;
     m_pObjects->SetVectorFontObject(&m_vfonts);
     m_pObjects->SetBitmapFontObject(&m_bfonts);
     m_pObjects->CGLI_Object::UpdateObject();
-}				/* }}} */
+}                               /* }}} */
 
 void CGLI_Interface::Draw()
-{				/* {{{ */
+{                               /* {{{ */
     m_set_matrix_flag = GL_TRUE;
     glGetFloatv(GL_PROJECTION_MATRIX, (GLfloat *) m_Projection_Matrix);
-    glGetFloatv(GL_MODELVIEW_MATRIX, (GLfloat *) m_ModelView_Matrix);	// Get current modelview matrix
+    glGetFloatv(GL_MODELVIEW_MATRIX, (GLfloat *) m_ModelView_Matrix);   // Get current modelview matrix
 
     DrawByMode(GL_RENDER);
-}				/* }}} */
+}                               /* }}} */
 
 void CGLI_Interface::DrawByMode(GLint mode)
-{				/* {{{ */
+{                               /* {{{ */
     CGLI_Object *cur;
 //      GLuint id;
 
     cur = m_pObjects;
     if (mode == GL_RENDER) {
-	while (cur) {
-	    cur->CGLI_Object::Draw();
-	    cur = cur->m_pNext;
-	}
+        while (cur) {
+            cur->CGLI_Object::Draw();
+            cur = cur->m_pNext;
+        }
     } else {
-	// Init names of objects
-	glInitNames();
-	glPushName(0);
-	while (cur) {
+        // Init names of objects
+        glInitNames();
+        glPushName(0);
+        while (cur) {
 //                      id = cur->GetID();
 //                      glLoadName(id);
-	    cur->DrawSelection();
-	    cur = cur->m_pNext;
-	}
+            cur->DrawSelection();
+            cur = cur->m_pNext;
+        }
     }
-}				/* }}} */
+}                               /* }}} */
 
 void CGLI_Interface::SendMouseParameters(GLuint type, int button,
-					 int state, int x, int y)
-{				/* {{{ */
+                                         int state, int x, int y)
+{                               /* {{{ */
     GLuint selectBuff[64];
     GLint hits, viewport[4];
     GLboolean Lighting;
     GLuint obj_id;
 
     if (m_set_matrix_flag == GL_FALSE)
-	glGetFloatv(GL_MODELVIEW_MATRIX, (GLfloat *) m_ModelView_Matrix);	// Get current modelview matrix
+        glGetFloatv(GL_MODELVIEW_MATRIX, (GLfloat *) m_ModelView_Matrix);       // Get current modelview matrix
 
     // Select buffer parameters
     glSelectBuffer(64, selectBuff);
@@ -118,7 +118,7 @@ void CGLI_Interface::SendMouseParameters(GLuint type, int button,
     glMatrixMode(GL_PROJECTION);
 
     if (m_set_matrix_flag == GL_FALSE)
-	glGetFloatv(GL_PROJECTION_MATRIX, (GLfloat *) m_Projection_Matrix);	// Get current projection matrix
+        glGetFloatv(GL_PROJECTION_MATRIX, (GLfloat *) m_Projection_Matrix);     // Get current projection matrix
 
     glPushMatrix();
 
@@ -143,50 +143,50 @@ void CGLI_Interface::SendMouseParameters(GLuint type, int button,
     // Get first object, in selection buffer stack
     //if (hits > 0) printf("Object selected: %i\n", selectBuff[3]);
     if (hits > 0)
-	obj_id = selectBuff[3];
+        obj_id = selectBuff[3];
 
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
 
     if (Lighting)
-	glEnable(GL_LIGHTING);
+        glEnable(GL_LIGHTING);
 
     CGLI_Object *cur;
 
     cur = m_pObjects;
     if (hits <= 0) {
-	while (cur) {
-	    cur->SetMouseState(GLI_MOUSE_CLICK, -1, button, state);
-	    cur = cur->m_pNext;
-	}
-	return;
+        while (cur) {
+            cur->SetMouseState(GLI_MOUSE_CLICK, -1, button, state);
+            cur = cur->m_pNext;
+        }
+        return;
     }
 
     if (type == GLI_MOUSE_MOTION_BUTTON) {
-	while (cur) {
-	    cur->SetMouseState(GLI_MOUSE_MOTION_BUTTON, obj_id, button,
-			       state);
-	    cur = cur->m_pNext;
-	}
-	return;
+        while (cur) {
+            cur->SetMouseState(GLI_MOUSE_MOTION_BUTTON, obj_id, button,
+                               state);
+            cur = cur->m_pNext;
+        }
+        return;
     }
     // Now search for object ID
     while (cur) {
-	cur->SetMouseState(GLI_MOUSE_CLICK, obj_id, button, state);
-	cur = cur->m_pNext;
+        cur->SetMouseState(GLI_MOUSE_CLICK, obj_id, button, state);
+        cur = cur->m_pNext;
     }
-}				/* }}} */
+}                               /* }}} */
 
 void CGLI_Interface::SendKeyEvent(unsigned char key, int x, int y)
-{				/* {{{ */
+{                               /* {{{ */
     GLuint selectBuff[64];
     GLint hits, viewport[4];
     GLboolean Lighting;
     GLuint obj_id;
 
     if (m_set_matrix_flag == GL_FALSE)
-	glGetFloatv(GL_MODELVIEW_MATRIX, (GLfloat *) m_ModelView_Matrix);	// Get current modelview matrix
+        glGetFloatv(GL_MODELVIEW_MATRIX, (GLfloat *) m_ModelView_Matrix);       // Get current modelview matrix
 
     // Select buffer parameters
     glSelectBuffer(64, selectBuff);
@@ -199,7 +199,7 @@ void CGLI_Interface::SendKeyEvent(unsigned char key, int x, int y)
     glMatrixMode(GL_PROJECTION);
 
     if (m_set_matrix_flag == GL_FALSE)
-	glGetFloatv(GL_PROJECTION_MATRIX, (GLfloat *) m_Projection_Matrix);	// Get current projection matrix
+        glGetFloatv(GL_PROJECTION_MATRIX, (GLfloat *) m_Projection_Matrix);     // Get current projection matrix
 
     glPushMatrix();
 
@@ -224,14 +224,14 @@ void CGLI_Interface::SendKeyEvent(unsigned char key, int x, int y)
     // Get first object, in selection buffer stack
     //if (hits > 0) printf("Object selected: %i\n", selectBuff[3]);
     if (hits > 0)
-	obj_id = selectBuff[3];
+        obj_id = selectBuff[3];
 
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
 
     if (Lighting)
-	glEnable(GL_LIGHTING);
+        glEnable(GL_LIGHTING);
 
     CGLI_Object *cur;
 
@@ -239,23 +239,23 @@ void CGLI_Interface::SendKeyEvent(unsigned char key, int x, int y)
 
     // Now search for object ID
     while (cur) {
-	cur->HandleKeyEvent(key, obj_id);
-	cur = cur->m_pNext;
+        cur->HandleKeyEvent(key, obj_id);
+        cur = cur->m_pNext;
     }
-}				/* }}} */
+}                               /* }}} */
 
 int CGLI_Interface::LoadVectorFont(char *lpszName)
-{				/* {{{ */
+{                               /* {{{ */
     return m_vfonts.glfLoadFont(lpszName);
-}				/* }}} */
+}                               /* }}} */
 
 int CGLI_Interface::LoadBitmapFont(char *lpszName)
-{				/* {{{ */
+{                               /* {{{ */
     return m_bfonts.glfLoadBMFFont(lpszName);
-}				/* }}} */
+}                               /* }}} */
 
 int CGLI_Interface::LoadTextureFromFile(char *lpszName)
-{				/* {{{ */
+{                               /* {{{ */
 // Load texture to the interface from file
     GLint width, height, comps;
     CGLI_Texture *temp;
@@ -277,28 +277,28 @@ int CGLI_Interface::LoadTextureFromFile(char *lpszName)
 
     // Return texture number
     return temp->GetTextureNumber();
-}				/* }}} */
+}                               /* }}} */
 
 void CGLI_Interface::DeleteAllTextures()
-{				/* {{{ */
+{                               /* {{{ */
 // Delete all textures from interface
     CGLI_Texture *temp;
 
     while (m_pTextures) {
-	temp = m_pTextures->m_pNext;
-	delete m_pTextures;
-	m_pTextures = temp;
+        temp = m_pTextures->m_pNext;
+        delete m_pTextures;
+        m_pTextures = temp;
     }
-}				/* }}} */
+}                               /* }}} */
 
 void CGLI_Interface::DoAnimationTick()
-{				/* {{{ */
+{                               /* {{{ */
     CGLI_Object *cur;
 
     // Do ticks in all objects
     cur = m_pObjects;
     while (cur) {
-	cur->CGLI_Object::DoAnimationTick();
-	cur = cur->m_pNext;
+        cur->CGLI_Object::DoAnimationTick();
+        cur = cur->m_pNext;
     }
-}				/* }}} */
+}                               /* }}} */

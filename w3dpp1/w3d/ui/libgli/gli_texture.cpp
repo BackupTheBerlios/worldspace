@@ -60,33 +60,33 @@ GLubyte *CGLI_TextureLoader::LoadTexture(char *lpszName)
     // First we find, what type is image
     FILE *f;
     if (!(f = fopen(lpszName, "rb"))) {
-	// Error in opening file
-	fclose(f);
-	return NULL;
+        // Error in opening file
+        fclose(f);
+        return NULL;
     }
     // Read magic from file
     if (fread(Magic, 1, 2, f) != 2) {
-	// Error in file
-	fclose(f);
-	return NULL;
+        // Error in file
+        fclose(f);
+        return NULL;
     }
     fclose(f);
 
     magic_int = (int) Magic[0] * 256 + Magic[1];
 
     if (magic_int == 474)
-	m_image =
-	    read_texture_rgb(lpszName, &m_width, &m_height, &m_comps);
+        m_image =
+            read_texture_rgb(lpszName, &m_width, &m_height, &m_comps);
     else
-	m_image =
-	    read_texture_tga(lpszName, &m_width, &m_height, &m_comps);
+        m_image =
+            read_texture_tga(lpszName, &m_width, &m_height, &m_comps);
 
     return m_image;
 }
 
 // Get image parameters
 void CGLI_TextureLoader::GetImageParameters(GLint * width, GLint * height,
-					    GLint * components)
+                                            GLint * components)
 {
     *width = m_width;
     *height = m_height;
@@ -97,7 +97,7 @@ void CGLI_TextureLoader::GetImageParameters(GLint * width, GLint * height,
 void CGLI_TextureLoader::FreeMemory()
 {
     if (m_image)
-	free(m_image);
+        free(m_image);
     m_image = NULL;
 }
 
@@ -117,20 +117,20 @@ CGLI_Texture::~CGLI_Texture()
 
 // Make texture from image pointer
 GLuint CGLI_Texture::MakeTexture(GLubyte * image, GLint width,
-				 GLint height, GLint components)
+                                 GLint height, GLint components)
 {
     GLenum type = GL_RGBA;
 
     if (!image)
-	return 0;		// Image is not present
+        return 0;               // Image is not present
 
     glGenTextures(1, &m_texture_number);
     glBindTexture(GL_TEXTURE_2D, m_texture_number);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     if (components == 3)
-	type = GL_RGB;
+        type = GL_RGB;
     glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, type,
-		 GL_UNSIGNED_BYTE, image);
+                 GL_UNSIGNED_BYTE, image);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -140,7 +140,7 @@ GLuint CGLI_Texture::MakeTexture(GLubyte * image, GLint width,
 void CGLI_Texture::DeleteTexture()
 {
     if (m_texture_number > 0)
-	glDeleteTextures(1, &m_texture_number);
+        glDeleteTextures(1, &m_texture_number);
 }
 
 GLuint CGLI_Texture::GetTextureNumber()
