@@ -164,7 +164,6 @@ int buscar_plugins(char *dir,plugin_info *plug_tag) {
       mostrar_info=(char *(*)())CargaFuncion(hDll,"mostrar_info");
       strcpy(plug_tag[n_plug_tag].info,(*mostrar_info)());
 
-
       mostrar_version=(int *(*)())CargaFuncion(hDll,"mostrar_version");
       tmp=(*mostrar_version)();
       plug_tag[n_plug_tag].version[0]=tmp[0];

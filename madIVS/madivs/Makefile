@@ -21,7 +21,7 @@ libDirs	=	-L/usr/X11R6/lib \
 incDirs	=	-I/usr/X11R6/include \
 	-I$(HOMEV)/includex
 
-LIBS	=	-lV -lVgl -lGLU -lGL -lXm -lXp -lXt -lXext -lX11 -ldl
+LIBS	=	-Wl,-Bstatic -lV -lVgl -Wl,-Bdynamic -lXm -lXp -lXt -lXext -lX11 -ldl  -lGLU -lGL
 C_FLAGS	=	-O -g -ggdb -DLINUX
 
 SRCS	=\

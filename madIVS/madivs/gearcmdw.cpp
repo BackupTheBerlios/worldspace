@@ -94,6 +94,7 @@ extern modelo *model;
     static vMenu VerMenu[] =
 
 
+
       {
 
 	{"&Wireframe", M_T_Wire, isSens, notChk, noKeyLbl, noKey, noSub},
@@ -253,6 +254,7 @@ extern modelo *model;
 	{C_EndOfList,0,0,0,0,CA_None,0,0,0}
 
 
+
       };
 
 //@V@:EndCmdPane
@@ -321,9 +323,7 @@ extern modelo *model;
     strcpy(msg,RUNPATH);
     strcat(msg,"plugins");
     if (buscar_plugins(msg,plugins)!=1) {
-      sprintf(msg,"No se encontró ningún plugin");
-      note.Notice(msg);
-//    exit (1);
+      printf("No se encontró ningún plugin");
     }
         
 
@@ -386,6 +386,7 @@ extern modelo *model;
     vCmdWindow::KeyIn(keysym, shift);
 
   }
+
 
 
 
@@ -633,6 +634,7 @@ extern modelo *model;
 
 
 	//@V@:Case M_Copy
+
 
 	case M_Copy:
 

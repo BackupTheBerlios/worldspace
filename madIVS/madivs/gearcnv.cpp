@@ -262,6 +262,7 @@ myinit(void)
 //===================>>> gearOGLCanvasPane::gearOGLCanvasPane <<<====================
   gearOGLCanvasPane::gearOGLCanvasPane()
   {
+
     myinit();
     initDone = 0;
   }

@@ -14,7 +14,6 @@
 
 
 
-
 class gearOGLCanvasPane : public vBaseGLCanvasPane
 
       {

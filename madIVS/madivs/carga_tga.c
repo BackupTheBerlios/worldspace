@@ -214,7 +214,7 @@ void *CargaPCX(char filename[], int *x, int *y)
   bzero(&paleta,768);
   fread(&buffer,1,1,input);
   if (buffer==12)
-    printf("Comienza la paleta..ok\n");
+    printf("Paleta detectada..ok\n");
 
   printf("Colores en la paleta %d\n",fread(paleta,3,256,input));
   datos=(GLubyte *)malloc(tam_x*tam_y*4);

@@ -233,7 +233,7 @@ int AppMain(int argc, char** argv)
         }
     }
 
-    else {  //Path relativo
+    else {                // Path relativo
       printf("Path relativo\n");
       strcpy(RUNPATH,argv[0]);
       for (i=strlen(RUNPATH)-1;i>=0;i--)
