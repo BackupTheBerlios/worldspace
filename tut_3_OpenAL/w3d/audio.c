@@ -54,18 +54,18 @@ ALuint frecuencia; /* Utilizados en la carga de archivos OGG */
 ALuint bitrate; /* Utilizados en la carga de archivos OGG */
 ALenum formato; /* Utilizado en la carga de archivos OGG */
 int tamanyo_cancion; /* Utilizado en la carga de archivos OGG */
-ALuint streambuffers[]; /* Utilizado en la carga de archivos OGG */
+
 int NUM_BUFFER_MUSICA;
-ALuint streamsource[1]; /* Utilizado en la carga de archivos OGG */
+
 ALuint streamvacios;
 static ALuint estado;
 static ALuint buffer[NUM_SONIDOS];
 static ALuint source[NUM_SONIDOS];
 static ALuint entornos[NUM_ENTORNOS];
-ALshort waveout [];  /* Donde almacenamos los OGG Vorbis decodificados */
+
 int BUFFER_MUSICA;
 OggVorbis_File buff;
-SDL_Thread *thread1musica = NULL; /* Thread de audio */
+SDL_Thread *threadmusica = NULL; /* Thread de audio */
 int audio_on = 0;
 int musica_on =0;
 int musica_decodificada = 0;
@@ -73,6 +73,8 @@ int buffers_vacios = 0;
 int current_section = -1;
 int numero_total=0;
 int streambuffer_vacio = 0 ;
+
+vorbis_info *informacion = NULL;
 /* A partir de aqui pondremos nuestras funciones */
 
 
@@ -258,6 +260,7 @@ void  CargaSonido (  char *fichero_wav, int identificador ){
 
 
 
+
 /************************************************************************************************************
 Funcion    : ReproducirSonido ( ALuint identificador, ALfloat src_pos[3], ALfloat src_vel[3],
                            ALfloat ganancia, Alfloat pitch, ALboolean repeticion )
@@ -405,9 +408,9 @@ BUG: La reproduccion de ficheros tendria que ser independiente de su bitrate, co
 void CargarMusica ( char *fichero_ogg ){
 
 	/* Variables locales */
-	vorbis_info *informacion = NULL;
-    	FILE *fichero;
-
+	
+    FILE *fichero;
+    ALint error;
 	/* Abrimos fichero para lectura */
 	if ( ( fichero = fopen ( fichero_ogg, "r" )) == NULL ){
 		fprintf( logs, "No se puede cargar fichero %s\n", fichero_ogg );
@@ -451,12 +454,7 @@ void CargarMusica ( char *fichero_ogg ){
 	/* Obtenemos el tamanyo de la cancion*/
 	tamanyo_cancion = ov_pcm_total ( &buff, -1 );
 	
-	/* Generamos  buffers para hacer el streaming */
-	alGenBuffers ( NUM_BUFFER_MUSICA, streambuffers);
-     	if ( alGetError() != AL_NO_ERROR){
-        	fprintf ( logs,"Fallo al crear los buffers para la musica\n");
-        	exit (2);
-     	}
+	
 
 }
 
@@ -469,9 +467,9 @@ Parametros : No hay que pasarle parametros
 void PararMusica (  ){
 
     	/* Paramos la musica */
-    	alSourceStop ( streamsource[0] );
+    	/*alSourceStop ( streamsource[0] );
     	musica_on = 0;
-    	streambuffer_vacio = 1;
+    	streambuffer_vacio = 1;*/
 }
 
 
@@ -488,7 +486,7 @@ void ResetearMusica (  ){
 	/* Antes de limpiar asegurarse de parar la musica */
 	/* Eliminamos Buffers y fuente */
 
-	alDeleteSources ( 1, &streamsource[0] );
+	/*alDeleteSources ( 1, &streamsource[0] );
 	alDeleteBuffers ( 4, &streambuffers );
 	if ( alGetError != AL_NO_ERROR ){
 		fprintf ( logs, "No se puede eliminar buffers o fuente");
@@ -508,48 +506,56 @@ Parametros : No hay que pasarle parametros
 ******************************************************************************************************/
 
 void ActualizarMusica (  ){
-
+        ALint error;
     	int cont = 0;
     	int contador = 0;
     	int i;
     	int posicion = 0;
-     
+        ALuint streambuffers[NUM_BUFFER_MUSICA]; /* Utilizado en la carga de archivos OGG */
+        ALshort waveout [BUFFER_MUSICA];  /* Donde almacenamos los OGG Vorbis decodificados */
+        ALuint streamsource[1]; /* Utilizado en la carga de archivos OGG */
+        
+      /* Generamos  buffers para hacer el streaming */
+	alGenBuffers ( NUM_BUFFER_MUSICA, streambuffers);
+     	if ( (error = alGetError()) != AL_NO_ERROR){
+        	fprintf ( logs,"Fallo al crear los buffers para la musica:%s\n", alGetString(error));
+        	exit (2);
+     	}  
      /* Rellenamos los buffers creados con la musica decodificada */
      for ( i=0; i < NUM_BUFFER_MUSICA ; i++){
 		cont = ov_read ( &buff, (char *)&waveout[posicion], BUFFER_MUSICA , 0, 2, 1, &current_section ) / 2;
-        	contador += cont;
-             	alBufferData ( streambuffers[i], formato, waveout , BUFFER_MUSICA , frecuencia );
-             	if ( alGetError != AL_NO_ERROR ){
-                	fprintf ( logs, "Error al anyadir datos al buffer");
-             	}
-	}
-
-        /* Creamos la fuente y definimos sus propiedades */
-        alGenSources( 1, streamsource[0] );
-        if ( !alIsSource ( streamsource[0])){
-             fprintf ( logs, "No se pueden crear las fuentes de sonido");
-             exit(1);
+        contador += cont;
+        fprintf ( logs, "contador = \n");
+        alBufferData ( streambuffers[i], formato, waveout , BUFFER_MUSICA , informacion->rate );
+        if ( (error =alGetError ()) != AL_NO_ERROR ){
+               	fprintf ( logs, "Error al anyadir datos al buffer %i:%s\n",i,alGetString(error));
         }
-          
+	}
+        
+        /* Creamos la fuente y definimos sus propiedades */
+        alGenSources( 1, streamsource );
+        if ( (error = alGetError()) != AL_NO_ERROR ){
+                	fprintf ( logs, "Error al generar la fuente de sonido: %s\n", alGetString (error));
+        }
+         
         /* Defino propiedades para la fuente */
-        alSourcei ( streamsource[0], AL_SOURCE_RELATIVE, AL_TRUE ); /* Para que se mueva con el listener */
-        alSourcei ( streamsource[0], AL_LOOPING, AL_FALSE ); /* No se repite por ella sola */
-        alSourcef ( streamsource[0], AL_GAIN, 0.9f ); /* Para que suene menos que los sonidos */
+        /*alSourcei ( streamsource[0], AL_SOURCE_RELATIVE, AL_TRUE ); /* Para que se mueva con el listener */
+        /*alSourcei ( streamsource[0], AL_LOOPING, AL_FALSE ); /* No se repite por ella sola */
+        /*alSourcef ( streamsource[0], AL_GAIN, 0.9f ); /* Para que suene menos que los sonidos */
 
         /* Asignamos los buffers creados a la fuente */
         alSourceQueueBuffers ( streamsource[0], NUM_BUFFER_MUSICA, streambuffers );
 
         /* Se empieza a reproducir la musica */
         alSourcePlay ( streamsource[0] );
-        if ( alGetError != AL_NO_ERROR ){
-              fprintf ( logs, "Error al reproducir musica");
+        if ( (error = alGetError ()) != AL_NO_ERROR ){
+              fprintf ( logs, "Error al reproducir musica:%s\n",alGetString (error));
         }
-	
 	/* A partir de aqui es donde realmente empieza el Streaming*/
 	while ( contador < tamanyo_cancion ){
 
             /* Comprobamos estado de los buffers */
-        	alGetSourcei ( streamsource[0], AL_BUFFERS_PROCESSED, &buffers_vacios);
+        	alGetSourceiv ( streamsource[0], AL_BUFFERS_PROCESSED, &buffers_vacios);
         
        		/* Si algun buffer esta vacio, lo rellenamos */
        		if ( buffers_vacios > 0 ){
@@ -608,8 +614,8 @@ void ReproducirMusica (  ){
     	musica_on=1;
 
     	/* Creamos thread independiente para la musica */
-    	thread1musica = SDL_CreateThread (ActualizarMusica, NULL);
-    	if (thread1musica == NULL) {
+    	threadmusica = SDL_CreateThread (ActualizarMusica, NULL);
+    	if (threadmusica == NULL) {
 		fprintf(logs,"No podemos crear el thread para la musica.\n");
     	}
 }
