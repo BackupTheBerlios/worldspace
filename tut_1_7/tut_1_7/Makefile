@@ -7,11 +7,11 @@ CC = gcc
 CFLAGS = $(COMPILERFLAGS) $(INCLUDE)
 LIBRARIES = -lX11 -lXi -lXmu  -lGL -lGLU -lm -lpthread -lSDL -lXxf86dga -lXv -lXxf86vm
 
-FUENTES= ini_sys.c main.c
+FUENTES= ini_sys.c main.c render.c
 
-CABECERAS= estructuras.h opengl.h sys_data.h w3d_api.h
+CABECERAS= estructuras.h opengl.h sys_data.h w3d_api.h render.h
 
-OBJS= ini_sys.o main.o
+OBJS= ini_sys.o main.o render.o
 
 all:tut_1_7
 	
@@ -19,11 +19,15 @@ all:tut_1_7
 tut_1_7:$(OBJS)
 	$(CC) $(OBJS) -o ../tut_1_7.exe $(LIBDIR) $(LIBRARIES)
 
-ini_sys.o:ini_sys.c estructuras.h w3d_api.h sys_data.h
+ini_sys.o:ini_sys.c estructuras.h w3d_api.h sys_data.h opengl.h
 	$(CC) -c ini_sys.c $(CFLAGS)
 
-main.o:main.c estructuras.h w3d_api.h sys_data.h
+main.o:main.c estructuras.h w3d_api.h sys_data.h opengl.h
 	$(CC) -c main.c $(CFLAGS)
+
+render.o:render.c estructuras.h w3d_api.h render.h opengl.h
+	$(CC) -c render.c $(CFLAGS)
+
 
 clean:	
 	rm -f *.o
