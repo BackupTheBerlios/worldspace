@@ -93,6 +93,7 @@ extern modelo *model;
 
     static vMenu VerMenu[] =
 
+
       {
 
 	{"&Wireframe", M_T_Wire, isSens, notChk, noKeyLbl, noKey, noSub},
@@ -251,6 +252,7 @@ extern modelo *model;
   {C_IconButton,M_T_Luces,0,"Luces",&icono_text,CA_None,isSens,NoFrame,0,0},
 	{C_EndOfList,0,0,0,0,CA_None,0,0,0}
 
+
       };
 
 //@V@:EndCmdPane
@@ -387,6 +389,7 @@ extern modelo *model;
 
 
 
+
 //====================>>> gearCmdWindow::WindowCommand <<<====================
 
   void gearCmdWindow::WindowCommand(ItemVal id, ItemVal val, CmdType cType)
@@ -426,7 +429,7 @@ extern modelo *model;
 
       int indice=0;
 
-	  importar.FileSelect("Importar fichero...",fich_imp,1023,extensiones,indice);
+	  if (importar.FileSelect("Importar fichero...",fich_imp,1023,extensiones,indice)) {
       if (importar_modelo(indice,fich_imp)==1)
             modelo_cargado=1;
       
@@ -434,6 +437,7 @@ extern modelo *model;
             sprintf(msg,"No se pudo importar %s",fich_imp);
             note.Notice(msg);
             modelo_cargado=0;
+      }
       }
             
 
@@ -454,7 +458,9 @@ extern modelo *model;
       char msg[1024];
       vNoticeDialog note(this);
       char *extensiones[]={"*.tga",0};
-  	  importar.FileSelect("Importar textura...",fich_imp,1023,extensiones,indice);
+
+  	  if (importar.FileSelect("Importar textura...",fich_imp,1023,extensiones,indice))
+      {
 
 
       if (textura_cargada!=1)
@@ -466,6 +472,7 @@ extern modelo *model;
          return ;
       }
 
+
       glBindTexture(GL_TEXTURE_2D, textura);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
@@ -473,7 +480,7 @@ extern modelo *model;
       gluBuild2DMipmaps(GL_TEXTURE_2D, 4, tam_x, tam_y, GL_RGBA,
                       GL_UNSIGNED_BYTE, textura_datos);
       free(textura_datos);
-
+      }
       textura_cargada=1;
 
 
@@ -492,8 +499,8 @@ extern modelo *model;
       char msg[1024];
       vNoticeDialog note(this);
       char *extensiones[]={"*.pcx;*.PCX",0};
-  	  importar.FileSelect("Importar textura...",fich_imp,1023,extensiones,indice);
-
+  	  if (importar.FileSelect("Importar textura...",fich_imp,1023,extensiones,indice))
+      {
 
       if (textura_cargada!=1)
         glGenTextures(0, &textura);
@@ -514,6 +521,7 @@ extern modelo *model;
 
       textura_cargada=1;
 
+      }
 
 	    break;
 
