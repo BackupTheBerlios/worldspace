@@ -135,6 +135,7 @@ char RUNPATH[2048];         // Path de ejecución.
 
 
 
+
     // This will be called BEFORE a window has been unregistered or
 
     // closed.  Default behavior: unregister and close the window.
@@ -207,19 +208,47 @@ int AppMain(int argc, char** argv)
     /* Vamos a preparar el path de ejecución */
     
     int i;
+    char auxiliar[2048];
    
-    
-    if (argv[0][0]=='/') {
+#ifdef W3DWIN32
+    /* En Windoze, al ejecutar la aplicación se usa el PATH absoluto */
     strcpy(RUNPATH,argv[0]);
     for (i=strlen(RUNPATH)-1;i>=0;i--)
-        if ((RUNPATH[i]=='\\')||(RUNPATH[i]=='/')) {
-                RUNPATH[i]='\0';
+        if ((RUNPATH[i]=='\\')) {
+                RUNPATH[i+1]='\0';
+                break;
+        }
+
+#endif
+#ifdef LINUX
+    /* En linux es habitual ejecutarlo de las dos maneras */
+
+    if (argv[0][0]=='/') {  //Path absoluto
+    printf("Path absoluto\n");
+    strcpy(RUNPATH,argv[0]);
+    for (i=strlen(RUNPATH)-1;i>=0;i--)
+        if ((RUNPATH[i]=='/')) {
+                RUNPATH[i+1]='\0';
                 break;
         }
     }
-    else
-        getcwd(RUNPATH,2046);
-    strcat(RUNPATH,"/");
+
+    else {  //Path relativo
+      printf("Path relativo\n");
+      strcpy(RUNPATH,argv[0]);
+      for (i=strlen(RUNPATH)-1;i>=0;i--)
+        if ((RUNPATH[i]=='/')) {
+          RUNPATH[i+1]='\0';
+          break;
+        }
+
+      getcwd(auxiliar,2046);
+      chdir(RUNPATH);      // Cambiamos al directorio del programa
+      getcwd(RUNPATH,2046);// Almacenamos ese directorio
+      strcat(RUNPATH,"/"); // Añadimos la barra
+      chdir(auxiliar);
+    }
+#endif
 
     printf("RUNPATH : %s\n", RUNPATH);
     

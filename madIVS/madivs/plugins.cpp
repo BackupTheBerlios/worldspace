@@ -81,7 +81,12 @@ int buscar_plugins(char *dir,plugin_info *plug_tag) {
 
 
       strcpy(fich_dll,dir);
+#ifdef LINUX
       strcat(fich_dll,"/");
+#endif
+#ifdef W3DWIN32
+      strcat(fich_dll,"\\");
+#endif
       strcat(fich_dll,lista_nombres->d_name);
       printf("%s ",fich_dll);
 
@@ -138,7 +143,13 @@ int buscar_plugins(char *dir,plugin_info *plug_tag) {
 
 
       strcpy(fich_dll,dir);
+#ifdef LINUX
       strcat(fich_dll,"/");
+#endif
+#ifdef W3DWIN32
+      strcat(fich_dll,"\\");
+#endif
+
       strcat(fich_dll,lista_nombres->d_name);
       hDll = CargaDLL(fich_dll);
 

@@ -154,7 +154,7 @@ void *CargaPCX(char filename[], int *x, int *y)
 
 	
 	pcx_h input_h;
-  byte *data;
+  unsigned char *data;
   GLubyte *datos,*aux;
   byte buffer;
   byte count,i;
@@ -181,7 +181,7 @@ void *CargaPCX(char filename[], int *x, int *y)
   tam_x=input_h.size[2]-input_h.size[0]+1;
   tam_y=input_h.size[3]-input_h.size[1]+1;
 
-  data=(byte *)malloc(tam_x*tam_y);
+  data=(unsigned char *)malloc(tam_x*tam_y);
 
 
   fread(&buffer,1,1,input);
@@ -222,8 +222,8 @@ void *CargaPCX(char filename[], int *x, int *y)
 
   for (j=0;j<tc;j++) {
     *datos=paleta[(GLubyte)data[j]][0];datos++;
-    *datos=paleta[(GLubyte)data[j]][0];datos++;
-    *datos=paleta[(GLubyte)data[j]][0];datos++;
+    *datos=paleta[(GLubyte)data[j]][1];datos++;
+    *datos=paleta[(GLubyte)data[j]][2];datos++;
     *datos=255;datos++;     // PCX no tienen canal ALPHA
   }
 	
