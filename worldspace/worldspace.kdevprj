@@ -50,7 +50,7 @@ groups=Headers,Sources,GNU,Translations,User Interface,Others
 
 [Makefile.am]
 files=indentar.sh,Makefile.conf.linux,Makefile.conf.windows,VERSION,worldspace.kdevprj,configure,worldspace.kdevses
-sub_dirs=
+sub_dirs=w3dsrc
 type=normal
 
 [Makefile.conf.linux]
@@ -112,13 +112,31 @@ install_location=
 type=HEADER
 
 [w3dsrc/audio/Makefile.am]
-files=w3dsrc/audio/audio.c
+files=w3dsrc/audio/audio.c,w3dsrc/audio/alut.c,w3dsrc/audio/alut.h,w3dsrc/audio/efectos.c
 sharedlib_LDFLAGS=-version-info 0:0:0
 sharedlib_rootname=audio
 sub_dirs=
 type=static_library
 
+[w3dsrc/audio/alut.c]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[w3dsrc/audio/alut.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
 [w3dsrc/audio/audio.c]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[w3dsrc/audio/efectos.c]
 dist=true
 install=false
 install_location=

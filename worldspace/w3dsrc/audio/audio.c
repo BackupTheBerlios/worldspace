@@ -2,17 +2,7 @@
 #include <stdlib.h>
 #include "w3d_base.h"
 #include "globales.h"
-#ifdef _LINUX
-#include <AL/al.h>
-#include <AL/alc.h>
-#include "alut.h"
-#endif
-#ifdef _WIN32
-#include <AL\al.h>
-#include <AL\alc.h>
-#include "alut.h"
-#include <AL\eax.h>
-#endif
+#include "audio.h"
 
 /*!
 ================================== DECLARACION DE VARIABLES
@@ -26,6 +16,10 @@ ALCcontext * Context = NULL;        /* Contexto para Windows */
 #endif
 
 
+
+/*!
+================================== DECLARACION DE FUNCIONES
+!*/
  /*!
 =================================================================
 Funcion         : ini_audio ( )
@@ -36,6 +30,7 @@ Parametros    : No hay que pasarle ningun parametro
 */
 int ini_audio(void)
 {
+  T_FUNC_IN
         /* Asignamos el mejor dispositivo de audio disponible */ 
 #ifdef _LINUX
   if ((Device = alcOpenDevice((ALubyte *) "alsa")) == NULL) {
@@ -82,7 +77,8 @@ int ini_audio(void)
     }
   }
 
-  return SI;
+  log_msj("[OK] OpenAL se ha iniciado correctamente\n");
+  _return SI;
 }
 
 /*!
@@ -95,10 +91,12 @@ Parametros   : No hay que pasarle ningun parametro
 */
 
 int cerrar_audio (void){
-	alcMakeContextCurrent ( NULL ); /* Desactivamos el contexto */
-	alcDestroyContext ( Context ); /* Destruimos el contexto */
-	alcCloseDevice ( Device ); /* Cerramos el dispositivo */
-    log_msj ("El dispositivo de audio se ha cerrado correctamente\n");
+    
+   T_FUNC_IN
+  alcMakeContextCurrent ( NULL ); /* Desactivamos el contexto */
+  alcDestroyContext ( Context ); /* Destruimos el contexto */
+  alcCloseDevice ( Device ); /* Cerramos el dispositivo */
+  log_msj ("[OK] OpenAL se ha cerrado correctamente\n");
 
-    return SI;
+  _return SI;
 }

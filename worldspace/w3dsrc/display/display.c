@@ -57,7 +57,9 @@ int ini_display(void)
         /* Comprobamos que la resolucion es valida */
         for(i=0;resoluciones[i];++i){
                 if ( (resoluciones[i]->w == x_size) && (resoluciones[i]->h == y_size) ){
-                                log_msj("La resolucion de %d x %d que has elegido es soportada por tu ordenador\n", x_size, y_size);
+                                T_FUNC_IN
+                                log_msj("[display.c] La resolucion de %d x %d que has elegido es soportada por tu ordenador\n", x_size, y_size);
+                                T_FUNC_OUT
                                 resolucion_ok = SI;
                                 break;
                 }
