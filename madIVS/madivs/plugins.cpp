@@ -117,7 +117,7 @@ int buscar_plugins(char *dir,plugin_info *plug_tag) {
       printf("Extensiones: %s\n\n",(*mostrar_extension)());
 
       n_plug_tag++;
-      CierraDLL;
+      //CierraDLL;
       }
     else {
       printf("No es una librería dinámica válida: ");

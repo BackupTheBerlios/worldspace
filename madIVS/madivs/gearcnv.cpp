@@ -53,7 +53,7 @@ int hh=384;
 
 GLfloat LightAmbient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 GLfloat LightDiffuse1[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-GLfloat LightPosition1[] = { 0.0f, 5.0f, 0.0f, 1.0f };
+GLfloat LightPosition1[] = { 0.0f, 0.0f, -1.0f, 1.0f };
 
 double matriz_proyeccion_A[4][4];
 double matriz_modelview[4][4];
