@@ -17,7 +17,6 @@
  
 #include <AL/al.h>
 #include <AL/alc.h>
-#include "alut.h"
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
 #include "mikmod.h"

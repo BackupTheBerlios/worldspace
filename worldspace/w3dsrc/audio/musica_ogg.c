@@ -24,7 +24,7 @@
 #include "musica_ogg.h"
 
 /* Estos defines puede que se cambien en un futuro */
-#define NUM_BUFFER_MUSICA 40
+#define NUM_BUFFER_MUSICA 70
 #define BUFFER_MUSICA 256
 
 

@@ -58,6 +58,7 @@ int logo(void)
     cargar_sonido("logo.wav",1);
     reproducir_sonido(1, SonPosition, SonVelocidad,1.0,1.0,100.0,AL_FALSE);
 
+
     taux = SDL_GetTicks();
 	iAncho = configuracion.Xtam;
 	iAlto = configuracion.Ytam;

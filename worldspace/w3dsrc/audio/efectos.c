@@ -100,23 +100,37 @@ ALuint identificador --> Para indicar que sonido hemos cargado
 void  cargar_sonido ( char *fichero_wav, int identificador ){
 
 	/* Variables locales */
-	ALsizei size, freq;
-	static void *data = NULL;
-    ALenum format;
-	ALboolean loop;
 
-    
+	FILE *fichero;
+	SDL_RWops *file;
+	char filename[LON_BUFF];
+	SDL_AudioSpec wav_spec;
+	Uint32 size;
+	Uint8 *data;
+
 	/* Generamos buffer, le asignamos un identificador y comprobamos errores */
 	alGenBuffers( 1, &buffer[identificador] );
 	if ( !alIsBuffer ( buffer[identificador] )){
 		log_msj ( "[KO] error al crear los buffers\n");
 	}
 
-	/* Cargamos ficheros Wave */
+	/* Establecemos donde estara situado el directorio para los sonidos */
+	strcpy(filename, "sonidos");
+	strcat(filename, "/");
+	strcat(filename, fichero_wav);
+	log_msj("[efectos.c] Cargando sonido %s\n", filename);
 
-	alutLoadWAV ( fichero_wav,  &format, &data, &size, &freq, &loop ); /* Cargamos en memoria */
-	alBufferData ( buffer[identificador], format, data, size, freq ); /* Almacenamos en buffer */
-	alutUnloadWAV ( format, data, size, freq ); /* liberamos */
+	/* Cargamos ficheros Wave */
+	fichero = abre_fichero(filename, "rb");
+	file = SDL_RWFromFP(fichero,0);
+	if( SDL_LoadWAV_RW(file,1, &wav_spec,&data,&size)== NULL ){
+		log_msj("[KO]Error al cargar %s\n",filename);
+		return;
+	}
+	alBufferData ( buffer[identificador], AL_FORMAT_STEREO16, data, size, wav_spec.freq ); /* Almacenamos en buffer */
+	SDL_FreeWAV(data);/*Liberamos*/
+	fclose(fichero);
+
 
 	/* Generamos las fuentes de sonido y comprobamos errores */
 	alGenSources( 1, &source[identificador] );
