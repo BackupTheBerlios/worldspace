@@ -1,0 +1,67 @@
+   libgli
+Version 0.4
+-----------
+
+Author:	Benjamin Schieder
+Email:	blindcoder@scavenger.homeip.net
+http:	http://www.crash-override.net
+
+General
+-------
+
+To stop any misunderstandings: I did NOT write the essential parts of this
+library. Roman Podobedov did (http://romka.demonews.com).
+But the library didn't seem to be maintained anymore and he didn't respond
+to my E-Mails, so I forke libgli off gli and maintain it now.
+Why did I do so?
+Because I think it would be a waste to let this fine piece of code go to
+waste :)
+
+License
+-------
+
+libgli is distributed under the terms of the Gnu Lesser General Public License
+or LGPL for short. Read the file COPYING or
+http://www.opensource.org/licenses/lgpl-license.php
+for details.
+
+GLI Library Description
+-----------------------
+
+see README.gli
+
+
+Why is this library needed and on who should use it?
+----------------------------------------------------
+
+see README.gli
+
+Demo Programs
+-------------
+These are being distributed seperatly because of their sheer size (~1MB bzip'd).
+Get them from http://www.crash-override.net
+
+Features of the library:
+------------------------
+
+At this time the basic features of this library are:
+
+* Standard 2D Buttons support
+* Texture buttons support
+* Standard 2D checked buttons support
+* Texture checked buttons support
+* Standard 2D windows support
+* Progress bars support (2D and 3D since V0.3)
+* Input-Box Support (since V0.4)
+* Images support (Textures polygons)
+* Text support
+* Object callbacks to your program
+* User Interface interaction with mouse
+* User Interface interactien with keyboard (since V0.4)
+* Texture and font loading
+* Supported .RGB (.SGI) and TGA texture formats
+* 10 GLUT demos
+* 1 GLX demo
+* Supported OS: Linux
+	other Architectures may still work, but I can't test them
+

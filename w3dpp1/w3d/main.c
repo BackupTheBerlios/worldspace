@@ -19,6 +19,7 @@
 #include "global.h"
 #include "display/display.h"
 #include "gfx/fuentes.h"
+#include "ui/w3d_ui.h"
 
 
 /*!
@@ -50,17 +51,22 @@ int main(void)
       _sis_msj("[OK]\tSistema gráfico inicializado\n");
 	
   if (!ini_fuente()) {
-        _sis_msj("[KO]\tNo se pudo iniciar el sistema de renderizado de fuentes\n");
+        _sis_msj("[KO]\tNo se pudo iniciar el sistema de renderizado de fuentes");
         cerrar_bios();
         return NO;
     }
   else
-      _sis_msj("[OK]\tSistema de renderizado de fuentes inicializado\n");
+      _sis_msj("[OK]\tSistema de renderizado de fuentes inicializado");
 	
 
 
+  _sis_msj("\n\t\tEntrando en el modo UI - Inicializando libGUI");
+  if (init_ui()) {
+      _sis_msj("\n[OK]\tGui Inicializado");
+      ui_loop();
+  }
 
-
+  _sis_msj("\n\nNotificación de cierre\n");
   /* Salida de la aplicación */
   if (!sis_cerrar_display()) {
         _sis_msj("[KO]\tError al cerrar el Sistema gráfico\n");

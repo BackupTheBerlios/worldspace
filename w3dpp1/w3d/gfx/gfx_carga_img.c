@@ -63,7 +63,6 @@ void *carga_tga(char f_imagen[],int *tam_x,int *tam_y)
 	
   _sis_msj("\t\t[gfx]carga_tga.c -> Cargando fichero ");
   _sis_msj(f_imagen);
-  _sis_msj("\n");
   fichero=abre_fichero(f_imagen,"rb");					
 
 

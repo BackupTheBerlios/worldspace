@@ -80,11 +80,12 @@ FUENTE *carga_fuente(char *fichero,	int tam_base,int espacio_base) {
     }
 
 	glBindTexture (GL_TEXTURE_2D, fuente_x->mapabits);
-
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, 4, tam_x, tam_y, 0, GL_RGBA, GL_UNSIGNED_BYTE,  textura_datos);
-
+ 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+  glTexImage2D(GL_TEXTURE_2D, 0, 4, tam_x, tam_y, 0, GL_RGBA, GL_UNSIGNED_BYTE,  textura_datos);
+	glTexParameterf (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameterf (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    
+  
 
 	/* Ahora establecemos las coordenadas */
 
@@ -160,6 +161,8 @@ int print(FUENTE *fuente,float x, float y,float tam,char *texto, ...) {
 		glEnd();
 		x+=fuente->tam_base*tam+fuente->espacio_base*tam;
 	}
+  glLoadIdentity();
+  glEnable(GL_DEPTH_TEST);
 return SI;
 }
 
@@ -169,7 +172,7 @@ Adivina para que sirve esta función
 */
 
 int ini_fuente(void) {
-
+  //return SI;
   glEnable(GL_TEXTURE_2D);
   glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -177,11 +180,13 @@ int ini_fuente(void) {
   glLoadIdentity();
 	glOrtho(0,config.SCREEN_SIZE_X,0,config.SCREEN_SIZE_Y,-100,100);
 	glGetDoublev(GL_PROJECTION_MATRIX,&matriz_proyeccion_fuentes[0][0]);
-  
+    
     def=carga_fuente("def.tga",30,0);
     print(def,config.SCREEN_SIZE_X/2-12*15,config.SCREEN_SIZE_Y,0.5f,"WorldSpace 3D BUILD: %d",BUILD);
+    
+    
     SDL_GL_SwapBuffers();
-    SDL_Delay(5000);
+    SDL_Delay(3000);
     if (def==NULL)
       return NO;
     else

@@ -1,0 +1,59 @@
+
+GLI Library
+Version 0.2
+-----------
+
+Author: Roman Podobedov
+Email: romka@ut.ee
+WEB: http://romka.demonews.com
+
+
+GLI Library Description
+-----------------------
+
+GLI Library - a multiplatforming library for making 3D user interfaces, based
+on OpenGL technology. With the help of this library, programmers can add in their
+own graphic application elements for the user interface and connect interface
+objects to their own programs with callbacks. In other words, GLI is layered between
+the user and an OpenGL application.
+
+
+Why is this library needed and on who should use it?
+----------------------------------------------------
+
+GLI is built first of all to relieve a labour of programmers who build graphic
+applications based on OpenGL and who don't want spend a time for programming their
+own user interface. In particular, GLI will be useful for small and average projects,
+where the majority of time is spent not on user interface, but on essence of the program.
+But that's not to say that GLI is intended for small projects only. GLI has sufficient
+features for building both simple and complex interfaces.
+
+The main feature of GLI is that it is a general interface, i.e. programmer can build
+interface objects of various form, color, size, etc. 
+
+GLI is a multiplatform library written in C++. All objects are based on classes defined
+in the library. The programmer can inherit from these classes to build new objects.
+
+
+Features of the library:
+------------------------
+
+At this time the basic features of this library are:
+
+* Standard 2D Buttons support
+* Texture buttons support
+* Standard 2D checked buttons support
+* Texture checked buttons support
+* Standard 2D windows support
+* Progress bars support
+* Images support (Textures polygons)
+* Text support
+* Object callbacks to your program
+* User Interface interaction with mouse
+* Texture and font loading
+* Supported .RGB (.SGI) and TGA texture formats
+* 9 GLUT demos
+* 2 Win32 demos
+* 1 GLX demo
+* Supported OS: Windows, Linux, MacOS X and other Unixes
+

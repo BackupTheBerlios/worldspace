@@ -18,6 +18,7 @@
 
 #include "../opengl.h"
 #include "../global.h"
+#include "../engine/mad.h"
 #include "logo.h"
 
 /*!
@@ -25,10 +26,11 @@
   gráfica OpenGL ha sido satisfactoria 
 */
 int logo(void) {
-
-	  float angulo=0;
+//    return SI;
+    modelo *logo;
+    float angulo=0;
 		GLfloat Ambient0[] = { 0.0f, 0.0f, 1.0f, 0.0f };
-    GLfloat LightPosition0[] = { 0.0f, 0.0f, -1.0f, 0.0f };
+    GLfloat LightPosition0[] = { 1.0f, -1.0f, 1.0f, 0.0f };
 		GLfloat Diffuse0[4];
   
 		Diffuse0[3] = 1.0f;
@@ -38,6 +40,7 @@ int logo(void) {
 		SDL_GL_SwapBuffers();
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING);
+    logo=carga_mad("logo.mad");    
 
     while (angulo<720) {
  			Diffuse0[0]=angulo/720.0f;
@@ -49,10 +52,10 @@ int logo(void) {
 			glRotatef(angulo,1.0f,1.0f,0.0f);
 			glLoadIdentity();
 			glTranslatef(0.0f,0.0f,-(angulo/34.28)+1.0f);
-			glRotatef(90.0f,1.0f,0.0f,0.0f);
-			glRotatef(-180.0f,0.0f,1.0f,0.0f);
+			glRotatef(0.0f,1.0f,0.0f,0.0f);
+			glRotatef(0.0f,0.0f,1.0f,0.0f);
 			glRotatef(-angulo/2,1.0f,1.0f,1.0f);
-			W1_C();
+			render_mad(logo);
 			SDL_GL_SwapBuffers();
      angulo+=2.0f;
 		}

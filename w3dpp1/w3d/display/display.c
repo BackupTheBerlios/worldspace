@@ -53,8 +53,11 @@ int sis_ini_display(void)
         return NO;
     }
 
-
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+    /*SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 1 );
+    SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 1 );
+    SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 1 );
+   SDL_GL_SetAttribute( SDL_GL_ALPHA_SIZE, 8 );
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);*/
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
     if (config.FULLSCREEN == 1) {
@@ -84,7 +87,7 @@ int sis_ini_display(void)
 		/* Cursor fuera */
     SDL_ShowCursor(0);
 
-		/* Título dela ventana */
+		/* Título de la ventana */
     SDL_WM_SetCaption("WorldSpace", "WorldSpace");
 
 		/* Podemos fijar el ratón a nuestra aplicación aquí */
@@ -93,17 +96,17 @@ int sis_ini_display(void)
     /* Hacemos que el ratón se ponga en el centro de la pantalla */
 		SDL_WarpMouse(config.SCREEN_SIZE_X/2, config.SCREEN_SIZE_Y/2);
 
-    _sis_msj("[OK]\t\tContexto OpenGL preparado\n");
+    _sis_msj("[OK]\t\tContexto OpenGL preparado");
 
 
     /* Inicializamos OpenGL */
 
 		if (!gl_basic_ini()) {
-      _sis_msj("[KO]\t\t\tError inesperado inicializando OpenGL");
+      _sis_msj("\n[KO]\t\t\tError inesperado inicializando OpenGL");
       return NO;
     }
     else {
-      _sis_msj("[OK]\t\t\tOpenGL inicializado con éxito\n");
+      _sis_msj("\n[OK]\t\tOpenGL inicializado con éxito\n");
 
     }
 		return SI;

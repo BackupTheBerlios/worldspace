@@ -29,6 +29,7 @@ por defecto
 
 */
 
+
 int init_bios(void) {
 	
 	logs=fopen("w3d_logs.txt","at");
@@ -150,7 +151,7 @@ FILE *abre_fichero(char *nombre, char *modo) {
       strcpy(f_fich,config.dir);
       strcat(f_fich,"/");
       strcat(f_fich,nombre);
-      _sis_msj("\t\t[bios]bios.c -> Cargando fichero ");
+      _sis_msj("\n\t\t[bios]bios.c -> Cargando fichero ");
       _sis_msj(f_fich);
       aux=fopen(f_fich,modo);
       if (aux)
@@ -167,4 +168,27 @@ FILE *abre_fichero(char *nombre, char *modo) {
 
 }
   
+/*!
 
+char prepara_apertura(char *nombre)
+
+Prepara una cadena anteponiendole el PATH por defecto.
+Se usa en el caso de que no queramos alterar el código de abrir fichero
+
+*/
+
+
+char *prepara_apertura(char *nombre) {
+
+
+      char *f_fich;
+      f_fich=(char *)malloc(1024);
+      strcpy(f_fich,config.dir);
+      strcat(f_fich,"/");
+      strcat(f_fich,nombre);
+      _sis_msj("\n\t\t[bios]bios.c -> Preparando PATH para fichero ");
+      _sis_msj(f_fich);
+      return f_fich;
+
+}
+      

@@ -33,7 +33,7 @@ typedef struct config_tag {
 
 
 configuracion config; 			/*! Variable global para almacenar la configuración */
-FILE *logs;						      /*! Salida para el fichero de logs */
+FILE *logs;						    /*! Salida para el fichero de logs */
 
 
 /*! 
@@ -69,6 +69,11 @@ Abre un fichero preponiendo el path por defecto
 
 */
 
-FILE *abre_fichero(char *nombre, char *modo);
+extern FILE *abre_fichero(char *nombre, char *modo);
+
+
+
+
+
 
 
