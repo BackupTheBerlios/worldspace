@@ -24,23 +24,7 @@
 #include "mad.h"
 #include "audio.h"
 
-/*!
-================================== DECLARACION DE VARIABLES
-!*/
-
-/*!
-Matrices de proyección. aquí se guardan un par de matrices de proyección.
-Esto nos permite ahorrarnos unas cuantas llamadas a gluPerspective.
-!*/
-double matriz_proyeccion[4][4];
-double matriz_proyeccion_ortogonal[4][4];
-
-/*!
-Esta matriz es una de las más importantes, ya que referenciará siempre la
-posición del observador, osea, nosotros
-!*/
-
-float camara[4][4];
+static GLfloat fFondo []        = { 1.0f,  0.5f, 0.5f, 0.0f };
 
 /*!
   Esta función muestra un logo por pantalla para demostrar que la inicialización
@@ -50,11 +34,11 @@ int logo(void)
 {
     SDL_Event event;
     Uint8 *keys;
-    int taux;
+    int taux, iAlto, iAncho;
     int intervalo;
     modelo *logo;
-    float angulo = 0;
-    GLfloat Ambient0[] = { 0.0f, 0.0f, 1.0f, 0.0f };
+    float fAngulo, fSize, fInc, fIter;
+    GLfloat Ambient0[]       = { 0.0f,  0.0f, 1.0f, 0.0f };
     GLfloat LightPosition0[] = { 1.0f, -1.0f, 1.0f, 0.0f };
     GLfloat Diffuse0[4];
     ALfloat SonPosition [] = {0.0,0.0,0.0};
@@ -67,44 +51,67 @@ int logo(void)
     glLightfv(GL_LIGHT0, GL_AMBIENT, Ambient0);
     glLightfv(GL_LIGHT0, GL_POSITION, LightPosition0);
     glMatrixMode(GL_MODELVIEW);
-    SDL_GL_SwapBuffers();
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING);
+
     logo = carga_mad("logo.mad");
     cargar_sonido("logo.wav",1);
-
     reproducir_sonido(1, SonPosition, SonVelocidad,1.0,1.0,100.0,AL_FALSE);
 
     taux = SDL_GetTicks();
+	iAncho = configuracion.Xtam;
+	iAlto = configuracion.Ytam;
+	fAngulo = fIter = fInc = fSize = 0.0f;
     
-    while (angulo < 720) {
-        Diffuse0[0] = angulo / 720.0f;
-        Diffuse0[1] = (angulo - 360) / 720.0f;
-        Diffuse0[2] = angulo / 360.0f;
-        glLightfv(GL_LIGHT0, GL_DIFFUSE, Diffuse0);
+    while (fIter < 1000.0f)
+	{
+		glClearColor(fFondo[0], fFondo[1], fFondo[2], fFondo[3]);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        glRotatef(angulo, 1.0f, 1.0f, 0.0f);
-        glLoadIdentity();
-        glTranslatef(0.0f, 0.0f, -(angulo / 34.28f) + 1.0f);
-        glRotatef(0.0f, 1.0f, 0.0f, 0.0f);
-        glRotatef(0.0f, 0.0f, 1.0f, 0.0f);
-        glRotatef(-angulo / 2, 1.0f, 1.0f, 1.0f);
-        if (logo != NULL)
-            render_mad(logo);
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, Diffuse0);
+
+        glPushMatrix();
+            glTranslatef(0.0f, 0.0f, -(fAngulo / 34.28f) + 1.0f);
+            glRotatef(0.0f, 1.0f, 0.0f, 0.0f);
+            glRotatef(0.0f, 0.0f, 1.0f, 0.0f);
+            glRotatef(-fAngulo / 2, 1.0f, 1.0f, 1.0f);
+            if (logo != NULL)
+                render_mad(logo);
+        glPopMatrix();
+
+	    w_begin ();
+		    //---------------------------------------------------
+		    imprime (vFuente[eAgulon], (float) iAncho * 0.27f , (float) iAlto * 0.9f, fSize,
+			    "WorldSpace");
+		    imprime (vFuente[eAgulon], (float) iAncho * 0.45f , (float) iAlto * 0.2f, fSize,
+			    "3D");
+		    //---------------------------------------------------
+	    w_end ();
+
         SDL_GL_SwapBuffers();
 
         intervalo=SDL_GetTicks()-taux;
-        angulo += (float)((intervalo*720)/5000.0f);
         taux = SDL_GetTicks();
 
-      SDL_PollEvent(&event);
+		fInc = (float)((intervalo*720)/5000.0f);
+		fIter += fInc;
+        if (fAngulo < 720.0f) fAngulo += fInc;
+	    if (fSize   < 3.0f  )   fSize += 0.01f;
+
+        Diffuse0[0] = fAngulo / 720.0f;
+        Diffuse0[1] = (fAngulo - 360) / 720.0f;
+        Diffuse0[2] = fAngulo / 360.0f;
+
+		fFondo[0] = (fFondo[0]>0.0f)? fFondo[0] - 0.002f : 0.0f;
+		fFondo[1] = (fFondo[1]>0.0f)? fFondo[1] - 0.001f : 0.0f;
+		fFondo[2] = (fFondo[2]>0.0f)? fFondo[2] - 0.001f : 0.0f;
+
+        SDL_PollEvent(&event);
         keys = SDL_GetKeyState(NULL);
         if (keys[SDLK_ESCAPE]) {
-            //print("ESC\n");
             break;
         }
-
     }
     glDisable(GL_LIGHT0);
     glDisable(GL_LIGHTING);
@@ -156,7 +163,9 @@ int ini_gl(char show_logo)
 
     /* Ahora establecemos el color de fondo por defecto. Está en formato RGBA y lo ponemos a negro */
 
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    //glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    //glClearColor(1.0f, 0.5f, 0.5f, 0.0f);
+    glClearColor(fFondo[0], fFondo[1], fFondo[2], fFondo[3]);
 
     /* Estas 3 líneas habilitan del Buffer de profundidad */
 
