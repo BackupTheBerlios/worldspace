@@ -97,11 +97,15 @@ extern modelo *model;
 
 
 
+
+
       {
 
 	{"&Wireframe", M_T_Wire, isSens, notChk, noKeyLbl, noKey, noSub},
 	{"&Textura", M_T_Tex, isSens, notChk, noKeyLbl, noKey, noSub},
 	{"&Solido", M_T_Sol, isSens, notChk, noKeyLbl, noKey, noSub},
+	{"-", M_Line, notSens, notChk, noKeyLbl, noKey, noSub},
+	{"&Información", M_Info, isSens, notChk, noKeyLbl, noKey, noSub},
 
 	{NULL}
 
@@ -363,6 +367,7 @@ extern modelo *model;
     // Associated dialogs
 
 
+
     strcpy(msg,RUNPATH);
     strcat(msg,"plugins");
     if (buscar_plugins(msg,plugins)!=1) {
@@ -589,6 +594,7 @@ extern modelo *model;
 	  }	//@V@:EndCase
 
 
+
 	//@V@:Case M_SaveAS
 
 	case M_SaveAs:
@@ -685,13 +691,18 @@ extern modelo *model;
 
 	//@V@:Case M_Cut
 
-	case M_Cut:
+	case M_Info:
 
 	  {
 
-	    vNoticeDialog note(this);
+	    if (modelo_cargado==1) {
+      vNoticeDialog note(this);
 
-	    note.Notice("Cut");
+	    char msg[2048];
+
+      sprintf(msg,"Caras    %d\nBytes    %d\nTextura  %s",model->n_caras,model->n_caras*sizeof(cara),model->id_textura);
+      note.Notice(msg);
+      }
 
 	    break;
 
