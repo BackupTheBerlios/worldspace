@@ -15,6 +15,9 @@
  *                                                                         *
  ***************************************************************************/
 
+#define VERSION_MAJ 0
+#define VERSION_MIN 1
+
 #include "estructuras.h"
 
 #ifndef _PLUGIN_INFO
