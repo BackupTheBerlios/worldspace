@@ -12,14 +12,14 @@ SHAREDFLAGS ?= -shared
 PREFIX ?= /usr/local
 BINDIR ?= $(PREFIX)/bin
 LIBDIR ?= $(PREFIX)/lib
-INCLUDEDIR ?= $(PREFIX)/include
+INCLUDEDIR ?= $(PREFIX)/include 
 MANDIR ?= $(PREFIX)/man
 CONFDIR ?= $(PREFIX)/etc
 INSTALL_GROUP ?= root
 INSTALL_USER ?= root
 SHAREDFLAGS := $(SHAREDFLAGS)
-LIBS := $(LIBS) -lX11 -lXi -lXmu  -lGL  -lm -lpthread -lSDL -lXxf86dga -lXv -lGLU -lopenal -lvorbisfile -lvorbis -logg  
+LIBS := $(LIBS) -lX11 -lXi -lXmu  -lGL  -lm -lpthread -lSDL -lXxf86dga -lXv -lGLU -lopenal -lvorbisfile -lvorbis -logg -lfreetype
 SHAREDLIBS := $(SHAREDLIBS)
-CFLAGS := $(CFLAGS) -g -ggdb    -Wall -D_LINUX -DBUILD=$(BUILD)
+CFLAGS := $(CFLAGS) -g -ggdb -Wall -D_LINUX -DBUILD=$(BUILD) -I/usr/include/freetype2
 LDFLAGS := -L/usr/X11R6/lib -L/usr/lib $(LDFLAGS)
 

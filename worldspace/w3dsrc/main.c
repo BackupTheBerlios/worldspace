@@ -23,6 +23,7 @@
 #include "audio.h"
 #include "textura.h"
 #include "globales.h"
+#include "gui.h"
 
 //===========================================================================
 //  Inicio de la aplicación. Punto de entrada.
@@ -61,35 +62,55 @@ int main(int iArg, char *vArg[])
 	int iError = 0;
 	int iAudio_OK= NO;
 
+
+    /* Inicializamos bios */
     if (ini_bios(iArg, vArg))
 	{
+	/* Inicializamos display */
         if (ini_display())
+	{
+		/* Inicializamos el audio */
+		iAudio_OK=ini_audio();
+		/* Cargamos las listas de fuentes,texturas,modelos,etc */
+	        if (( carga_listaFuentes(&vListaFuentes))
+                /*|| ( carga_listaTexturas(&vListaTexturas)) Lista de texturas */
+                /*|| ( carga_listaModelos(&vListaModelos)) Lista de modelos */
+		|| ( genera_texturas()))
 		{
-            iAudio_OK=ini_audio();
-
-	        if (
-                  ( carga_listaFuentes(&vListaFuentes)   )
-             /*|| ( carga_listaTexturas(&vListaTexturas) ) Lista de texturas */
-             /*|| ( carga_listaModelos(&vListaModelos)   ) Lista de modelos  Las texturas deben de pasarse antes */
-               || ( genera_texturas()                    )
-               )
-	            iError = 1;
+			iError = 1;
+		}
+		else
+		{
+			if (ini_gl(SI)) // Bucle principal
+				/* Inicializamos el gui */
+				if (ini_ui());
+				else
+				{
+					iError = 1;
+				}
 			else
 			{
-	            if (ini_gl(SI))           ;  // Bucle principal
-				else            iError = 1;
+				iError = 1;
 			}
-            cerrar_texturas();
-            if (iAudio_OK)
-			    cerrar_audio();
-            cerrar_display();
-		}
-		else iError = 1;
 
-		control_memoria ();
-        cerrar_bios();
+		}
+		/* Cerramos las texturas */
+		cerrar_texturas();
+		/* Cerramos el audio */
+		if (iAudio_OK)
+			cerrar_audio();
+		/* Cerramos el display */
+		cerrar_display();
 	}
-	else iError = 1;
+	else
+		iError = 1;
+
+	/* Controlamos la memoria y cerramos bios */
+	control_memoria ();
+        cerrar_bios();
+    }
+	else
+		iError = 1;
 
     return iError;
 }
