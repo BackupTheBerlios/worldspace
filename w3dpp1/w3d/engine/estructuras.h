@@ -15,9 +15,9 @@
 
 typedef struct lista_sprites_spc_tag {
     unsigned int textura;
-		float matriz[4][4];
-		float tam_x;
-		float tam_y;
+    float matriz[4][4];
+    float tam_x;
+    float tam_y;
 } lista_sprites_spc;
 
 

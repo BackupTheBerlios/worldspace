@@ -27,4 +27,4 @@ va desde .1 a 100. Es decir, lo que esté situado a más de 100 unidades de la cám
 
 Esta versión de inicialización es una versión básica.
 */
-extern int gl_basic_ini(void);
+extern int gl_basic_ini(char show_logo);

@@ -35,9 +35,9 @@
 
 CGLI_Frame::CGLI_Frame()
 {
-	// Set default parameters
-	m_width = 5;
-	m_height = 5;
+    // Set default parameters
+    m_width = 5;
+    m_height = 5;
 }
 
 CGLI_Frame::~CGLI_Frame()
@@ -53,13 +53,13 @@ void CGLI_Frame::UpdateObject()
 
 void CGLI_Frame::Draw()
 {
-	glColor4f(m_r, m_g, m_b, m_a);
-	glBegin(GL_LINE_LOOP);
-		glVertex3f(-m_width/2, -m_height/2, 0);
-		glVertex3f(m_width/2, -m_height/2, 0);
-		glVertex3f(m_width/2, m_height/2, 0);
-		glVertex3f(-m_width/2, m_height/2, 0);
-	glEnd();
+    glColor4f(m_r, m_g, m_b, m_a);
+    glBegin(GL_LINE_LOOP);
+    glVertex3f(-m_width / 2, -m_height / 2, 0);
+    glVertex3f(m_width / 2, -m_height / 2, 0);
+    glVertex3f(m_width / 2, m_height / 2, 0);
+    glVertex3f(-m_width / 2, m_height / 2, 0);
+    glEnd();
 }
 
 void CGLI_Frame::DoAnimationTick()

@@ -42,6 +42,9 @@ Macros que exportamos al sistema
 
 #define _sis_msj(c) fprintf(logs,"%s",c)
 
+#define _sis_msje(c,d) {fprintf(logs,c,d);}
+
+
 /*! 
 Funciones que exportamos al sistema
 */

@@ -36,7 +36,7 @@ email=neuralgya@users.berlios.de
 kdevprj_version=1.3
 lfv_open_groups=Cabeceras,Fuentes,GNU,Otros
 make_options=\s-w -j1
-makefiles=Makefile.am,w3d/Makefile.am,w3d/docs/Makefile.am,w3d/docs/en/Makefile.am,w3d/bios/Makefile.am,w3d/display/Makefile.am,w3d/gfx/Makefile.am,w3d/ui/Makefile.am,w3d/engine/Makefile.am
+makefiles=Makefile.am,w3d/Makefile.am,w3d/docs/Makefile.am,w3d/docs/en/Makefile.am,w3d/bios/Makefile.am,w3d/display/Makefile.am,w3d/gfx/Makefile.am,w3d/ui/Makefile.am,w3d/engine/Makefile.am,w3d/input/Makefile.am
 modifyMakefiles=false
 project_name=W3d
 project_type=normal_empty
@@ -97,7 +97,7 @@ type=DATA
 
 [w3d/Makefile.am]
 files=w3d/definiciones.h,w3d/global.h,w3d/main.c,w3d/opengl.h
-sub_dirs=bios,display,gfx,ui,engine
+sub_dirs=bios,display,gfx,ui,engine,input
 type=prog_main
 
 [w3d/bios/Makefile.am]
@@ -177,9 +177,33 @@ sub_dirs=
 type=normal
 
 [w3d/engine/Makefile.am]
-files=w3d/engine/estructuras.h,w3d/engine/mad.c,w3d/engine/mad.h
+files=w3d/engine/estructuras.h,w3d/engine/mad.c,w3d/engine/mad.h,w3d/engine/engine.c,w3d/engine/texturas.c,w3d/engine/texturas.h,w3d/engine/engine.h,w3d/engine/espacio.c,w3d/engine/espacio.h
 sub_dirs=
 type=static_library
+
+[w3d/engine/engine.c]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[w3d/engine/engine.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
+[w3d/engine/espacio.c]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[w3d/engine/espacio.h]
+dist=true
+install=false
+install_location=
+type=HEADER
 
 [w3d/engine/estructuras.h]
 dist=true
@@ -194,6 +218,18 @@ install_location=
 type=SOURCE
 
 [w3d/engine/mad.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
+[w3d/engine/texturas.c]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[w3d/engine/texturas.h]
 dist=true
 install=false
 install_location=
@@ -233,6 +269,19 @@ dist=true
 install=false
 install_location=
 type=HEADER
+
+[w3d/input/Makefile.am]
+files=w3d/input/teclado.c
+sharedlib_LDFLAGS=-version-info 0:0:0
+sharedlib_rootname=input
+sub_dirs=
+type=static_library
+
+[w3d/input/teclado.c]
+dist=true
+install=false
+install_location=
+type=SOURCE
 
 [w3d/main.c]
 dist=true

@@ -193,7 +193,7 @@ int ini_fuente(void)
 
 
     SDL_GL_SwapBuffers();
-    SDL_Delay(3000);
+    SDL_Delay(1000);
     if (def == NULL)
 	return NO;
     else

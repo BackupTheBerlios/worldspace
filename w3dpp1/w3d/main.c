@@ -20,6 +20,7 @@
 #include "display/display.h"
 #include "gfx/fuentes.h"
 #include "ui/w3d_ui.h"
+#include "engine/engine.h"
 
 
 /*!
@@ -64,6 +65,16 @@ int main(void)
 	ui_loop();
     }
 
+    _sis_msj("\n\t\tInicializando Engine");
+    if (init_engine()) {
+	_sis_msj("\n[OK]\tEngine Inicializado");
+	game_loop();
+    }
+     else
+	_sis_msj("\n[KO]\tLa cagamos Luis, no se inicializó el engine");
+
+
+    
     _sis_msj("\n\nNotificación de cierre\n");
     /* Salida de la aplicación */
     if (!sis_cerrar_display()) {

@@ -28,6 +28,9 @@
 int logo(void)
 {
 //    return SI;
+    SDL_Event event;
+    Uint8 *keys;
+
     modelo *logo;
     float angulo = 0;
     GLfloat Ambient0[] = { 0.0f, 0.0f, 1.0f, 0.0f };
@@ -59,6 +62,15 @@ int logo(void)
 	render_mad(logo);
 	SDL_GL_SwapBuffers();
 	angulo += 2.0f;
+
+	SDL_PollEvent(&event);
+	keys = SDL_GetKeyState(NULL);
+	if (keys[SDLK_ESCAPE]) {
+	    //print("ESC\n");
+	    break;
+	}
+
+
     }
     glDisable(GL_LIGHT0);
     glDisable(GL_LIGHTING);
@@ -83,7 +95,7 @@ Esta versión de inicialización es una versión básica.
 */
 
 
-int gl_basic_ini(void)
+int gl_basic_ini(char show_logo)
 {
 
     /* Vamos a preparar las matrices de proyección */
@@ -137,9 +149,12 @@ int gl_basic_ini(void)
     glEnable(GL_CULL_FACE);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    if (logo())
-	return SI;
-    else
-	return NO;
+    if (show_logo)
+	if (logo())
+	    return SI;
+	else
+	    return NO;
+return SI;
+
 
 }

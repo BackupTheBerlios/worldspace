@@ -164,7 +164,7 @@ FILE *abre_fichero(char *nombre, char *modo)
     _sis_msj("\n\t\t[bios]bios.c -> Cargando fichero ");
     _sis_msj(f_fich);
     aux = fopen(f_fich, modo);
-    if (aux)
+    if (aux!=NULL)
 	return aux;
     else {
 	_sis_msj(" error abriendo ");

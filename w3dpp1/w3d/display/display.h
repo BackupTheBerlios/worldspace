@@ -17,6 +17,8 @@
 
 #ifndef _INC_DISPLAY
 #define _INC_DISPLAY
+
+
  
 /*!
 int sis_ini_display(void)
