@@ -1,0 +1,24 @@
+VERSION=`date +%Y%m%d`
+INCLUDE = -I/usr/include/   -I/usr/X11R6/include -I/usr/include/SDL
+LIBDIR  =  -L/usr/X11R6/lib -L/usr/lib
+COMPILERFLAGS =  -g -ggdb    -Wall -D_LINUX -DFECHA="$(VERSION)"
+#COMPILERFLAGS =  -O3  -Wall -D_LINUX -fexpensive-optimizations -fPIC -DFECHA=$(VERSION)
+CC = gcc
+
+CFLAGS = $(COMPILERFLAGS) $(INCLUDE)
+LIBRARIES = -lX11 -lXi -lXmu  -lGL -lGLU -lm -lpthread -lSDL -lXxf86dga -lXv -lXxf86vm -lopenal -lvorbisfile -lvorbis -logg
+
+FUENTES= fuentes.c timer_linux.c carga_tga.c render.c sys_linux.c  init_sys.c teclado.c espacio.c mad.c audio.c 
+
+CABECERAS= fuentes.h timer.h estructuras.h render.h sys.h init_sys.h carga_tga.h timer.h teclado.h espacio.h mad.h audio.h 
+
+all:tut_1_6
+	
+	
+tut_1_6:$(FUENTES) $(CABECERAS)
+	echo "Compilando WorldSpace 3d en Linux!!" 
+	$(CC) -c $(FUENTES) $(CFLAGS)
+	$(CC) *.o -o ../tut_1_6.exe $(LIBDIR) $(LIBRARIES)
+clean:	
+	rm -f *.o
+

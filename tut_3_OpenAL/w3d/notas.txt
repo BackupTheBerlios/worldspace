@@ -1,0 +1,5 @@
+- Unidades en general:
+	10.0f		= 100 metros
+	1.0f		= 10 metros
+	0.1f 		= 1 metro
+	6000.0f	=	60 kilómetros
