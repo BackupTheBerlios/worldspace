@@ -18,58 +18,58 @@ ExeOutput=
 ObjectOutput=
 
 [Unit1]
-FileName=madivs\trackball.h
-Open=0
-Top=0
-
-[Unit2]
 FileName=madivs\gearapp.cpp
 Open=1
 Top=0
 
-[Unit3]
+[Unit2]
 FileName=madivs\gearapp.h
 Open=1
 Top=0
 
-[Unit4]
+[Unit3]
 FileName=madivs\gearcmdw.cpp
 Open=1
-Top=0
+Top=1
 
-[Unit5]
+[Unit4]
 FileName=madivs\gearcmdw.h
 Open=1
 Top=0
 
-[Unit6]
+[Unit5]
 FileName=madivs\gearcnv.cpp
 Open=1
 Top=0
 
-[Unit7]
+[Unit6]
 FileName=madivs\gearcnv.h
 Open=1
 Top=0
 
-[Unit8]
+[Unit7]
 FileName=madivs\globales.h
 Open=1
 Top=0
 
+[Unit8]
+FileName=madivs\plugins.cpp
+Open=1
+Top=0
+
 [Unit10]
-FileName=madivs\plugins.h
+FileName=madivs\estructuras.h
 Open=1
 Top=0
 
 [Unit11]
-FileName=madivs\trackball.c
+FileName=madivs\carga_tga.h
 Open=1
 Top=0
 
 [Unit12]
-FileName=madivs\estructuras.h
-Open=0
+FileName=madivs\carga_tga.c
+Open=1
 Top=0
 
 [Unit13]
@@ -81,7 +81,7 @@ Top=0
 ProjectView=1
 
 [Unit9]
-FileName=madivs\plugins.cpp
+FileName=madivs\plugins.h
 Open=1
 Top=0
 

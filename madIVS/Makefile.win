@@ -4,7 +4,7 @@
 CC   = g++.exe
 WINDRES = windres.exe
 RES  = madivs.res
-OBJ  = madivs/gearapp.o madivs/gearcmdw.o madivs/gearcnv.o madivs/plugins.o madivs/trackball.o $(RES)
+OBJ  = madivs/gearapp.o madivs/gearcmdw.o madivs/gearcnv.o madivs/plugins.o madivs/carga_tga.o $(RES)
 LIBS =  -L"C:\MSYS\1.0\MINGW\lib" -lV -lVgl -lopengl32 -lglu32 -lmingwex -lcomctl32
 INCS =  -I"C:\MSYS\1.0\MINGW\include"  -I"C:\MSYS\1.0\MINGW\include\g++-3"  -I"C:\MSYS\1.0\MINGW\include" 
 BIN  = madivs.exe
@@ -32,8 +32,8 @@ madivs/gearcnv.o: madivs/gearcnv.cpp
 madivs/plugins.o: madivs/plugins.cpp 
 	$(CC) -c madivs/plugins.cpp -o madivs/plugins.o $(CFLAGS)
 
-madivs/trackball.o: madivs/trackball.c 
-	$(CC) -c madivs/trackball.c -o madivs/trackball.o $(CFLAGS)
+madivs/carga_tga.o: madivs/carga_tga.c 
+	$(CC) -c madivs/carga_tga.c -o madivs/carga_tga.o $(CFLAGS)
 
 madivs.res: madivs.rc 
 	$(WINDRES) -i madivs.rc -I rc -o madivs.res -O coff 

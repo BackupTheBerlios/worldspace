@@ -13,17 +13,17 @@
 #endif
 
 #ifdef LINUX
-#define DLLExport *
+#define DLLExport 
 #define DLLExport_ 
 #endif
 
-char DLLExport mostrar_autor(void);
-char DLLExport mostrar_nombre(void);
-char DLLExport mostrar_info(void);
-int  DLLExport mostrar_version(void);
-int  DLLExport mostrar_fecha(void);
-char DLLExport mostrar_extension(void);
-int  DLLExport_ importar_modelo(char *fichero,void **model_tag);
+DLLExport char* mostrar_autor(void);
+DLLExport char* mostrar_nombre(void);
+DLLExport char* mostrar_info(void);
+DLLExport int* mostrar_version(void);
+DLLExport int* mostrar_fecha(void);
+DLLExport char* mostrar_extension(void);
+DLLExport_ int importar_modelo(char *fichero,void **model_tag);
 
 
 
@@ -190,25 +190,25 @@ const int fecha[3]={17,6,2002};
 const char extension[]="*.md2";
 
 
-char DLLExport mostrar_autor(void){
+DLLExport char* mostrar_autor(void){
 	return (char *)&autor[0];
 }
-char DLLExport mostrar_nombre(void){
+DLLExport char*  mostrar_nombre(void){
         return (char *)&nombre[0];
 }
-char DLLExport mostrar_info(void){
+DLLExport char* mostrar_info(void){
         return (char *)&info[0];
 }
-int  DLLExport mostrar_version(void){
+DLLExport int*   mostrar_version(void){
         return (int *)&version[0];
 }
-int  DLLExport  mostrar_fecha(void){
+DLLExport int*   mostrar_fecha(void){
         return (int *)&fecha[0];
 }
-char DLLExport mostrar_extension(void){
+DLLExport char* mostrar_extension(void){
         return (char *)&extension[0];
 }
-int  DLLExport_ importar_modelo(char *fichero,void **model_tag){
+DLLExport_ int importar_modelo(char *fichero,void **model_tag){
 
 
     float avertexnormals[162][3] = {

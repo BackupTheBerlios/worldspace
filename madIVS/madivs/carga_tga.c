@@ -223,11 +223,11 @@ CargaTGA (char filename[], int *tam_x, int *tam_y)
     	  for (j = 0; j < count; j++)
 	      {
 
-          data[tc] = buf[2];
+          data[tc] = buf[0];
 	        tc++;
 	        data[tc] = buf[1];
 	        tc++;
-	        data[tc] = buf[0];
+	        data[tc] = buf[2];
 	        tc++;
 	        data[tc] = buf[3];
           tc++;
@@ -244,6 +244,12 @@ CargaTGA (char filename[], int *tam_x, int *tam_y)
 	
   }
 
+   for (i = 0; i < tc; i += bytesPerPixel)
+	{
+	  temp = data[i];
+	  data[i] = data[i + 2];
+	  data[i + 2] = temp;
+	}
 
 /* Ahora, cambiamos el orden de las líneas, como si hiciesemos
          un flip vertical. */
@@ -335,7 +341,6 @@ CargaPCX (char filename[], int *x, int *y)
     }
 
   /*   El PCX ya está decodificado. Ahora debemos leer la paleta   */
-  bzero (&paleta, 768);
   fread (&buffer, 1, 1, input);
   if (buffer == 12)
     printf ("Paleta detectada..ok\n");
