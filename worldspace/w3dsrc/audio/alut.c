@@ -104,10 +104,10 @@ ALvoid alutLoadWAV(ALbyte *file,ALenum *format,ALvoid **data,ALsizei *size,ALsiz
 	FILE *Stream;
     char filename[LON_BUFF]; 
   
-	*format=AL_FORMAT_MONO16;
+	*format=AL_FORMAT_STEREO16;
 	*data=NULL;
 	*size=0;
-	*freq=22050;
+	*freq=44100;
 	*loop=AL_FALSE;
 
     /* Establecemos donde estara situado el directorio para los sonidos */

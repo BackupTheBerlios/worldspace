@@ -15,16 +15,12 @@
  *                                                                         *
  ***************************************************************************/
  
-#ifdef _LINUX
 #include <AL/al.h>
 #include <AL/alc.h>
 #include "alut.h"
-#endif
-#ifdef _WIN32
-#include <AL\al.h>
-#include <AL\alc.h>
-#include "alut.h"
-#endif
+#include <vorbis/codec.h>
+#include <vorbis/vorbisfile.h>
+
 
  
  /*!

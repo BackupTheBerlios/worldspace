@@ -112,7 +112,7 @@ install_location=
 type=HEADER
 
 [w3dsrc/audio/Makefile.am]
-files=w3dsrc/audio/audio.c,w3dsrc/audio/alut.c,w3dsrc/audio/alut.h,w3dsrc/audio/efectos.c
+files=w3dsrc/audio/audio.c,w3dsrc/audio/alut.c,w3dsrc/audio/alut.h,w3dsrc/audio/efectos.c,w3dsrc/audio/musica_ogg.c
 sharedlib_LDFLAGS=-version-info 0:0:0
 sharedlib_rootname=audio
 sub_dirs=
@@ -137,6 +137,12 @@ install_location=
 type=SOURCE
 
 [w3dsrc/audio/efectos.c]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[w3dsrc/audio/musica_ogg.c]
 dist=true
 install=false
 install_location=

@@ -15,6 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "audio.h"
 
 #ifndef _W3D_BASE_
 #define _W3D_BASE_
@@ -34,6 +35,18 @@ Valor devuelto por las funciones
 Longitud por defecto de los buffer (arrays)
 !*/
 #define LON_BUFF      1024
+
+
+/*!
+Aqui definimos el nº de sonidos, musicas, entornos y listeners que vamos a utilizar 
+*/
+#define NUM_SONIDOS     1
+#define NUM_LISTENER    1
+#ifdef _LINUX
+#define NUM_ENTORNOS    1
+#endif
+#define NUM_MUSICAS   1
+
 
 
 /*!
@@ -97,5 +110,14 @@ typedef struct tag_object {
 } modelo;
 
 
+/*!
+Estructura del listener
+*/
+
+typedef struct {
+	ALfloat    Posicion[3];
+	ALfloat    Velocidad[3];
+	ALfloat    Orientacion[6];
+}LISTENER;
 
 #endif

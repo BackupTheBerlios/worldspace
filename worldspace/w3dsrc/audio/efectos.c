@@ -23,20 +23,6 @@
 #include "audio.h"
 
 
-/* Aqui definimos el nº de sonidos, musicas, entornos y listeners que vamos a utilizar */
-
-#define NUM_SONIDOS     1
-#define NUM_LISTENER    1
-#ifdef _LINUX
-#define NUM_ENTORNOS    1
-#endif
-
-/* Definimos estructura del listener y lo creamos */
-typedef struct {
-	ALfloat    Posicion[3];
-	ALfloat    Velocidad[3];
-	ALfloat    Orientacion[6];
-}LISTENER;
 
 LISTENER Listener[NUM_LISTENER];
 static ALuint buffer[NUM_SONIDOS];
