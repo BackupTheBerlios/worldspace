@@ -95,6 +95,7 @@ extern modelo *model;
 
 
 
+
       {
 
 	{"&Wireframe", M_T_Wire, isSens, notChk, noKeyLbl, noKey, noSub},
@@ -325,9 +326,6 @@ extern modelo *model;
     if (buscar_plugins(msg,plugins)!=1) {
       printf("No se encontró ningún plugin");
     }
-        
-
-
 
     
 
@@ -453,7 +451,7 @@ extern modelo *model;
 
       char fich_imp[1024]="";
       int indice=0;
-      int tam_x, tam_y;
+      int tam_x, tam_y,j;
       char *textura_datos;
       vFileSelect importar(this);
       char msg[1024];
@@ -484,6 +482,16 @@ extern modelo *model;
       }
       textura_cargada=1;
 
+      if (modelo_cargado==1) {
+        strcpy(msg,fich_imp);
+        for (j=strlen(msg)-1;j>=0;j--)
+          if ((msg[j]=='/')||(msg[j]=='\\'))
+                  break;
+
+
+        strcpy(model->id_textura,&msg[j+1]);
+        printf("Textura activa ->%s",model->id_textura);
+      }
 
 	    break;
 
@@ -494,7 +502,7 @@ extern modelo *model;
 
       char fich_imp[1024]="";
       int indice=0;
-      int tam_x, tam_y;
+      int tam_x, tam_y,j;
       char *textura_datos;
       vFileSelect importar(this);
       char msg[1024];
@@ -523,21 +531,49 @@ extern modelo *model;
       textura_cargada=1;
 
       }
+      if (modelo_cargado==1) {
+        strcpy(msg,fich_imp);
+        for (j=strlen(msg)-1;j>=0;j--)
+          if ((msg[j]=='/')||(msg[j]=='\\'))
+                  break;
+
+
+        strcpy(model->id_textura,&msg[j+1]);
+        printf("Textura activa ->%s",model->id_textura);
+      }
 
 	    break;
 
 	  }	//@V@:EndCase
 
 
-	//@V@:Case M_Save
+	//@V@:Case M_SaveAS
 
-	case M_Save:
+	case M_SaveAs:
 
 	  {
 
-	    vNoticeDialog note(this);
+      char fich_imp[1024]="";
+      int indice=0;
 
-	    note.Notice("Save");
+      vFileSelect importar(this);
+      vNoticeDialog note(this);
+      char *extensiones[]={"*.mad",0};
+
+      if (modelo_cargado!=1)
+        break;
+
+  	  if (importar.FileSelect("Salvar MAD...",fich_imp,1023,extensiones,indice)) {
+             FILE *mad_out = fopen(fich_imp, "wb");
+             char magic=MAD_MAGIC;
+             int j;
+             fwrite(&magic,1,1,mad_out);
+             fwrite(model, sizeof(modelo), 1, mad_out);
+             for (j = 0; j < model->n_caras; j++)
+               fwrite(&(model->triangulos[j]), sizeof(cara), 1, mad_out);
+              fclose(mad_out);
+             printf("Grabadas %d caras\n",j);
+      }
 
 	    break;
 
@@ -546,18 +582,6 @@ extern modelo *model;
 
 
 	//@V@:Case M_SaveAs
-
-	case M_SaveAs:
-
-	  {
-
-	    vNoticeDialog note(this);
-
-	    note.Notice("Save As");
-
-	    break;
-
-	  }	//@V@:EndCase
 
 
 

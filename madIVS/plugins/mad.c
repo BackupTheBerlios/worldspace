@@ -132,11 +132,14 @@ int  DLLExport_ importar_modelo(char *fichero,void **model_tag){
     }
 
     fread(modelo_1, sizeof(modelo), 1, f_object);
+    printf("Cabecera:%d caras\n", modelo_1->n_caras);
+
 
     memset(modelo_1->base, 0, (sizeof(vertice) * 3));
     modelo_1->x = 0.0;
     modelo_1->y = 0.0;
     modelo_1->z = 0.0;
+
 
     tri = (cara *) malloc(sizeof(cara) * modelo_1->n_caras);
     modelo_1->triangulos = tri;
