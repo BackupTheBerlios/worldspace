@@ -20,7 +20,7 @@
 
 /*==============================================================================
 
-  $Id: mikmod_internals.h,v 1.3 2003/05/07 18:18:40 lordloki Exp $
+  $Id: mikmod_internals.h,v 1.4 2003/05/07 19:42:47 lordloki Exp $
 
   MikMod sound library internal definitions
 
@@ -37,7 +37,7 @@
 #define strcasecmp(s,t) stricmp(s,t)
 #endif
 
-#include <mikmod_build.h>
+#include "mikmod_build.h"
 
 #ifdef macintosh
 #ifndef __MWERKS__
@@ -55,10 +55,13 @@ static char *strdup(const char *str)
 }
 #endif
 
+#if defined(_MSC_VER) && !defined(__MWERKS__)
+#pragma warning(disable:4761)
+#endif
+
 #ifdef WIN32
 #ifndef __STDC__
 #define __STDC__
-#pragma warning(disable:4761)
 #endif
 #endif
 
