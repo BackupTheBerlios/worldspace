@@ -39,7 +39,7 @@ if test "$CC" = ""; then
 		CC="gcc"
 	else
 		$ECHO "not found, assuming \"cc\""
-		CC="cc"
+		CC="gcc"
 	fi
 else
 	$ECHO "found: \"$CC\""
@@ -364,7 +364,7 @@ BINARIES=""
 $ECHO
 $ECHO "	=== Make binaries ==="
 obj=`find -name "*\.c"|sed s/.c$/.o/` ;
-echo "w3d.x86:" $obj >firemake.binaries
+echo "w3d_x86.exe:" $obj >firemake.binaries
 if test -f "firemake.binaries"; then
 	$ECHO "RUN: cat firemake.binaries | sed s/:.*//" >> configure.log
 	for BINARY in `cat firemake.binaries | sed s/:.*// 2>>configure.log`; do

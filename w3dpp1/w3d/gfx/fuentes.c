@@ -181,7 +181,7 @@ int ini_fuente(void) {
     def=carga_fuente("def.tga",30,0);
     print(def,config.SCREEN_SIZE_X/2-12*15,config.SCREEN_SIZE_Y,0.5f,"WorldSpace 3D BUILD: %d",BUILD);
     SDL_GL_SwapBuffers();
-    sleep(5);
+    SDL_Delay(5000);
     if (def==NULL)
       return NO;
     else
