@@ -5,14 +5,13 @@
 #ifdef _LINUX
 #include <AL/al.h>
 #include <AL/alc.h>
-#include <AL/alut.h>
-#include <AL/alext.h>
+#include "alut.h"
 #endif
 #ifdef _WIN32
-#include <al\al.h>
-#include <al\alc.h>
-#include <al\alut.h>
-#include <eax.h>
+#include <AL\al.h>
+#include <AL\alc.h>
+#include "alut.h"
+#include <AL\eax.h>
 #endif
 
 /*!
@@ -20,10 +19,10 @@
 !*/
 ALCdevice *Device = NULL;       /* Dispositivo de sonido */
 #ifdef _LINUX
-    ALvoid * Context = NULL;    /* Contexto para Linux */
+ALvoid * Context = NULL;    /* Contexto para Linux */
 #endif  
 #ifdef _WIN32
-    ALCcontext * Context = NULL;        /* Contexto para Windows */
+ALCcontext * Context = NULL;        /* Contexto para Windows */
 #endif
 
 
