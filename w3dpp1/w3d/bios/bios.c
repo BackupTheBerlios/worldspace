@@ -30,11 +30,12 @@ por defecto
 */
 
 
-int init_bios(void) {
-	
-	logs=fopen("w3d_logs.txt","at");
-	
-	fprintf(logs,"\n\n\n\n
+int init_bios(void)
+{
+
+    logs = fopen("w3d_logs.txt", "at");
+
+    fprintf(logs, "\n\n\n\n
  ***************************************************************************
  *                 Hello World! WorldSpace has just arrived!               *
  ***************************************************************************
@@ -47,21 +48,22 @@ int init_bios(void) {
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************
-\n",BUILD);
-	if (carga_conf()) {
-		fprintf(logs,"Configuración:\n");
-		fprintf(logs,"\tResolución horz.(X)\t %d\n",config.SCREEN_SIZE_X);
-		fprintf(logs,"\tResolución vert.(Y)\t %d\n",config.SCREEN_SIZE_Y);
-		fprintf(logs,"\tPantalla completa\t %d\n",config.FULLSCREEN);
-		fprintf(logs,"\tDirectorio base\t %s\n\n",config.dir);
-	}
-	else {
-		fprintf(logs,"Imposible cargar configuración:\n");
-		return NO;
-	}
+\n", BUILD);
+    if (carga_conf()) {
+	fprintf(logs, "Configuración:\n");
+	fprintf(logs, "\tResolución horz.(X)\t %d\n",
+		config.SCREEN_SIZE_X);
+	fprintf(logs, "\tResolución vert.(Y)\t %d\n",
+		config.SCREEN_SIZE_Y);
+	fprintf(logs, "\tPantalla completa\t %d\n", config.FULLSCREEN);
+	fprintf(logs, "\tDirectorio base\t %s\n\n", config.dir);
+    } else {
+	fprintf(logs, "Imposible cargar configuración:\n");
+	return NO;
+    }
 
 
-  return SI;
+    return SI;
 
 }
 
@@ -73,39 +75,44 @@ de que éste no existiese). El fichero del configuración va a definir el comporta
 de la aplicación en muchos sentidos, por lo que es necesario cargarlo al principio.
 */
 
-int carga_conf(void){
+int carga_conf(void)
+{
 
-	FILE *conf;
-	
-	/* Carga de la configuración */
+    FILE *conf;
 
-	conf=fopen("w3_cfg.txt","rt");				// Abre el fichero de configuración
-	
-	if (conf==NULL) {							// Si no existe lo crea con la configuración por defecto
-		config.SCREEN_SIZE_X=640;		
-		config.SCREEN_SIZE_Y=480;
-		config.FULLSCREEN=0;
-		strcpy(config.dir,"ws_datos");
-		conf=fopen("w3_cfg.txt","wt");
-		fprintf(conf,"Fichero generado por WorldSpace3D. Modificar con cuidado\n\n");
-		fprintf(conf,"Resolución horz.(X)\t %d\n",config.SCREEN_SIZE_X);
-		fprintf(conf,"Resolución vert.(Y)\t %d\n",config.SCREEN_SIZE_Y);
-		fprintf(conf,"Pantalla completa\t %d\n",config.FULLSCREEN);
-		fprintf(conf,"Directorio base\t %s\n",config.dir);
-		fclose(conf);
-	}
-	else {
-		fscanf(conf,"Fichero generado por WorldSpace3D. Modificar con cuidado\n\n");
-		fscanf(conf,"Resolución horz.(X)\t %d\n",&(short int)config.SCREEN_SIZE_X);
-		fscanf(conf,"Resolución vert.(Y)\t %d\n",&(short int)config.SCREEN_SIZE_Y);
-		fscanf(conf,"Pantalla completa\t %d\n",&(char)config.FULLSCREEN);
-		fscanf(conf,"Directorio base\t %s\n",config.dir);
-		fclose(conf);
-	}
+    /* Carga de la configuración */
+
+    conf = fopen("w3_cfg.txt", "rt");	// Abre el fichero de configuración
+
+    if (conf == NULL) {		// Si no existe lo crea con la configuración por defecto
+	config.SCREEN_SIZE_X = 640;
+	config.SCREEN_SIZE_Y = 480;
+	config.FULLSCREEN = 0;
+	strcpy(config.dir, "ws_datos");
+	conf = fopen("w3_cfg.txt", "wt");
+	fprintf(conf,
+		"Fichero generado por WorldSpace3D. Modificar con cuidado\n\n");
+	fprintf(conf, "Resolución horz.(X)\t %d\n", config.SCREEN_SIZE_X);
+	fprintf(conf, "Resolución vert.(Y)\t %d\n", config.SCREEN_SIZE_Y);
+	fprintf(conf, "Pantalla completa\t %d\n", config.FULLSCREEN);
+	fprintf(conf, "Directorio base\t %s\n", config.dir);
+	fclose(conf);
+    } else {
+	fscanf(conf,
+	       "Fichero generado por WorldSpace3D. Modificar con cuidado\n\n");
+	fscanf(conf, "Resolución horz.(X)\t %d\n",
+	       &(short int) config.SCREEN_SIZE_X);
+	fscanf(conf, "Resolución vert.(Y)\t %d\n",
+	       &(short int) config.SCREEN_SIZE_Y);
+	fscanf(conf, "Pantalla completa\t %d\n",
+	       &(char) config.FULLSCREEN);
+	fscanf(conf, "Directorio base\t %s\n", config.dir);
+	fclose(conf);
+    }
 
 
-	
-	return SI;
+
+    return SI;
 
 
 }
@@ -117,18 +124,20 @@ Cierra los fichero de logs, y graba el fichero de configuración.
 
 */
 
-int cerrar_bios(void) {
+int cerrar_bios(void)
+{
 
     FILE *conf;
-    conf=fopen("w3_cfg.txt","wt");
-		fprintf(conf,"Fichero generado por WorldSpace3D. Modificar con cuidado\n\n");
-		fprintf(conf,"Resolución horz.(X)\t %d\n",config.SCREEN_SIZE_X);
-		fprintf(conf,"Resolución vert.(Y)\t %d\n",config.SCREEN_SIZE_Y);
-		fprintf(conf,"Pantalla completa\t %d\n",config.FULLSCREEN);
-		fprintf(conf,"Directorio base\t %s\n",config.dir);
-		fclose(conf);
-    fprintf(logs,"\n....Guardada la configuración\n");
-    fprintf(logs,"\n\nWorldSpace 3D se cerró correctamente");
+    conf = fopen("w3_cfg.txt", "wt");
+    fprintf(conf,
+	    "Fichero generado por WorldSpace3D. Modificar con cuidado\n\n");
+    fprintf(conf, "Resolución horz.(X)\t %d\n", config.SCREEN_SIZE_X);
+    fprintf(conf, "Resolución vert.(Y)\t %d\n", config.SCREEN_SIZE_Y);
+    fprintf(conf, "Pantalla completa\t %d\n", config.FULLSCREEN);
+    fprintf(conf, "Directorio base\t %s\n", config.dir);
+    fclose(conf);
+    fprintf(logs, "\n....Guardada la configuración\n");
+    fprintf(logs, "\n\nWorldSpace 3D se cerró correctamente");
     fclose(logs);
 
     return SI;
@@ -144,30 +153,31 @@ Abre un fichero preponiendo el path por defecto
 
 */
 
-FILE *abre_fichero(char *nombre, char *modo) {
+FILE *abre_fichero(char *nombre, char *modo)
+{
 
-      FILE *aux;
-      char f_fich[1024];
-      strcpy(f_fich,config.dir);
-      strcat(f_fich,"/");
-      strcat(f_fich,nombre);
-      _sis_msj("\n\t\t[bios]bios.c -> Cargando fichero ");
-      _sis_msj(f_fich);
-      aux=fopen(f_fich,modo);
-      if (aux)
-        return aux;
-      else {
-        _sis_msj(" error abriendo ");
-        _sis_msj(f_fich);
-        _sis_msj(" ");
-        return NULL;
-      }
-      return NULL;
-        
-        
+    FILE *aux;
+    char f_fich[1024];
+    strcpy(f_fich, config.dir);
+    strcat(f_fich, "/");
+    strcat(f_fich, nombre);
+    _sis_msj("\n\t\t[bios]bios.c -> Cargando fichero ");
+    _sis_msj(f_fich);
+    aux = fopen(f_fich, modo);
+    if (aux)
+	return aux;
+    else {
+	_sis_msj(" error abriendo ");
+	_sis_msj(f_fich);
+	_sis_msj(" ");
+	return NULL;
+    }
+    return NULL;
+
+
 
 }
-  
+
 /*!
 
 char prepara_apertura(char *nombre)
@@ -178,17 +188,17 @@ Se usa en el caso de que no queramos alterar el código de abrir fichero
 */
 
 
-char *prepara_apertura(char *nombre) {
+char *prepara_apertura(char *nombre)
+{
 
 
-      char *f_fich;
-      f_fich=(char *)malloc(1024);
-      strcpy(f_fich,config.dir);
-      strcat(f_fich,"/");
-      strcat(f_fich,nombre);
-      _sis_msj("\n\t\t[bios]bios.c -> Preparando PATH para fichero ");
-      _sis_msj(f_fich);
-      return f_fich;
+    char *f_fich;
+    f_fich = (char *) malloc(1024);
+    strcpy(f_fich, config.dir);
+    strcat(f_fich, "/");
+    strcat(f_fich, nombre);
+    _sis_msj("\n\t\t[bios]bios.c -> Preparando PATH para fichero ");
+    _sis_msj(f_fich);
+    return f_fich;
 
 }
-      
