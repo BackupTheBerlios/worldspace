@@ -1,32 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
  <LastCompileConfig>(Default)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
- <DocsAndViews NumberOfDocuments="8" >
-  <Doc0 CursorPosLine="1" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="60" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/main.c" >
+ <DocsAndViews NumberOfDocuments="4" >
+  <Doc0 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/worldspace/src/configure" >
    <View0 Top="0" Width="700" Attach="1" Height="390" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc0>
-  <Doc1 CursorPosLine="37" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="18" FileName="/usr/src/worldspace/w3dpp2/src/w3dsrc/wMain.c" >
+  <Doc1 CursorPosLine="29" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="7" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/bios/bios.c" >
    <View0 Top="0" Width="700" Attach="1" Height="390" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc1>
-  <Doc2 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/w3dpp2/src/w3dsrc/bios/wArgum.c" >
+  <Doc2 CursorPosLine="27" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="14" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/bios.h" >
    <View0 Top="0" Width="700" Attach="1" Height="390" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc2>
-  <Doc3 CursorPosLine="1" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="71" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/bios/bios.c" >
-   <View0 Top="0" Width="700" Attach="1" Height="390" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
-  </Doc3>
-  <Doc4 CursorPosLine="1" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="71" FileName="/usr/src/worldspace/w3dpp1/w3d/bios/bios.c" >
-   <View0 Top="0" Width="700" Attach="1" Height="390" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
-  </Doc4>
-  <Doc5 CursorPosLine="27" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="44" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/bios.h" >
-   <View0 Top="0" Width="700" Attach="1" Height="390" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
-  </Doc5>
-  <Doc6 CursorPosLine="1" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="57" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/w3d_base.h" >
+  <Doc3 CursorPosLine="35" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="13" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/main.c" >
    <View0 Top="0" Width="700" Attach="1" Height="390" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />
-  </Doc6>
-  <Doc7 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/w3dpp2/src/w3dsrc/wComun.h" >
-   <View0 Top="0" Width="700" Attach="1" Height="390" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
-  </Doc7>
+  </Doc3>
  </DocsAndViews>
 </KDevPrjSession>

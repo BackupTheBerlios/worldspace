@@ -34,14 +34,14 @@ cflags=
 cppflags=
 cxxflags=\s-O0
 ldadd=
-ldflags=\s\s
+ldflags=\s \s
 libtool_dir=
 path_to_bin_program=..
 
 [General]
 AMChanged=false
 author=Grupo WorldSpace
-configure_args=
+configure_args=\s--build=i386-linux --host=i386-linux --target=i386-linux\s
 dir_where_make_will_be_called=./
 email=neuralgya@users.berlios.de
 kdevprj_version=1.3
@@ -54,7 +54,7 @@ project_type=normal_empty
 short_info=
 sub_dir=
 version=0.1
-version_control=None
+version_control=CVS
 workspace=1
 
 [LFV Groups]
@@ -70,21 +70,9 @@ groups=Headers,Sources,GNU,Translations,User Interface,Others
 sub_dirs=w3dsrc
 
 [lang/Makefile.am]
-files=lang/en.configure,lang/es.configure,
+files=
 sub_dirs=
 type=normal
-
-[lang/en.configure]
-dist=true
-install=false
-install_location=
-type=DATA
-
-[lang/es.configure]
-dist=true
-install=false
-install_location=
-type=DATA
 
 [w3dsrc/Makefile.am]
 files=w3dsrc/main.c,w3dsrc/bios.h,w3dsrc/w3d_base.h
