@@ -139,8 +139,10 @@ int establece_conf() {
 	T_FUNC_IN;
 
 	if ((f_conf=abre_fichero("w3d.ini","rt"))) {
-		    configuracion.Xtam=extrae_valor_entero(f_conf,PXSCREEN);
-		    configuracion.Ytam=extrae_valor_entero(f_conf,PYSCREEN);
+		   /*
+		   Por Hacer: Parsear este fichero
+		   y establecer las variables de configuracion
+		   */
 	}
 	else {
 	     /* Cargamos la configuración por defecto */
@@ -155,6 +157,11 @@ int establece_conf() {
 	     strcpy(configuracion.sDirEspacios, WDIR_ESPACIOS);
 
 	}
+
+    T_FUNC_OUT
+
+
+    return SI;
 
 }
 

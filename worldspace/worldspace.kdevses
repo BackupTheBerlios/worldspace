@@ -4,35 +4,35 @@
  <LastCompileConfig>(Default)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
  <DocsAndViews NumberOfDocuments="10" >
-  <Doc0 CursorPosLine="138" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="10" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/bios/bios.c" >
-   <View0 Top="0" Width="730" Attach="1" Height="403" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />
+  <Doc0 CursorPosLine="163" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="4" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/bios/bios.c" >
+   <View0 Top="0" Width="730" Attach="1" Height="387" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc0>
   <Doc1 CursorPosLine="18" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/bios.h" >
-   <View0 Top="0" Width="730" Attach="1" Height="403" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+   <View0 Top="0" Width="96" Attach="1" Height="26" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc1>
-  <Doc2 CursorPosLine="37" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/main.c" >
-   <View0 Top="0" Width="730" Attach="1" Height="403" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc2 CursorPosLine="33" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="4" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/main.c" >
+   <View0 Top="0" Width="730" Attach="1" Height="387" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />
   </Doc2>
   <Doc3 CursorPosLine="30" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/sdl_gl.h" >
-   <View0 Top="0" Width="730" Attach="1" Height="403" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+   <View0 Top="0" Width="730" Attach="1" Height="387" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc3>
   <Doc4 CursorPosLine="46" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="51" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/globales.h" >
-   <View0 Top="0" Width="730" Attach="1" Height="403" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+   <View0 Top="0" Width="730" Attach="1" Height="387" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc4>
   <Doc5 CursorPosLine="46" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="33" FileName="/usr/src/worldspace/worldspace/src/w3dsrc/w3d_base.h" >
-   <View0 Top="0" Width="730" Attach="1" Height="403" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+   <View0 Top="0" Width="730" Attach="1" Height="387" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc5>
   <Doc6 CursorPosLine="29" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/w3dpp1/w3d/gfx/fuentes.c" >
-   <View0 Top="0" Width="730" Attach="1" Height="403" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+   <View0 Top="0" Width="730" Attach="1" Height="387" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc6>
   <Doc7 CursorPosLine="237" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="7" FileName="/usr/src/worldspace/w3dpp2/src/w3dsrc/wMain.c" >
-   <View0 Top="0" Width="730" Attach="1" Height="403" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+   <View0 Top="0" Width="730" Attach="1" Height="387" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc7>
   <Doc8 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/w3dpp2/src/w3dsrc/bios/wUtil.c" >
-   <View0 Top="0" Width="730" Attach="1" Height="403" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+   <View0 Top="0" Width="730" Attach="1" Height="387" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc8>
   <Doc9 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/w3dpp2/src/w3dsrc/bios/wFichero.c" >
-   <View0 Top="0" Width="730" Attach="1" Height="403" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+   <View0 Top="0" Width="730" Attach="1" Height="387" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc9>
  </DocsAndViews>
 </KDevPrjSession>
