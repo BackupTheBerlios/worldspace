@@ -139,7 +139,7 @@ extern modelo *model;
 	{"&Importar...", M_Open, isSens, notChk, noKeyLbl, noKey, noSub},
 	{"&Importar textura TGA...", M_Open_TGA, isSens, notChk, noKeyLbl, noKey, noSub},
 	{"&Importar textura PCX...", M_Open_PCX, isSens, notChk, noKeyLbl, noKey, noSub},
-    {"&Exportar", M_SaveAs, isSens, notChk, noKeyLbl, noKey, noSub},
+  {"&Exportar", M_SaveAs, isSens, notChk, noKeyLbl, noKey, noSub},
 	{"-", M_Line, notSens, notChk, noKeyLbl, noKey, noSub},
 	{"&Salir", M_Exit, isSens, notChk, noKeyLbl, noKey, noSub},
 	{NULL}
