@@ -327,7 +327,7 @@ int renderiza_escena()
     render_mad(nave);
 
     /* Establecemos la guía */
-    glDisable(GL_TEXTURE_2D);
+    /*glDisable(GL_TEXTURE_2D);
     glDisable(GL_CULL_FACE);
     glDisable(GL_LIGHTING);
     glLoadIdentity();
