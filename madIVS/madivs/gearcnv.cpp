@@ -26,7 +26,7 @@
 #define fsqrt sqrt
 
 #include "globales.h"
-#include "trackball.h"
+
 modelo *model;
 
 static double d_near = 1.0;
@@ -87,12 +87,7 @@ void display(void)
     glLoadMatrixd(&matriz_proyeccion_A[0][0]);
 
     glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glTranslatef(0.0f,0.0f,zoom);
-    glMultMatrixd(&matriz_modelview[0][0]);
-
-
-
+    glLoadMatrixd(&matriz_modelview[0][0]);
   	glDisable(GL_LIGHTING);
 		glDisable(GL_TEXTURE_2D);
 
@@ -102,6 +97,7 @@ void display(void)
 			 glVertex3f(0.1f,0.0f,0.0f);
 	
 		glColor3f(0.0f,1.0f,0.0f);
+
 			 glVertex3f(0.0f,0.0f,0.0f);
 			 glVertex3f(0.0f,0.1f,0.0f);
 
@@ -196,19 +192,18 @@ myReshape(int w, int h)
 void
 myinit(void)
 {
-    float spin_quat[4];
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(45.0f,(GLfloat) 1.3, 0.01f, 100.0f);
-
     glGetDoublev(GL_PROJECTION_MATRIX, &matriz_proyeccion_A[0][0]);
-
     glLoadMatrixd(&matriz_proyeccion_A[0][0]);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glGetDoublev(GL_PROJECTION_MATRIX, &matriz_modelview[0][0]);
-    glLoadMatrixd(&matriz_modelview[0][0]);
+    glTranslatef(0.0f,0.0f,zoom);
+    glGetDoublev(GL_MODELVIEW_MATRIX, &matriz_modelview[0][0]);
+
 
 
 
@@ -253,10 +248,6 @@ myinit(void)
   	glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    trackball( spin_quat,0.0f,0.0f,0.0f,0.0f );
-    add_quats( spin_quat,quaternion,quaternion );
-    build_rotmatrix(matriz_modelview, quaternion);
-
     display();
 
 }
@@ -348,14 +339,15 @@ myinit(void)
 
     vBaseGLCanvasPane::MouseMove(x,y,button);
     if (button==1){
-      trackball(spin_quat,  (2.0*rX-ww/2.0f)/(ww),
-                            -(2.0*rY-hh/2.0f)/(hh),
-                            (2.0*x-ww/2.0f)/(ww),
-                            -(2.0*y-hh/2.0f)/(hh));
-      add_quats( spin_quat,quaternion,quaternion );
-      build_rotmatrix(matriz_modelview, quaternion);
-      //printf("%d,%d\n",x,y);
-      rX=x;rY=y;
+          glMatrixMode(GL_MODELVIEW);
+          glLoadMatrixd(&matriz_modelview[0][0]);
+          glRotatef(x-rX,matriz_modelview[0][1],matriz_modelview[1][1],matriz_modelview[2][1]);
+          glGetDoublev(GL_MODELVIEW_MATRIX, &matriz_modelview[0][0]);
+          glLoadMatrixd(&matriz_modelview[0][0]);
+          glRotatef(y-rY,matriz_modelview[0][0],matriz_modelview[1][0],matriz_modelview[2][0]);
+          glGetDoublev(GL_MODELVIEW_MATRIX, &matriz_modelview[0][0]);
+
+          rX=x;rY=y;
     }
     if (button==3){
         if (y>rY)
@@ -363,6 +355,7 @@ myinit(void)
         else
           zoom-=0.02f;
       rX=x;rY=y;
+    matriz_modelview[3][2]=(double)zoom;
     }
 
 

@@ -54,7 +54,7 @@ install_location=
 type=DATA
 
 [madivs/Makefile.am]
-files=madivs/gearapp.cpp,madivs/gearapp.h,madivs/gearcmdw.cpp,madivs/gearcmdw.h,madivs/gearcnv.cpp,madivs/gearcnv.h,madivs/Makefile,madivs/plugins.h,madivs/plugins.cpp,madivs/globales.h,madivs/estructuras.h,madivs/trackball.c,madivs/trackball.h
+files=madivs/gearapp.cpp,madivs/gearapp.h,madivs/gearcmdw.cpp,madivs/gearcmdw.h,madivs/gearcnv.cpp,madivs/gearcnv.h,madivs/Makefile,madivs/plugins.h,madivs/plugins.cpp,madivs/globales.h,madivs/estructuras.h
 sub_dirs=
 type=prog_main
 
@@ -121,18 +121,6 @@ install_location=
 type=SOURCE
 
 [madivs/plugins.h]
-dist=true
-install=false
-install_location=
-type=HEADER
-
-[madivs/trackball.c]
-dist=true
-install=false
-install_location=
-type=SOURCE
-
-[madivs/trackball.h]
 dist=true
 install=false
 install_location=

@@ -26,14 +26,12 @@ C_FLAGS	=	-O -g -ggdb -DLINUX
 
 SRCS	=\
 	$(Src)/plugins.cpp\
-	$(Src)/trackball.c\
 	$(Src)/gearapp.cpp\
 	$(Src)/gearcmdw.cpp\
 	$(Src)/gearcnv.cpp
 
 EXOBJS	=\
 	$(oDir)/plugins.o\
-	$(oDir)/trackball.o\
 	$(oDir)/gearapp.o\
 	$(oDir)/gearcmdw.o\
 	$(oDir)/gearcnv.o
@@ -82,5 +80,3 @@ $(oDir)/gearcnv.o: gearcnv.cpp gearcnv.h
 $(oDir)/plugins.o: plugins.cpp plugins.h
 	$(CC) $(C_FLAGS) $(incDirs) -c -o $@ $<
 
-$(oDir)/trackball.o: trackball.c trackball.h
-	$(CC) $(C_FLAGS) $(incDirs) -c -o $@ $<
