@@ -15,14 +15,20 @@
  *                                                                         *
  ***************************************************************************/
 
-
 #ifndef _GLOBALES_
 #define _GLOBALES_
-
-#include "w3d_base.h"
+//==========================================================================
 #include <stdio.h>
 
+#include "w3d_base.h"
+#include "color.h"
+#include "fuente.h"
 
+//==========================================================================
+extern float             fFondo  [4];
+extern miColor           vPaleta [256*2];
+extern miLFuentes        vListaFuentes;
+//==========================================================================
 /*!
 Variable para guardar la configuración
 !*/
@@ -32,8 +38,7 @@ extern estr_config configuracion;
 Nivel de traza
 */
 extern char nivel_traza;
-
-
+//==========================================================================
 /*!
 Salida de logs
 */
@@ -44,7 +49,9 @@ Wrapper para fopen, que inserta al nombre del fichero
 el directorio de los datos
 */
 extern FILE *abre_fichero(char *nombre, char *modo);
-
-
-
+//==========================================================================
 #endif
+
+//==========================================================================
+//  Fin de globales.h
+//==========================================================================
