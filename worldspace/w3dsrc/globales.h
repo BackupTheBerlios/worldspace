@@ -15,6 +15,10 @@
  *                                                                         *
  ***************************************************************************/
 
+
+#ifndef _GLOBALES_
+#define _GLOBALES_
+ 
 #include "w3d_base.h"
 #include <stdio.h>
 
@@ -23,11 +27,6 @@
 Variable para guardar la configuración
 !*/
 extern estr_config configuracion;
-
-/*!
-Descriptor del fichero de logs
-!*/
-FILE *log;
 
 /*!
 Nivel de traza
@@ -47,3 +46,5 @@ el directorio de los datos
 extern FILE *abre_fichero(char *nombre,char *modo);
 
 
+
+#endif

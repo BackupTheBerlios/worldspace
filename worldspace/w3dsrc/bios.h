@@ -27,6 +27,7 @@ por defecto.
 */
 
 extern int ini_bios(int iArg, char **cArg);
+extern int cerrar_bios(void);
 
 /*!
 Wrapper para fopen, que inserta al nombre del fichero

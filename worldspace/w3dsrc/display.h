@@ -1,8 +1,8 @@
 /***************************************************************************
-                          main.c  -  Inicio de la aplicación
+                          display.h  -  Contexto gráfico
                              -------------------
-    begin                : dom feb 9 2003
-    copyright            : (C) 2003 by Grupo WorldSpace
+    begin                : Thu Nov 14 2002
+    copyright            : (C) 2002 by neuralgya
     email                : neuralgya@users.berlios.de
  ***************************************************************************/
 
@@ -15,31 +15,24 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "w3d_base.h"
-#include "bios.h"
-#include "display.h"
-#include "engine.h"
+#ifndef _DISPLAY_
+#define _DISPLAY_
+
 
  
+/*!
+int sis_ini_display(void)
+Inicialización del contexto OpenGL mediante SDL.
+Abrirá la ventana SDL y le asignará un contexto OpenGL.
+A su vez, llamará a la inicialización de OpenGL.
+*/
+extern int ini_display(void);
+
 
 /*!
-==================================================================
-Inicio de la aplicación. Punto de entrada.
-==================================================================
-!*/
+Cierre el contexto gráfico
+*/
+extern int cerrar_display(void);
 
-int main(int iArg, char **vArg)
-{
+#endif
 
-
-    ini_bios(iArg,vArg);
-    ini_display();
-    ini_gl(SI);
-
-    cerrar_display();
-    cerrar_bios();
-    
-
-
-    return SI;
-}

@@ -52,14 +52,16 @@ Patrones para leer la configuracion inicial del fichero ini.
 #define PDIR_MODELOS  "DirModelos  = "
 #define PDIR_ESPACIOS "DirEspacios = "
 
-/*
-Cadena vacía de 80 espacios
-*/
-char cad_traza[80];
+
 
 /*!
 ================================== DECLARACION DE VARIABLES
 !*/
+
+/*
+Cadena vacía de 80 espacios, la usaremos para la traza
+*/
+char cad_traza[80];
 
 /*!
 Variable para guardar la configuracion
@@ -69,7 +71,7 @@ estr_config configuracion;
 /*!
 Descriptor del fichero de logs
 !*/
-FILE *log;
+FILE *salida_log;
 
 /*!
 Nivel de traza
@@ -96,9 +98,11 @@ int log_msj(char *cadena,...)
     va_end(ap);                 		// almacenando el resultado en text
 
     
-    fprintf(log,&cad_traza[80-nivel_traza]);
-    fprintf(log,texto);
+    fprintf(salida_log,&cad_traza[79-nivel_traza*2]);
+    fprintf(salida_log,texto);
 
+    fflush(salida_log);
+    
     return SI;
 }
 
@@ -108,8 +112,15 @@ Esta función inicializa el sistema de logs
 */
 int ini_sis_log()
 {
+    int i;
 
-    if (!(log=fopen("w3d.log","wt")))
+    for (i=0;i<79;i++)
+		cad_traza[i]=' ';
+
+	cad_traza[i]='\0';	
+	
+	
+    if (!(salida_log=fopen("w3d.log","wt")))
 	return NO;
     else
 	{
@@ -187,6 +198,20 @@ int ini_bios(int iArg, char **cArg)
 	}
 	
 
+	log_msj("[OK] Sistema básico inicializado\n");
+
+    T_FUNC_OUT
+
+    return SI;
+
+}
+
+int cerrar_bios()
+{
+    T_FUNC_IN
+
+	log_msj("[bios.c] Cerrando bios....\n");
+    fclose(salida_log);
     T_FUNC_OUT
 
     return SI;
@@ -209,12 +234,12 @@ FILE *abre_fichero(char *nombre,char *modo)
     strcpy(nombre_completo,configuracion.sDirGeneral);
     strcat(nombre_completo,"/");
     strcat(nombre_completo,nombre);
-    log_msj("     Abriendo %s\n",nombre);
+    log_msj("[bios.c] Abriendo %s\n",nombre);
     tmp=fopen(nombre_completo,modo);
     if (!tmp) 
 		log_msj("[KO] Error abriendo %s\n",nombre);
 	else	
-		 log_msj("[OK] $s abierto \n",nombre);
+		 log_msj("[OK] %s abierto \n",nombre);
 
     T_FUNC_OUT
 
