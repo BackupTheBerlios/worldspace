@@ -186,26 +186,9 @@ int renderiza_escena()
     glLoadIdentity();
     glDisable(GL_LIGHTING);
 
-    /* Dibujamos estrellas */
-/*
-    glColor3f(1.0f, 1.0f, 1.0f);
-    for (aux = 0; aux < n_estrellas; aux += 4) {
-        glPointSize(estrellas[aux + 3]);
-        glBegin(GL_POINTS);
-        glVertex3f(estrellas[aux], estrellas[aux + 1], estrellas[aux + 2]);
-        glEnd();
-    }
-
-*/
-
-/*
-
-*/
-
-    glColor3f(1.0f, 1.0f, 1.0f);
-
 
     /* Dibujamos Sky-Boxes */
+    glColor3f(1.0f, 1.0f, 1.0f);
     glEnable(GL_TEXTURE_2D);
 
     glBindTexture(GL_TEXTURE_2D, matriz_texturas[sprites_spc[0].textura]);      // Bind the Texture to the object
@@ -354,7 +337,7 @@ int renderiza_escena()
     	glVertex3f(camara[3][0] + camara[2][0], camara[3][1] + camara[2][1], camara[3][2] + camara[2][2]);
 	glVertex3f(nave->x,nave->y,nave->z);
     glEnd();
-
+	
     glEnable(GL_TEXTURE_2D);
     print_p(def,IZQUIERDA,config.SCREEN_SIZE_Y,.25f,"Velocidad %f m/s %f,%f,%f",velocidad*10,nave->x,nave->y,nave->z);
 

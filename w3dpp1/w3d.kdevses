@@ -3,11 +3,11 @@
 <KDevPrjSession>
  <LastCompileConfig>(Predeterminado)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
- <DocsAndViews NumberOfDocuments="7" >
+ <DocsAndViews NumberOfDocuments="8" >
   <Doc0 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/w3dpp1/w3d/engine/espacio.c" >
    <View0 Top="0" Width="761" Attach="1" Height="389" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc0>
-  <Doc1 CursorPosLine="98" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="4" FileName="/usr/src/worldspace/w3dpp1/w3d/engine/engine.c" >
+  <Doc1 CursorPosLine="339" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="1" FileName="/usr/src/worldspace/w3dpp1/w3d/engine/engine.c" >
    <View0 Top="0" Width="761" Attach="1" Height="389" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc1>
   <Doc2 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/w3dpp1/w3d/engine/mad.h" >
@@ -23,7 +23,10 @@
    <View0 Top="0" Width="761" Attach="1" Height="389" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc5>
   <Doc6 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/w3dpp1/w3d/input/input.c" >
-   <View0 Top="0" Width="761" Attach="1" Height="389" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />
+   <View0 Top="0" Width="761" Attach="1" Height="389" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc6>
+  <Doc7 CursorPosLine="195" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="21" FileName="/usr/src/worldspace/w3dpp1/w3d/gfx/fuentes.c" >
+   <View0 Top="0" Width="761" Attach="1" Height="389" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />
+  </Doc7>
  </DocsAndViews>
 </KDevPrjSession>

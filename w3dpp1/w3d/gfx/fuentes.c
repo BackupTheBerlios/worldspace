@@ -191,9 +191,9 @@ int print_p(FUENTE * fuente, char align, float y, float tam, char *texto, ...)
 
     glBindTexture(GL_TEXTURE_2D, fuente->mapabits);
     i = strlen(text);
-    _sis_msj("\t[dbg] ");
+    /*_sis_msj("\t[dbg] ");
     _sis_msj(text);
-    _sis_msj("\n");
+    _sis_msj("\n");*/
 
 
     if (align==CENTRO) {
