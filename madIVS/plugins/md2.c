@@ -9,10 +9,12 @@
 #ifdef W3DWIN32
 #include <windows.h>
 #define DLLExport __declspec(dllexport) __cdecl
+#define DLLExport_ __declspec(dllexport) __cdecl
 #endif
 
 #ifdef LINUX
 #define DLLExport *
+#define DLLExport_ 
 #endif
 
 char DLLExport mostrar_autor(void);
@@ -21,7 +23,7 @@ char DLLExport mostrar_info(void);
 int  DLLExport mostrar_version(void);
 int  DLLExport mostrar_fecha(void);
 char DLLExport mostrar_extension(void);
-int  DLLExport importar_modelo(char *fichero,void **model_tag);
+int  DLLExport_ importar_modelo(char *fichero,void **model_tag);
 
 
 
@@ -206,7 +208,7 @@ int  DLLExport  mostrar_fecha(void){
 char DLLExport mostrar_extension(void){
         return (char *)&extension[0];
 }
-int  DLLExport importar_modelo(char *fichero,void **model_tag){
+int  DLLExport_ importar_modelo(char *fichero,void **model_tag){
 
 
     float avertexnormals[162][3] = {

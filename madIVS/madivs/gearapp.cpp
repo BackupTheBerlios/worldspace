@@ -16,6 +16,7 @@
 
 #include <v/vnotice.h>
 #include <stdio.h>
+#include <unistd.h>
 
 char RUNPATH[2048];         // Path de ejecución.
 
@@ -54,6 +55,7 @@ char RUNPATH[2048];         // Path de ejecución.
     int w, int h, vAppWinInfo* winInfo)
 
   {
+
 
     vAppWinInfo* awinfo = winInfo;
 
@@ -203,14 +205,17 @@ int AppMain(int argc, char** argv)
     int i;
    
     
-    strcpy(RUNPATH,argv[0]);
+    /*strcpy(RUNPATH,argv[0]);
     for (i=strlen(RUNPATH)-1;i>=0;i--)
         if ((RUNPATH[i]=='\\')||(RUNPATH[i]=='/')) {
                 RUNPATH[i+1]='\0';
                 break;
         }
+    */
+    getcwd(RUNPATH,2046);
+    strcat(RUNPATH,"/");
 
-    
+     printf("RUNPATH : %s\n", RUNPATH);
     
     (void) theApp->NewAppWin(0, "madIVS", 300, 300);
     vNoticeDialog note(theApp);

@@ -37,8 +37,8 @@
 #define CierraDLL while(0==1){;}
 HINSTANCE hDll;
 #endif
-#ifdef LINUX
 
+#ifdef LINUX
 #include <dlfcn.h>
 void *hDll;
 inline void *dlopen2(char *fich) {return (void *)dlopen(fich,RTLD_LAZY);}
@@ -201,11 +201,11 @@ int importar_modelo(int n_plugin,char *file) {
       void *model_tag;
       int ok;
 
-
+      printf("\n%s\n",plugins[n_plugin].fich);
       hDll = CargaDLL(plugins[n_plugin].fich);
 
       if (hDll==NULL) {
-        printf("No es una librería dinámica válida: ");
+        printf("No es una librería dinámica válida: %s\n",dlerror());
         return -1;
       }
 
@@ -221,7 +221,7 @@ int importar_modelo(int n_plugin,char *file) {
       CierraDLL;
 
       model=(modelo *)model_tag;
-            
+      printf("importar_modelo_dll devolvió %d\n",ok);
       return ok;
 
 
