@@ -337,7 +337,10 @@ int renderiza_escena()
     /* Renderizamos una nave de prueba */
 
     render_mad(nave);
-    glLoadIdentity();
+
+
+    /* Establecemos la guía */
+  
     glDisable(GL_LIGHTING);
     glRasterPos3f(nave->x, nave->y, nave->z);
     glGetBooleanv(GL_CURRENT_RASTER_POSITION_VALID, &visible);
