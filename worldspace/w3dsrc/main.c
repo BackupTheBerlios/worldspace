@@ -19,6 +19,7 @@
 #include "bios.h"
 #include "display.h"
 #include "engine.h"
+#include "audio.h"
 
 /*!
 ==================================================================
@@ -35,7 +36,7 @@ int main(int iArg, char **vArg)
     if (!ini_display())
         return NO;
 
-	if (!ini_audio())
+    if (!ini_audio())
         return NO;
 
     if (!ini_gl(SI))
