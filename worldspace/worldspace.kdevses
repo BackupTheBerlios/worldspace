@@ -48,5 +48,5 @@
 <View0 Top="0" Width="815" Attach="1" Height="399" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc20>
   <Doc21 CursorPosLine="9" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="26" FileName="/home/lordloki/hacking/worldspace/w3dsrc/audio/alut.h" >
 <View0 Top="0" Width="815" Attach="1" Height="399" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc21>
-  <Doc22 CursorPosLine="215" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="55" FileName="/home/lordloki/hacking/worldspace/w3dsrc/audio/musica_ogg.c" >
+  <Doc22 CursorPosLine="22" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="93" FileName="/home/lordloki/hacking/worldspace/w3dsrc/audio/musica_ogg.c" >
 <View0 Top="0" Width="815" Attach="1" Height="399" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />  </Doc22> </DocsAndViews></KDevPrjSession>
