@@ -182,7 +182,7 @@ int repeticion ---> -1 bucle infinito y 1,2,3.... numero de veces
 ===============================================================================
 */
 
-extern int reproducir_musica ( int repeticion );
+extern int reproducir_musica ( int repetir );
 
 /*!
 =======================================================================================

@@ -31,6 +31,7 @@
 ALenum formato; /* Utilizado en la carga de archivos OGG */
 OggVorbis_File buff;
 ALint estado;
+int repeticion;
 int buffers_vacios = 0;
 int current_section = -1;
 vorbis_info *informacion = NULL;
@@ -160,10 +161,8 @@ int resetear_musica (void){
        log_msj ("[KO] No se pueden parar el streamsource\n");
        return NO;
      }
-     
      /* Matamos el thread*/
      SDL_KillThread ( threadmusica );
-     
      /* Borramos buffers y sources */
      alDeleteSources(1, streamsource);
      if (alGetError() != AL_NO_ERROR){
@@ -175,7 +174,6 @@ int resetear_musica (void){
        log_msj ("[KO] No se pueden borrar los buffers\n");
        return NO;
      }
-
      return SI;
 }
 
@@ -190,64 +188,83 @@ Parametros : No hay que pasarle parametros
 
 int  actualizar_musica ( void ){
   
-    int cont = 0, cancion_acabada = 0;
+    int cont = 0,contador = 0, cancion_acabada = NO, repeticion_acabada = NO;
     ALuint buffer_intercambio;
-    
-    /* A partir de aqui es donde realmente empieza el Streaming*/
-    while ( cancion_acabada == NO ){
-      /* Comprobamos estado de los buffers */
-      alGetSourcei ( streamsource[0], AL_BUFFERS_PROCESSED, &buffers_vacios);
-      /* Si algun buffer esta vacio, lo rellenamos */
-      if ( buffers_vacios > 0 ){
-        while ( buffers_vacios ){
-          /* Desasignamos buffers para rellenarlos */
-          alSourceUnqueueBuffers ( streamsource[0], 1, &buffer_intercambio );
-          if ( (alGetError( )) != AL_NO_ERROR ){
-            log_msj ("[KO] No va el streaming\n");
+
+    /* Aqui establacemos el primer bucle para la repeticion */
+    while ( repeticion_acabada == NO ){
+      /* A partir de aqui es donde realmente empieza el Streaming*/
+      while ( cancion_acabada == NO ){
+        /* Comprobamos estado de los buffers */
+        alGetSourcei ( streamsource[0], AL_BUFFERS_PROCESSED, &buffers_vacios);
+        /* Si algun buffer esta vacio, lo rellenamos */
+        if ( buffers_vacios > 0 ){
+          while ( buffers_vacios ){
+            /* Desasignamos buffers para rellenarlos */
+            alSourceUnqueueBuffers ( streamsource[0], 1, &buffer_intercambio );
+            if ( (alGetError( )) != AL_NO_ERROR ){
+              log_msj ("[KO] No va el streaming\n");
+            }
+            /* Descomprimimos datos en el buffer intermedio */	
+            if ( (cont = ov_read ( &buff, (char *)&waveout, BUFFER_MUSICA, 0, 2, 1, &current_section)) == 0){
+              cancion_acabada = SI;
+              break;
+            }
+            /* Los  anyadimos en el buffer */
+            alBufferData ( buffer_intercambio, formato, waveout, BUFFER_MUSICA, informacion->rate );
+            if ((alGetError()) != AL_NO_ERROR ){
+              log_msj ("[KO] No se puede añadir datos al buffer\n");
+            }
+            /* Asignamos de nuevo los buffers al streamsource */
+            alSourceQueueBuffers ( streamsource[0], 1, &buffer_intercambio );
+            buffers_vacios --;
           }
-          /* Descomprimimos datos en el buffer intermedio */	
-          if ( (cont = ov_read ( &buff, (char *)&waveout, BUFFER_MUSICA, 0, 2, 1, &current_section)) == 0){
-            cancion_acabada = SI;
-            break;
-          }
-          /* Los  anyadimos en el buffer */
-          alBufferData ( buffer_intercambio, formato, waveout, BUFFER_MUSICA, informacion->rate );
-          if ((alGetError()) != AL_NO_ERROR ){
-            log_msj ("[KO] No se puede añadir datos al buffer\n");
-          }
-          /* Asignamos de nuevo los buffers al streamsource */
-          alSourceQueueBuffers ( streamsource[0], 1, &buffer_intercambio );
-          buffers_vacios --;
         }
+        /* Si ocurre buffer underrun lo ponemos en marcha de nuevo o si esta en pausa lo paramos*/
+        alGetSourcei(streamsource[0], AL_SOURCE_STATE, &estado);
+        if (estado != AL_PLAYING){
+          if (estado != AL_PAUSED){
+            alSourcePlay(streamsource[0]);
+          }else{
+            while (estado == AL_PAUSED){
+              alGetSourcei(streamsource[0], AL_SOURCE_STATE, &estado);
+              SDL_Delay(10);
+            }
+          }
+        }    
+        /* Para sincronizar mejor la musica y que no se imponga al thread principal */
+        SDL_Delay(20);
       }
-      /* Si ocurre buffer underrun lo ponemos en marcha de nuevo o si esta en pausa lo paramos*/
-      alGetSourcei(streamsource[0], AL_SOURCE_STATE, &estado);
-      if (estado != AL_PLAYING){
-        if (estado != AL_PAUSED){
-          alSourcePlay(streamsource[0]);
-        }else{
-          while (estado == AL_PAUSED){
-            alGetSourcei(streamsource[0], AL_SOURCE_STATE, &estado);
-            SDL_Delay(10);
-          }
-        }
-      }    
-      /* Para sincronizar mejor la musica y que no se imponga al thread principal */
-      SDL_Delay(20);
-  }
-  return SI;    
+      /* A partir de aqui miramos cuantas veces tiene que ser repetida la musica */
+      contador = contador + 1;
+      if ( (contador >= repeticion) && (repeticion != -1) ){
+        repeticion_acabada = SI;
+      }else{
+	/* Rebobinamos la musica hasta el principio */
+	if ( ov_time_seek ( &buff, 0 ) != 0 ){
+          log_msj ("[KO] No se puede rebobinar la musica\n");
+          repeticion_acabada = SI;
+	}else{
+	  cancion_acabada = NO;
+	}
+      }
+    }
+    return SI;    
 }
 
 /********************************************************
-Funcion       : reproducir_musica ( )
+Funcion       : reproducir_musica ( int repetir )
 Objetivo      : reproduce la musica seleccionada
 Parametros :
 
-int repeticion ---> -1 bucle infinito y 1,2,3.... numero de veces
+int repetir  --> -1 bucle infinito y 1,2,3.... numero de veces
                             que se repite
 ********************************************************/
 
-int reproducir_musica ( int repeticion ){	
+int reproducir_musica ( int repetir ){
+
+    /* Para la repeticion de la musica */
+    repeticion = repetir;
   
     /* Creamos thread independiente para la musica */
     threadmusica = SDL_CreateThread ((void *)actualizar_musica, NULL);
