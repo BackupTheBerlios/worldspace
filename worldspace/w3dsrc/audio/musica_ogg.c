@@ -157,7 +157,7 @@ Parametros : No hay que pasarle parametros
 
 int resetear_musica (  ){
 
-      /* Cuando queremos cambiar la cancion, paramos todo y borramos buffers y fuentes */
+     /* Cuando queremos cambiar la cancion, paramos todo y borramos buffers y fuentes */
      alSourceStopv(1, streamsource);
      if (alGetError() != AL_NO_ERROR){
        log_msj ("[KO] No se pueden parar el streamsource\n");
@@ -193,43 +193,44 @@ Parametros : No hay que pasarle parametros
 
 int  actualizar_musica (  ){
   
-    	int cont = 0;
-    	int contador = 0, cancion_acabada = 0;
-     ALuint buffer_intercambio;
-
+    int cont = 0, cancion_acabada = 0;
+    ALuint buffer_intercambio;
+    ALint estado;
+    
 	/* A partir de aqui es donde realmente empieza el Streaming*/
-	while ( cancion_acabada == 0 ){
-
-            /* Comprobamos estado de los buffers */
-        	alGetSourceiv ( streamsource[0], AL_BUFFERS_PROCESSED, &buffers_vacios);
-        
-       		/* Si algun buffer esta vacio, lo rellenamos */
-       		if ( buffers_vacios > 0 ){
-         
-               while ( buffers_vacios ){
-				
-                    /* Desasignamos buffers para rellenarlos */
-          			alSourceUnqueueBuffers ( streamsource[0], 1, &buffer_intercambio );
-          			if ( (alGetError( )) != AL_NO_ERROR ){
-              				log_msj ("No va el streaming\n");
-          			}
-					/* Descomprimimos datos en el buffer intermedio */	
-			   		cont = ov_read ( &buff, (char *)&waveout, BUFFER_MUSICA, 0, 2, 1, &current_section);
-                	contador += cont;
-                    /* Los  anyadimos en el buffer */
-              		alBufferData ( buffer_intercambio, formato, waveout, BUFFER_MUSICA, informacion->rate );
-					if ((alGetError()) != AL_NO_ERROR ){
-						log_msj ("No se puede añadir datos al buffer\n");
-					}
-          			/* Asignamos de nuevo los buffers al streamsource */
-          			alSourceQueueBuffers ( streamsource[0], 1, streambuffers );
-          			buffers_vacios --;
-                    /* Compruebo si se ha acabado la cancion */
-                    
-                }
-             }
-     }
-     return SI;
+	while ( cancion_acabada == NO ){
+      /* Comprobamos estado de los buffers */
+      alGetSourceiv ( streamsource[0], AL_BUFFERS_PROCESSED, &buffers_vacios);
+      /* Si algun buffer esta vacio, lo rellenamos */
+      if ( buffers_vacios > 0 ){
+        while ( buffers_vacios ){
+          /* Desasignamos buffers para rellenarlos */
+          alSourceUnqueueBuffers ( streamsource[0], 1, &buffer_intercambio );
+          if ( (alGetError( )) != AL_NO_ERROR ){
+            log_msj ("[KO] No va el streaming\n");
+          }
+          /* Descomprimimos datos en el buffer intermedio */	
+          if ( (cont = ov_read ( &buff, (char *)&waveout, BUFFER_MUSICA, 0, 2, 1, &current_section)) == 0){
+            cancion_acabada = SI;
+            break;
+          }
+          /* Los  anyadimos en el buffer */
+          alBufferData ( buffer_intercambio, formato, waveout, BUFFER_MUSICA, informacion->rate );
+          if ((alGetError()) != AL_NO_ERROR ){
+            log_msj ("[KO] No se puede añadir datos al buffer\n");
+          }
+          /* Asignamos de nuevo los buffers al streamsource */
+          alSourceQueueBuffers ( streamsource[0], 1, &buffer_intercambio );
+          buffers_vacios --;
+        }
+      }
+      /* Si ocurre buffer underrun lo ponemos en marcha de nuevo */
+      alGetSourcei(streamsource[0], AL_SOURCE_STATE, &estado);
+      if (estado != AL_PLAYING){
+        alSourcePlay(streamsource[0]);
+      }
+    }
+    return SI;
 }
 
 /********************************************************
@@ -241,24 +242,14 @@ int repeticion ---> -1 bucle infinito y 1,2,3.... numero de veces
                             que se repite
 ********************************************************/
 
-int reproducir_musica ( int repeticion ){
-
-    ALint error;	
-    
+int reproducir_musica ( int repeticion ){	
+  
     /* Creamos thread independiente para la musica */
     threadmusica = SDL_CreateThread (actualizar_musica, NULL);
     if (threadmusica == NULL) {
       log_msj ("[KO] No podemos crear el thread para la musica.\n");
       return NO;
     }
-
-    /* Se empieza a reproducir la musica */
-    alSourcePlay ( streamsource[0] );
-    if ( (error = alGetError ()) != AL_NO_ERROR ){
-      log_msj ("[KO]Error al reproducir musica:%s\n",alGetString (error));
-      return NO;
-    }
-
     return SI;
     
 }
