@@ -3,30 +3,24 @@
 <KDevPrjSession>
  <LastCompileConfig>(Predeterminado)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
- <DocsAndViews NumberOfDocuments="8" >
-  <Doc0 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/w3dpp1/w3d/main.c" >
-   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+ <DocsAndViews NumberOfDocuments="6" >
+  <Doc0 CursorPosLine="89" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="29" FileName="/usr/src/worldspace/w3dpp1/w3d/ui/w3d_ui.cpp" >
+   <View0 Top="0" Width="761" Attach="1" Height="383" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />
   </Doc0>
-  <Doc1 CursorPosLine="157" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="20" FileName="/usr/src/worldspace/w3dpp1/w3d/bios/bios.c" >
-   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc1 CursorPosLine="196" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="23" FileName="/tmp/gli_demos/demos_glut/buttons_texture2/buttons_texture.cpp" >
+   <View0 Top="0" Width="761" Attach="1" Height="383" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc1>
-  <Doc2 CursorPosLine="180" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="33" FileName="/usr/src/worldspace/w3dpp1/w3d/gfx/fuentes.c" >
-   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />
+  <Doc2 CursorPosLine="271" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="1" FileName="/usr/src/worldspace/w3dpp1/w3d/ui/gli_text.cpp" >
+   <View0 Top="0" Width="761" Attach="1" Height="383" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc2>
-  <Doc3 CursorPosLine="74" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="12" FileName="/usr/src/worldspace/w3dpp1/w3d/gfx/gfx_carga_img.c" >
-   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc3 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/w3dpp1/w3d/main.c" >
+   <View0 Top="0" Width="761" Attach="1" Height="383" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc3>
-  <Doc4 CursorPosLine="249" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="1" FileName="/usr/src/worldspace/tut_1_6/w3d/render.c" >
-   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc4 CursorPosLine="657" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="14" FileName="/usr/src/worldspace/w3dpp1/w3d/ui/gli_button.cpp" >
+   <View0 Top="0" Width="761" Attach="1" Height="383" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc4>
-  <Doc5 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/w3dpp1/w3d/display/display.c" >
-   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
+  <Doc5 CursorPosLine="212" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="18" FileName="/tmp/gli_demos/demos_glut/buttons2d/buttons2d.cpp" >
+   <View0 Top="0" Width="761" Attach="1" Height="383" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
   </Doc5>
-  <Doc6 CursorPosLine="55" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="3" FileName="/usr/src/worldspace/w3dpp1/w3d/display/init_gl.c" >
-   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
-  </Doc6>
-  <Doc7 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/usr/src/worldspace/w3dpp1/w3d/gfx/fuentes.h" >
-   <View0 Top="0" Width="761" Attach="1" Height="388" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />
-  </Doc7>
  </DocsAndViews>
 </KDevPrjSession>

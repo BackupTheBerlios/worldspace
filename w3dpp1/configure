@@ -329,17 +329,16 @@ $ECHO "	rm -f Makefile firemake.h install.sh" >> Makefile
 $ECHO >> Makefile
 $ECHO "done"
 
-$ECHO "RUN: find -name '*\.c'" >> configure.log
-LS=`find -name "*\.c" 2>>configure.log`
+$ECHO "RUN: find -name '*\.cpp'" >> configure.log
+LS=`find -name "*\.cpp" 2>>configure.log`
 if test "$LS" = ""; then
 	$ECHO "ERROR: bad return value" >> configure.log
-	$ECHO "	ERROR: Unable to find any C files"
-	exit 1
+	$ECHO "	ERROR: Unable to find any CPP files"
 fi
 
-for CFILE in `find -name "*\.c"`; do
-	$ECHO "RUN: $ECHO \"$CFILE\" | sed s/\.c\$/\.o/" >> configure.log
-	OBJECT=`$ECHO "$CFILE" | sed s/.c\$/.o/ 2>>configure.log`
+for CFILE in `find -name "*\.cpp"`; do
+	$ECHO "RUN: $ECHO \"$CFILE\" | sed s/\.cpp\$/\.o/" >> configure.log
+	OBJECT=`$ECHO "$CFILE" | sed s/.cpp\$/.o/ 2>>configure.log`
 	if test "$?" != "0"; then
 		$ECHO "ERROR: bad return value" >> configure.log
 		$ECHO "	ERROR: error finding C files; check configure.log"
@@ -353,17 +352,44 @@ for CFILE in `find -name "*\.c"`; do
 		$ECHO "	ERROR: error while generating dependencies; check configure.log"
 		exit
 	fi
-	$ECHO "	\$(CC) \$(CFLAGS) -DCONFDIR=\\\"\$(CONFDIR)\\\" -DBINDIR=\\\"\$(BINDIR)\\\" -o $OBJECT -c $CFILE" >> Makefile
+	$ECHO "	\$(CCPP) \$(CFLAGS) -DCONFDIR=\\\"\$(CONFDIR)\\\" -DBINDIR=\\\"\$(BINDIR)\\\" -o $OBJECT -c $CFILE" >> Makefile
 	$ECHO >> Makefile
 	$ECHO "done"
 done
 
+$ECHO "RUN: find -name '*\.c'" >> configure.log
+LS=`find -name "*\.c" 2>>configure.log`
+if test "$LS" = ""; then
+        $ECHO "ERROR: bad return value" >> configure.log
+        $ECHO " ERROR: Unable to find any C files"
+fi
+
+for CFILE in `find -name "*\.c"`; do
+        $ECHO "RUN: $ECHO \"$CFILE\" | sed s/\.c\$/\.o/" >> configure.log
+        OBJECT=`$ECHO "$CFILE" | sed s/.c\$/.o/ 2>>configure.log`
+        if test "$?" != "0"; then
+                $ECHO "ERROR: bad return value" >> configure.log
+                $ECHO " ERROR: error finding C files; check configure.log"
+        fi
+        $ECHO -n "      writing rules to make $OBJECT from $CFILE..."
+        $ECHO "RUN: $CC $CFLAGS $INCFLAGS -M $CFILE" >> configure.log
+        $CC $CFLAGS $INCFLAGS -M $CFILE >> Makefile 2>>configure.log
+        if test "$?" != "0"; then
+                $ECHO "ERROR: bad return value" >> configure.log
+                $ECHO
+                $ECHO " ERROR: error while generating dependencies; check configure.log"
+                exit
+        fi
+        $ECHO " \$(CC) \$(CFLAGS) -DCONFDIR=\\\"\$(CONFDIR)\\\" -DBINDIR=\\\"\$(BINDIR)\\\" -o $OBJECT -c $CFILE" >> Makefile
+        $ECHO >> Makefile
+        $ECHO "done"
+done
 
 
 BINARIES=""
 $ECHO
 $ECHO "	=== Make binaries ==="
-obj=`find -name "*\.c"|sed s/.c$/.o/` ;
+obj=`find -name "*\.c"|sed s/.c$/.o/;find -name "*\.cpp"|sed s/.cpp$/.o/` ;
 echo "w3d_x86.exe:" $obj >firemake.binaries
 if test -f "firemake.binaries"; then
 	$ECHO "RUN: cat firemake.binaries | sed s/:.*//" >> configure.log
@@ -373,7 +399,7 @@ if test -f "firemake.binaries"; then
 		OBJS=`grep "^$BINARY:" firemake.binaries | sed "s/.*: //" 2>>configure.log`;
 		$ECHO -n "	adding rule to make $BINARY..."
 		$ECHO "$BINARY: $OBJS" >> Makefile
-		$ECHO "	\$(CC) \$(LDFLAGS) -o $BINARY $OBJS \$(LIBS)" >> Makefile
+		$ECHO "	\$(CCPP) \$(LDFLAGS) -o $BINARY $OBJS \$(LIBS)" >> Makefile
 		$ECHO >> Makefile
 		$ECHO "done"
 	done;
@@ -383,6 +409,8 @@ fi
 
 $ECHO "binaries: $BINARIES" >> Makefile
 $ECHO >> Makefile
+
+
 
 
 

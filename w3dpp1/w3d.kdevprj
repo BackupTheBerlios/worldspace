@@ -36,7 +36,7 @@ email=neuralgya@users.berlios.de
 kdevprj_version=1.3
 lfv_open_groups=Cabeceras,Fuentes,GNU,Otros
 make_options=\s-w -j1
-makefiles=Makefile.am,w3d/Makefile.am,w3d/docs/Makefile.am,w3d/docs/en/Makefile.am,w3d/bios/Makefile.am,w3d/display/Makefile.am,w3d/gfx/Makefile.am
+makefiles=Makefile.am,w3d/Makefile.am,w3d/docs/Makefile.am,w3d/docs/en/Makefile.am,w3d/bios/Makefile.am,w3d/display/Makefile.am,w3d/gfx/Makefile.am,w3d/ui/Makefile.am,w3d/engine/Makefile.am
 modifyMakefiles=false
 project_name=W3d
 project_type=normal_empty
@@ -97,7 +97,7 @@ type=DATA
 
 [w3d/Makefile.am]
 files=w3d/definiciones.h,w3d/global.h,w3d/main.c,w3d/opengl.h
-sub_dirs=bios,display,gfx
+sub_dirs=bios,display,gfx,ui,engine
 type=prog_main
 
 [w3d/bios/Makefile.am]
@@ -176,6 +176,29 @@ type=normal
 sub_dirs=
 type=normal
 
+[w3d/engine/Makefile.am]
+files=w3d/engine/estructuras.h,w3d/engine/mad.c,w3d/engine/mad.h
+sub_dirs=
+type=static_library
+
+[w3d/engine/estructuras.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
+[w3d/engine/mad.c]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[w3d/engine/mad.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
 [w3d/gfx/Makefile.am]
 files=w3d/gfx/gfx_carga_img.h,w3d/gfx/gfx_carga_img.c,w3d/gfx/fuentes.h,w3d/gfx/fuentes.c
 sub_dirs=
@@ -218,6 +241,23 @@ install_location=
 type=SOURCE
 
 [w3d/opengl.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
+[w3d/ui/Makefile.am]
+files=w3d/ui/w3d_ui.h,w3d/ui/w3d_ui.cpp
+sub_dirs=
+type=static_library
+
+[w3d/ui/w3d_ui.cpp]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[w3d/ui/w3d_ui.h]
 dist=true
 install=false
 install_location=
