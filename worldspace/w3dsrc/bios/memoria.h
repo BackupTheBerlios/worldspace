@@ -17,9 +17,10 @@
 
 #ifndef _Memoria_h_
 #define _Memoria_h_
-// ==================================================================
+//==========================================================================
 #define LIM_MEM	  60		// Tamaño del vector de bloques
-#define mNULO(s)  if (s==NULL) return -1;
+#define miNulo(s)  if (s==NULL) return -1;
+#define mpNulo(s)  if (s==NULL) return NULL;
 
 typedef struct stMem {
 	int    iDes;			// Descriptor de memoria
