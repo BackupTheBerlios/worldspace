@@ -169,11 +169,13 @@ Cambia la resolucion del contexto gráfico
 */
 int cambia_display( int xdis, int ydis, int pan_completa){
 
+  SDL_Surface *screen;
+  
   configuracion.Xtam = xdis;
   configuracion.Ytam = ydis;
   configuracion.FullScreen = pan_completa;
   
-  if (config.FULLSCREEN == 1){
+  if (configuracion.FullScreen == 1){
     screen =  SDL_SetVideoMode ( configuracion.Xtam, configuracion.Ytam, 16, SDL_OPENGL | SDL_FULLSCREEN);
   }
   else {

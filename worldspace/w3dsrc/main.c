@@ -35,6 +35,10 @@ int main(int iArg, char **vArg)
     if (!ini_display())
         return NO;
 
+	/* Pendiente de nueva nomenclatura (neu) */
+    if (!inicializar_audio())
+        return NO;
+
     if (!ini_gl(SI))
         return NO;
 

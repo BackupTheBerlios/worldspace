@@ -39,6 +39,10 @@ BINARY=w3d_x86.exe
 
 EXCEP=$*
 
+if test -z $EXCEP
+then
+EXCEP=esternocleidomastoideo
+fi
 
 C_SOURCES=`find -name *.c |grep -v $EXCEP`
 echo "C : " $C_SOURCES
