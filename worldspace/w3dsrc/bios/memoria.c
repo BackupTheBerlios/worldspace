@@ -14,6 +14,7 @@
 //===========================================================================
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "globales.h"
 #include "memoria.h"
