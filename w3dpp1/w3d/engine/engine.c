@@ -46,6 +46,9 @@ extern GLuint *matriz_texturas;
 
 extern float velocidad;
 
+int id_textura_crosshair;
+int id_textura_localizador;
+
 
 /* Matriz de sprites de fondo del espacio */
 lista_sprites_spc *sprites_spc;
@@ -86,7 +89,7 @@ int init_espacio(void)
         return NO;
     }
 
-    nave=carga_mad("yodai.mad");
+    nave = carga_mad("yodai.mad");
 
 
     return SI;
@@ -99,7 +102,7 @@ int init_engine()
     SDL_ShowCursor(0);
     SDL_WM_GrabInput(SDL_GRAB_ON);
     gl_basic_ini(NO);
-    
+
     if (init_espacio()) {
         _sis_msj("\n[OK]\t\tEspacio inicializado");
     } else
@@ -130,7 +133,13 @@ int init_engine()
 
     glGetFloatv(GL_MODELVIEW_MATRIX, &camara[0][0]);
     camara[2][2] = 1.0f;
-    camara[3][2] = -1.0f;
+    camara[3][0] = ((rand() % 100) - 50);
+    camara[3][1] = ((rand() % 100) - 50);
+    camara[3][2] = ((rand() % 100) - 50);
+
+
+    id_textura_crosshair = encola_textura("crosshair.tga", GL_RGBA);
+    id_textura_localizador = encola_textura("localizador.tga", GL_RGBA);
 
     if (!genera_texturas(GL_LINEAR)) {
         _sis_msj("\n\t\t\tError generando texturas [KO]");
@@ -149,8 +158,8 @@ int init_engine()
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
 
-    
-    
+
+
 
     return SI;
 }
@@ -160,11 +169,14 @@ int renderiza_escena()
 
     int aux;
     float aux2, aux3;
+    float Px, Py, Pz, Vx, Vy, Vz, Ox, Oy, Oz, Gx, Gy, Gz, multiplicador,
+        modulo;
 
     GLboolean visible;
+    float viewport[4];
 
 
-    
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     /* Dibujamos el fondo */
@@ -325,21 +337,113 @@ int renderiza_escena()
     /* Renderizamos una nave de prueba */
 
     render_mad(nave);
-
-    /* Establecemos la guía */
-    /*glDisable(GL_TEXTURE_2D);
-    glDisable(GL_CULL_FACE);
-    glDisable(GL_LIGHTING);
     glLoadIdentity();
-    glLineWidth(5.0f);
-    glColor3f(0.0f,1.0f,1.0f);
-    glBegin(GL_LINES);
-    	glVertex3f(camara[3][0] + camara[2][0], camara[3][1] + camara[2][1], camara[3][2] + camara[2][2]);
-	glVertex3f(nave->x,nave->y,nave->z);
-    glEnd();
-	
+    glDisable(GL_LIGHTING);
+    glRasterPos3f(nave->x, nave->y, nave->z);
+    glGetBooleanv(GL_CURRENT_RASTER_POSITION_VALID, &visible);
+    glGetFloatv(GL_CURRENT_RASTER_POSITION, &viewport);
+    glLoadIdentity();
+
+
+
+
+
+    /* Ahora vamos a cagarnos un rato. Cojemos el punto donde esta la nave liebre,
+       hacemos una proyección sobre nuestro plano de visión y hallamos el punto más cercano
+       en nuestro plano al punto de la nave. Así tendremos una referencia de donde cojones
+       está esta.
+
+       Nota: Ricardo ni Mariajo tuvieron güevos de sacarlo ;P */
+
+    if (visible) {
+        glMatrixMode(GL_PROJECTION);
+        glLoadMatrixd(&matriz_proyeccion_C[0][0]);
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D,
+                      matriz_texturas[id_textura_localizador]);
+        glBegin(GL_QUADS);
+        glTexCoord2f(0.0f, 1.0f);
+        glVertex2f(viewport[0] - 16.0f, viewport[1] + 16.0f);
+        glTexCoord2f(0.0f, 0.0f);
+        glVertex2f(viewport[0] - 16.0f, viewport[1] - 16.0f);
+        glTexCoord2f(1.0f, 0.0f);
+        glVertex2f(viewport[0] + 16.0f, viewport[1] - 16.0f);
+        glTexCoord2f(1.0f, 1.0f);
+        glVertex2f(viewport[0] + 16.0f, viewport[1] + 16.0f);
+        glEnd();
+    } else {
+
+        Px = camara[3][0];
+        Py = camara[3][1];
+        Pz = camara[3][2];
+        Vx = camara[2][0];
+        Vy = camara[2][1];
+        Vz = camara[2][2];
+        Ox = nave->x;
+        Oy = nave->y;
+        Oz = nave->z;
+        multiplicador =
+            (Vx * Px + Vy * Py + Vz * Pz - Ox * Vx - Oy * Vy -
+             Oz * Vz) / (Vx * Vx + Vy * Vy + Vz * Vz);
+        Gx = Ox + multiplicador * Vx;
+        Gy = Oy + multiplicador * Vy;
+        Gz = Oz + multiplicador * Vz;
+        Gx = Gx - camara[3][0];
+        Gy = Gy - camara[3][1];
+        Gz = Gz - camara[3][2];
+        modulo = sqrt(Gx * Gx + Gy * Gy + Gz * Gz) * 10;
+        Gx = Gx / modulo;
+        Gy = Gy / modulo;
+        Gz = Gz / modulo;
+
+
+
+        /* Establecemos la guía */
+        glDisable(GL_TEXTURE_2D);
+        glDisable(GL_CULL_FACE);
+        glDisable(GL_LIGHTING);
+        glLoadIdentity();
+        glPointSize(5.0f);
+
+        glColor3f(0.0f, 1.0f, 0.0f);
+        glBegin(GL_POINTS);
+        glVertex3f(camara[3][0] + camara[2][0] + Gx,
+                   camara[3][1] + camara[2][1] + Gy,
+                   camara[3][2] + camara[2][2] + Gz);
+
+        glEnd();
+
+    }
+    glColor3f(1.0f, 1.0f, 1.0f);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrixd(&matriz_proyeccion_C[0][0]);
     glEnable(GL_TEXTURE_2D);
-    print_p(def,IZQUIERDA,config.SCREEN_SIZE_Y,.25f,"Velocidad %f m/s %f,%f,%f",velocidad*10,nave->x,nave->y,nave->z);
+
+    glBindTexture(GL_TEXTURE_2D, matriz_texturas[id_textura_crosshair]);
+
+    /* CrossHair */
+    /* Con la funcion glTexCoord2f mapeamos las coordenadas de la textura */
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex2f(config.SCREEN_SIZE_X / 2 - 16.0f,
+               config.SCREEN_SIZE_Y / 2 + 16.0f);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex2f(config.SCREEN_SIZE_X / 2 - 16.0f,
+               config.SCREEN_SIZE_Y / 2 - 16.0f);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex2f(config.SCREEN_SIZE_X / 2 + 16.0f,
+               config.SCREEN_SIZE_Y / 2 - 16.0f);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex2f(config.SCREEN_SIZE_X / 2 + 16.0f,
+               config.SCREEN_SIZE_Y / 2 + 16.0f);
+    glEnd();
+
+
+
+    print_p(def, IZQUIERDA, config.SCREEN_SIZE_Y, .25f,
+            "Velocidad %f m/s %f,%f,%f", velocidad * 10, nave->x, nave->y,
+            nave->z);
 
 
     glFlush();

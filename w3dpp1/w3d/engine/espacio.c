@@ -74,7 +74,7 @@ int carga_espacio(char *fichero_spc)
         (lista_sprites_spc *) malloc(sizeof(lista_sprites_spc) * 6);
     /* Otras inicializaciones */
     for (contador = 0; contador < 6; contador++) {
-        lista_aux.textura = encola_textura(sky_box[contador]);
+        lista_aux.textura = encola_textura(sky_box[contador], GL_RGB);
         _sis_msje("\tSky Box Blues %d", lista_aux.textura);
         memcpy(&sprites_spc[contador], &lista_aux,
                sizeof(lista_sprites_spc));

@@ -18,5 +18,5 @@
 
 #include "../opengl.h"
  
-extern  int encola_textura(char *nombre);
+extern  int encola_textura(char *nombre,GLuint formato);
 extern int genera_texturas(GLuint tipo);

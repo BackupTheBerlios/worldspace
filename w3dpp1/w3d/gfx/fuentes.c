@@ -172,7 +172,8 @@ int print(FUENTE * fuente, float x, float y, float tam, char *texto, ...)
 }
 
 
-int print_p(FUENTE * fuente, char align, float y, float tam, char *texto, ...)
+int print_p(FUENTE * fuente, char align, float y, float tam, char *texto,
+            ...)
 {
 
     char text[1024];            // almacena el texto a escribir
@@ -196,14 +197,16 @@ int print_p(FUENTE * fuente, char align, float y, float tam, char *texto, ...)
     _sis_msj("\n");*/
 
 
-    if (align==CENTRO) {
-    	x=config.SCREEN_SIZE_X/2;
-	x=x-(fuente->tam_base+fuente->espacio_base)*tam*strlen(texto)/2;
-	}
-    else if (align==IZQUIERDA)
-    	x=0;
-    else if (align==DERECHA)
-    	x=config.SCREEN_SIZE_X-(fuente->tam_base+fuente->espacio_base)*tam*strlen(texto);
+    if (align == CENTRO) {
+        x = config.SCREEN_SIZE_X / 2;
+        x = x - (fuente->tam_base +
+                 fuente->espacio_base) * tam * strlen(texto) / 2;
+    } else if (align == IZQUIERDA)
+        x = 0;
+    else if (align == DERECHA)
+        x = config.SCREEN_SIZE_X - (fuente->tam_base +
+                                    fuente->espacio_base) * tam *
+            strlen(texto);
 
 
     glDisable(GL_DEPTH_TEST);
@@ -253,7 +256,7 @@ int ini_fuente(void)
 
     def = carga_fuente("def.tga", 30, -5);
     print_p(def, CENTRO, config.SCREEN_SIZE_Y,
-          0.75f, "WorldSpace 3D BUILD: %d", BUILD);
+            0.75f, "WorldSpace 3D BUILD: %d", BUILD);
 
 
     SDL_GL_SwapBuffers();
