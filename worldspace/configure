@@ -1,10 +1,9 @@
 #!/bin/bash
 # Configurando y creando Makefile
 
-clear
 if test -z `echo $LANG`
 then
-	LANG=es
+	W3DLANG=es
 else
 	if test -z `echo $LANG|grep es`
 	then 
