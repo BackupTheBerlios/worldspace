@@ -20,7 +20,7 @@
 
 /*==============================================================================
 
-  $Id: sloader.c,v 1.1 2003/04/11 12:09:52 lordloki Exp $
+  $Id: sloader.c,v 1.2 2003/05/08 21:54:59 lordloki Exp $
 
   Routines for loading samples. The sample loader utilizes the routines
   provided by the "registered" sample loader.
@@ -31,7 +31,7 @@
 #include "config.h"
 #endif
 
-#include <mikmod_internals.h>
+#include "mikmod_internals.h"
 
 static	int sl_rlength;
 static	SWORD sl_old;
