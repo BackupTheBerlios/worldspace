@@ -4,11 +4,13 @@
 #include "globales.h"
 #include "audio.h"
 
+
 /*!
 ================================== DECLARACION DE VARIABLES
 !*/
 ALCdevice *Device = NULL;       /* Dispositivo de sonido */
 ALCcontext *Context = NULL;    /* Contexto */
+
 
 /*!
 ================================== DECLARACION DE FUNCIONES
@@ -26,9 +28,9 @@ int ini_audio(void)
   T_FUNC_IN
         /* Asignamos el mejor dispositivo de audio disponible */ 
 #ifdef _LINUX
-  if ((Device = alcOpenDevice((ALubyte *) "'alsa")) == NULL) {
+  if ((Device = alcOpenDevice((ALubyte *) "sdl")) == NULL) {
     log_msj("No existe ALSA Backend\n");
-    if ((Device = alcOpenDevice((ALubyte *) "'sdl")) == NULL) {
+    if ((Device = alcOpenDevice((ALubyte *) "alsa")) == NULL) {
       log_msj("No existe SDL Backend\n");
 #endif
 #ifdef _WIN32
@@ -61,7 +63,22 @@ int ini_audio(void)
     }
   }
 
-  log_msj("[OK] OpenAL se ha iniciado correctamente\n");
+  /* Ahora inicializamos Mikmod */
+      
+  /* Registramos el driver OpenAL */
+  MikMod_RegisterDriver(&drv_sdl);
+
+  /* Registramos los diferentes formatos (it, s3m, xm y mod) */
+  MikMod_RegisterAllLoaders();
+
+
+  /* Inicializamos la libreria */
+  if (MikMod_Init("")) {
+    log_msj ("No se puede inicializar Mikmod: %s\n",MikMod_strerror(MikMod_errno));
+    return NO;
+  }
+
+  log_msj("[OK] OpenAL y Mikmod se han inicializado correctamente\n");
   _return SI;
 }
 
@@ -76,11 +93,13 @@ Parametros   : No hay que pasarle ningun parametro
 
 int cerrar_audio (void){
     
-   T_FUNC_IN
+  T_FUNC_IN
+  
   alcMakeContextCurrent ( NULL ); /* Desactivamos el contexto */
   alcDestroyContext ( Context ); /* Destruimos el contexto */
   alcCloseDevice ( Device ); /* Cerramos el dispositivo */
-  log_msj ("[OK] OpenAL se ha cerrado correctamente\n");
+  MikMod_Exit();  /* Cerramos Mikmod */  
+  log_msj ("[OK] OpenAL y Mikmod se han cerrado correctamente\n");
 
   _return SI;
 }

@@ -21,7 +21,7 @@
 #include "w3d_base.h"
 #include "globales.h"
 #include "sdl_gl.h"
-#include "audio.h"
+#include "musica_ogg.h"
 
 /* Estos defines puede que se cambien en un futuro */
 #define NUM_BUFFER_MUSICA 40
@@ -30,9 +30,7 @@
 
 ALenum formato; /* Utilizado en la carga de archivos OGG */
 OggVorbis_File buff;
-ALint estado;
 int repeticion;
-int buffers_vacios = 0;
 int current_section = -1;
 vorbis_info *informacion = NULL;
 
@@ -42,17 +40,17 @@ ALuint streamsource[1]; /* Utilizado en la carga de archivos OGG */
 SDL_Thread *threadmusica; /* Thread de audio */
 
 /*****************************************************************************************
-Funcion       : cargar_musica ( char *fichero_ogg )
+Funcion       : cargar_ogg ( char *fichero_ogg )
 *****************************************************************************************/
 
-int cargar_musica ( char *fichero_ogg ){
+int cargar_ogg ( char *fichero_ogg ){
 
     /* Variables locales */
     FILE *fichero;
     char filename[LON_BUFF];
     ALint error;
     int i, cont, posicion = 0;
-    
+
     /* Establecemos donde estara situado el directorio para los sonidos */
     strcpy(filename, "musicas");
     strcat(filename, "/");
@@ -73,7 +71,7 @@ int cargar_musica ( char *fichero_ogg ){
 
     /* Obtenemos formato, frecuencia */
     informacion = ov_info ( &buff, -1);
-	
+
     /* Adjudicamos valores, que son necesarios para una correcta reproduccion*/
     if ((informacion->channels) == 2){
       formato = AL_FORMAT_STEREO16;
@@ -87,10 +85,10 @@ int cargar_musica ( char *fichero_ogg ){
     /* Generamos  buffers para hacer el streaming */
     alGenBuffers ( NUM_BUFFER_MUSICA, streambuffers);
     if ( (error = alGetError()) != AL_NO_ERROR){
-      log_msj ("[KO] Fallo al crear los buffers para la musica en cargar_musica:%s\n", alGetString(error));
+      log_msj ("[KO] Fallo al crear los buffers para la musica en cargar_ogg:%s\n", alGetString(error));
       return NO;
     }
-      
+
     /* Rellenamos los buffers creados con la musica decodificada */
     for ( i=0; i < NUM_BUFFER_MUSICA ; i++){
       cont = ov_read ( &buff, (char *)&waveout[posicion], BUFFER_MUSICA , 0, 2, 1, &current_section );
@@ -99,7 +97,7 @@ int cargar_musica ( char *fichero_ogg ){
       }else{
         alBufferData ( streambuffers[i], formato, waveout , BUFFER_MUSICA , informacion->rate );
         if ( (error =alGetError ()) != AL_NO_ERROR ){
-          log_msj ("[KO] Error al asignar datos al buffer %i en cargar_musica:%s\n",i,alGetString(error));
+          log_msj ("[KO] Error al asignar datos al buffer %i en cargar_ogg:%s\n",i,alGetString(error));
           return NO;
         }
       }
@@ -108,7 +106,7 @@ int cargar_musica ( char *fichero_ogg ){
     /* Creamos la fuente y definimos sus propiedades */
     alGenSources( 1, streamsource );
     if ( (error = alGetError()) != AL_NO_ERROR ){
-      log_msj ("[KO] Error al generar la fuente de sonido en cargar_musica: %s\n", alGetString (error));
+      log_msj ("[KO] Error al generar la fuente de sonido en cargar_ogg: %s\n", alGetString (error));
       return NO;
     }
 
@@ -120,22 +118,22 @@ int cargar_musica ( char *fichero_ogg ){
     /* Asignamos los buffers creados a la fuente */
     alSourceQueueBuffers ( streamsource[0], NUM_BUFFER_MUSICA, streambuffers );
     if ( (error = alGetError()) != AL_NO_ERROR ){
-      log_msj ("[KO] Error al asignar buffers a la fuente en cargar_musica: %s\n", alGetString (error));
+      log_msj ("[KO] Error al asignar buffers a la fuente en cargar_ogg: %s\n", alGetString (error));
       return NO;
-    } 
-    return SI;    
+    }
+    return SI;
 }
 
 /******************************************************
-Funcion       : pausar_musica (int pausa)
+Funcion       : pausar_ogg (int pausa_ogg)
 ******************************************************/
 
-int pausar_musica (int pausa){
+int pausar_ogg (int pausa_ogg){
 
     ALint error;
 
     /* Pausamos la musica */
-   if (pausa == 1){
+   if (pausa_ogg == 1){
      alSourcePause(streamsource[0]);
       if ( (error = alGetError()) != AL_NO_ERROR ){
         log_msj ("[KO] Error al pausar la fuente de sonido: %s\n", alGetString (error));
@@ -143,7 +141,7 @@ int pausar_musica (int pausa){
       }
    }
    /* Reanudamos la musica */
-   if (pausa == 0){
+   if (pausa_ogg == 0){
      alSourcePlay(streamsource[0]);
      if ( (error = alGetError()) != AL_NO_ERROR ){
         log_msj ("[KO] Error al reanudar la reproduccion de la fuente de sonido: %s\n", alGetString (error));
@@ -157,17 +155,17 @@ int pausar_musica (int pausa){
 
 
 /***********************************************************************************************
-Funcion      : resetear_musica (  )
+Funcion      : resetear_ogg (  )
 ************************************************************************************************/
 
-int resetear_musica (void){
+int resetear_ogg (void){
 
       ALint error;
 
      /* Cuando queremos cambiar la cancion, paramos todo y borramos buffers y fuentes */
      alSourceStopv(1, streamsource);
      if ( (error = alGetError()) != AL_NO_ERROR){
-       log_msj ("[KO] No se pueden parar el streamsource en resetear_musica: %s\n",alGetString (error));
+       log_msj ("[KO] No se pueden parar el streamsource en resetear_ogg: %s\n",alGetString (error));
        return NO;
      }
      /* Matamos el thread*/
@@ -175,27 +173,32 @@ int resetear_musica (void){
      /* Borramos buffers y sources */
      alDeleteSources(1, streamsource);
      if ( (error = alGetError()) != AL_NO_ERROR){
-       log_msj ("[KO] No se puede borrar el stremsource en resetear_musica: %s\n",alGetString (error));
+       log_msj ("[KO] No se puede borrar el stremsource en resetear_ogg: %s\n",alGetString (error));
        return NO;
      }
      alDeleteBuffers(NUM_BUFFER_MUSICA, streambuffers);
      if ( ( error = alGetError()) != AL_NO_ERROR){
-       log_msj ("[KO] No se pueden borrar los buffers en resetear_musica: %s\n",alGetString (error));
+       log_msj ("[KO] No se pueden borrar los buffers en resetear_ogg: %s\n",alGetString (error));
        return NO;
      }
+     /* Lo reseteamos */
+     ov_clear(&buff);
+
      return SI;
 }
 
 
 /******************************************************************************************************
-Funcion       : actualizar_musica (  )
+Funcion       : actualizar_ogg (  )
 ******************************************************************************************************/
 
-int  actualizar_musica ( void ){
+int  actualizar_ogg ( void ){
 
     ALint error;
     int cont = 0,contador = 0, cancion_acabada = NO, repeticion_acabada = NO;
     ALuint buffer_intercambio;
+    int buffers_vacios = 0;
+    ALint estado;
 
     /* Aqui establacemos el primer bucle para la repeticion */
     while ( repeticion_acabada == NO ){
@@ -209,10 +212,10 @@ int  actualizar_musica ( void ){
             /* Desasignamos buffers para rellenarlos */
             alSourceUnqueueBuffers ( streamsource[0], 1, &buffer_intercambio );
             if ( (error = alGetError( )) != AL_NO_ERROR ){
-              log_msj ("[KO] No se puede desasignar buffers en actualizar_musica: %s\n",alGetString (error));
+              log_msj ("[KO] No se puede desasignar buffers en actualizar_ogg: %s\n",alGetString (error));
               return NO;
             }
-            /* Descomprimimos datos en el buffer intermedio */	
+            /* Descomprimimos datos en el buffer intermedio */
             if ( (cont = ov_read ( &buff, (char *)&waveout, BUFFER_MUSICA, 0, 2, 1, &current_section)) == 0){
               cancion_acabada = SI;
               break;
@@ -220,13 +223,13 @@ int  actualizar_musica ( void ){
             /* Los  anyadimos en el buffer */
             alBufferData ( buffer_intercambio, formato, waveout, BUFFER_MUSICA, informacion->rate );
             if ((error = alGetError()) != AL_NO_ERROR ){
-              log_msj ("[KO] No se puede añadir datos al buffer en actualizar_musica: %s\n",alGetString (error));
+              log_msj ("[KO] No se puede añadir datos al buffer en actualizar_ogg: %s\n",alGetString (error));
               return NO;
             }
             /* Asignamos de nuevo los buffers al streamsource */
             alSourceQueueBuffers ( streamsource[0], 1, &buffer_intercambio );
             if ((error = alGetError()) != AL_NO_ERROR ){
-              log_msj ("[KO] No se puede asignar buffers a la fuente en actualizar_musica: %s\n",alGetString (error));
+              log_msj ("[KO] No se puede asignar buffers a la fuente en actualizar_ogg: %s\n",alGetString (error));
               return NO;
             }
             buffers_vacios --;
@@ -238,7 +241,7 @@ int  actualizar_musica ( void ){
           if (estado != AL_PAUSED){
             alSourcePlay(streamsource[0]);
             if ((error = alGetError()) != AL_NO_ERROR ){
-              log_msj ("[KO] No se puede arreglar el buffer underrun en actualizar_musica: %s\n",alGetString (error));
+              log_msj ("[KO] No se puede arreglar el buffer underrun en actualizar_ogg: %s\n",alGetString (error));
               return NO;
             }
           }else{
@@ -247,7 +250,7 @@ int  actualizar_musica ( void ){
               SDL_Delay(10);
             }
           }
-        }    
+        }
         /* Para sincronizar mejor la musica y que no se imponga al thread principal */
         SDL_Delay(20);
       }
@@ -265,20 +268,20 @@ int  actualizar_musica ( void ){
 	}
       }
     }
-    return SI;    
+    return SI;
 }
 
 /********************************************************
-Funcion       : reproducir_musica ( int repetir )
+Funcion       : reproducir_ogg ( int repetir )
 ********************************************************/
 
-int reproducir_musica ( int repetir ){
+int reproducir_ogg ( int repetir ){
 
     /* Para la repeticion de la musica */
     repeticion = repetir;
-  
+
     /* Creamos thread independiente para la musica */
-    threadmusica = SDL_CreateThread ((void *)actualizar_musica, NULL);
+    threadmusica = SDL_CreateThread ((void *)actualizar_ogg, NULL);
     if (threadmusica == NULL) {
       log_msj ("[KO] No podemos crear el thread para la musica.\n");
       return NO;
