@@ -188,7 +188,6 @@ DLLExport_ int importar_modelo(char *fichero,void **model_tag){
         j=0;
         while (import_model(fichero,&tri_3ds)!=-1) {
           for (z=0;z<3;z++) {
-            printf("%d,%d\n",j,z);
             modelo_1->triangulos[j].vertices[z].x=tri_3ds.vertices[z].x/100.0f;
             modelo_1->triangulos[j].vertices[z].y=tri_3ds.vertices[z].y/100.0f;
             modelo_1->triangulos[j].vertices[z].z=tri_3ds.vertices[z].z/100.0f;

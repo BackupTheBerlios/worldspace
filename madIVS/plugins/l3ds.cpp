@@ -1816,7 +1816,6 @@ int import_model(char *fichero,struct LTriangle2 *tri_3ds) {
     return a;
   }
   else if (status<a) {
-    printf("%d,",status);
     fflush(stdout);
     *tri_3ds=loader.GetMesh(0).GetTriangle2(status);
     //memcpy(tri_3ds,&tmp,sizeof(struct LTriangle2));
