@@ -44,10 +44,11 @@ modelo *carga_mad(char *file)
     modelo_1 = (modelo *) malloc(sizeof(modelo));
     strcpy(filename, "modelos");
     strcat(filename, "/");
+
     strcat(filename, file);
 
 
-    _sis_msj("\t\t[mad.c]Cargando modelo ");
+    _sis_msj("\n\t\t[mad.c]Cargando modelo ");
     _sis_msj(filename);
     f_object = abre_fichero(filename,"rb");
     if (f_object == NULL) {

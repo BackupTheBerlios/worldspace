@@ -116,6 +116,7 @@ int gl_basic_ini(void)
   glEnable (GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+
 	/* Esta función sirve para optimizar el renderizado, y se utiliza para muchas cosas. En este caso es para
 	hacer un buen cálculo de la perspectiva perdiendo un poco de rendimiento*/
 

@@ -57,7 +57,7 @@ void CGLI_String::Draw()
 		temp = m_pBitmapFont->glfGetStringCentering();
 		m_pBitmapFont->glfStringCentering(m_center);
 		m_pBitmapFont->glfStartBitmapDrawing();
-		m_pBitmapFont->glfDrawBString(m_string);
+		m_pBitmapFont->glfDrawBString(m_string);    
 		m_pBitmapFont->glfStopBitmapDrawing();
 		m_pBitmapFont->glfStringCentering(temp);
 	}
