@@ -30,7 +30,7 @@
 
 #define NUM_SONIDOS     1
 #define NUM_MUSICAS     1
-#define NUM_ENTORNOS  1
+#define NUM_ENTORNOS    1
 #define NUM_LISTENER    1
 
 /* Definimos estructura del listener y lo creamos */
@@ -86,13 +86,13 @@ int InicializarAudio(){
 	/* Asignamos el mejor dispositivo de audio disponible */
 #ifdef _LINUX
 	if (( Device = alcOpenDevice ((ALubyte* ) "waveOut" )) == NULL){
-		fprintf ( logs,"No existe WaveOut Backend");
+		fprintf ( logs,"No existe WaveOut Backend\n");
 		if (( Device = alcOpenDevice (( ALubyte* ) "SDL" )) == NULL ){
-			fprintf ( logs,"No existe SDL Backend");
+			fprintf ( logs,"No existe SDL Backend\n");
 			if (( Device = alcOpenDevice (( ALubyte* ) "ALSA" )) == NULL ){
-				fprintf ( logs,"No existe ALSA Backend");
+				fprintf ( logs,"No existe ALSA Backend\n");
 				if (( Device = alcOpenDevice ( NULL )) == NULL ){
-					fprintf ( logs,"No hay disponible ningun dispositivo de audio");
+					fprintf ( logs,"No hay disponible ningun dispositivo de audio\n");
 					return -1;
 				}
 			}
@@ -101,13 +101,13 @@ int InicializarAudio(){
 #endif
 #ifdef _WIN32
 	if (( Device = alcOpenDevice ((ALubyte* ) "DirectSound3D" )) == NULL ){
-		fprintf ( logs,"No existe DirectSound3D Backend");
+		fprintf ( logs,"No existe DirectSound3D Backend\n");
 		if (( Device = alcOpenDevice (( ALubyte* ) "DirectSound" )) == NULL ){
-			fprintf ( logs,"No existe DirectSound Backend");
+			fprintf ( logs,"No existe DirectSound Backend\n");
 			if (( Device = alcOpenDevice (( ALubyte* ) "WaveOut" )) == NULL ){
-				fprintf ( logs,"No existe WaveOut Backend");
-				if (( Device = alcOpenDevice ( NULL ) == NULL ){
-					fprintf ( logs,"No hay disponible ningun dispositivo de audio");
+				fprintf ( logs,"No existe WaveOut Backend\n");
+				if (( Device = alcOpenDevice ( NULL )) == NULL ){
+					fprintf ( logs,"No hay disponible ningun dispositivo de audio\n");
 					return -1;
 				}
 			}
@@ -119,13 +119,13 @@ int InicializarAudio(){
 	if ( Device != NULL ){
 		Context = alcCreateContext ( Device , NULL ); /* Creamos */
 	    if ( alcGetError ( Device ) != ALC_NO_ERROR ){
-			fprintf ( logs, "No se puede crear un contexto para el sistema de audio");
+			fprintf ( logs, "No se puede crear un contexto para el sistema de audio\n");
 			return -1;
 		}
 
 		alcMakeContextCurrent ( Context ); /* Asignamos */
 	    if ( alcGetError ( Device ) != ALC_NO_ERROR ){
-			fprintf ( logs, "No se puede asignar el contexto para el sistema de audio");
+			fprintf ( logs, "No se puede asignar el contexto para el sistema de audio\n");
 			return -1;
 		}
 	}
@@ -224,7 +224,7 @@ void  CargaSonido (  char *fichero_wav, int identificador ){
 	/* Generamos buffer, le asignamos un identificador y comprobamos errores */
 	alGenBuffers( 1, &buffer[identificador] );
 	if ( !alIsBuffer ( buffer[identificador] )){
-		fprintf ( logs, "error al crear los buffers");
+		fprintf ( logs, "error al crear los buffers\n");
 		exit(1);
 	}
 
@@ -243,7 +243,7 @@ void  CargaSonido (  char *fichero_wav, int identificador ){
 	/* Generamos las fuentes de sonido y comprobamos errores */
 	alGenSources( 1, &source[identificador] );
 	if ( !alIsSource ( source[identificador])){
-		fprintf ( logs, "No se pueden crear las fuentes de sonido");
+		fprintf ( logs, "No se pueden crear las fuentes de sonido\n");
 		exit(1);
 	}
 
@@ -351,13 +351,13 @@ void ConfigurarEntorno ( ALsizei identificador, ALenum modelo,
 	alEnable ( AL_DISTANCE_MODEL );
 	alDistanceModel ( modelo );
 	alDopplerFactor ( doppler_factor );
-	alDopplerVelocity ( doppler_vel );
+	alDopplerVelocity ( doppler_vel ); /* Recordad que en metros la velocidad del sonido es 343 */
 
 #ifdef _LINUX
 	/* Generamos el entorno y comprobamos errores */
 	alGenEnvironmentIASIG ( identificador, &entornos[identificador] );
 	if ( !alIsEnvironmentIASIG ( entornos[identificador] )){
-		fprintf ( logs, "No se puede configurar parte del entorno");
+		fprintf ( logs, "No se puede configurar parte del entorno\n");
 	}
 
 	/* Configuramos las propiedades del entorno */
@@ -402,11 +402,11 @@ void CargarMusica ( char *fichero_ogg ){
 
 	/* Variables locales */
 	vorbis_info *informacion = NULL;
-    FILE *fichero;
+    	FILE *fichero;
 
 	/* Abrimos fichero para lectura */
 	if ( ( fichero = fopen ( fichero_ogg, "r" )) == NULL ){
-		fprintf( logs, "No se puede cargar fichero %s", fichero_ogg );
+		fprintf( logs, "No se puede cargar fichero %s\n", fichero_ogg );
 		exit(2);
 	}
 
@@ -420,8 +420,8 @@ void CargarMusica ( char *fichero_ogg ){
 	informacion = ov_info ( &buff, -1);
 	frecuencia = informacion->rate;
 
-    /* Adjudicamos valores, que son necesarios para una correcta reproduccion*/
-    if ((informacion->channels) == 2){
+    	/* Adjudicamos valores, que son necesarios para una correcta reproduccion*/
+    	if ((informacion->channels) == 2){
 		formato = AL_FORMAT_STEREO16;
 	} else {
 		formato = AL_FORMAT_MONO16;
@@ -439,7 +439,7 @@ void CargarMusica ( char *fichero_ogg ){
          NUM_BUFFER_MUSICA = 50;
          BUFFER_MUSICA = 512;
      }
-     else if ((informacion->bitrate) >= 92000)){
+     else if ((informacion->bitrate) >= 92000){
          NUM_BUFFER_MUSICA = 200;
          BUFFER_MUSICA = 256;
      }
@@ -447,7 +447,7 @@ void CargarMusica ( char *fichero_ogg ){
 	/* Generamos  buffers para hacer el streaming */
 	alGenBuffers ( NUM_BUFFER_MUSICA, streambuffers);
      if ( alGetError() != AL_NO_ERROR){
-         fprintf ( logs,"Fallo al crear los buffers para la musica");
+         fprintf ( logs,"Fallo al crear los buffers para la musica\n");
          exit (2);
      }
 
@@ -478,8 +478,8 @@ Parametros : No hay que pasarle parametros
 
 void PararMusica (  ){
 
-	/* Paramos la musica */
-	alSourceStop ( streamsource[0] );
+    /* Paramos la musica */
+    alSourceStop ( streamsource[0] );
     musica_on = 0;
     streambuffer_vacio = 1;
 }
