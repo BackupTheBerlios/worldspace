@@ -1,5 +1,5 @@
 //==========================================================================
-//  texturas.c  -  Tratamiento de texturas
+//  texturas.c - Tratamiento de texturas
 //
 //  begin     : sat apr 12 2003 / sab 12 abr 2003
 //  copyright : (C) 2003 by Grupo WorldSpace
@@ -13,13 +13,10 @@
 //                                                                         *
 //==========================================================================
 
-#include <string.h>
-
 #include "globales.h"
 #include "memoria.h"
 #include "conf_parser.h"
 #include "carga_imagen.h"
-#include "sdl_gl.h"
 #include "textura.h"
 
 //==========================================================================
@@ -38,10 +35,11 @@ static char sDirTexturas [LON_BUFF] = { WDIR_TEXTURAS };
 //  genera_textura sólo se cargue una vez y se genere una textura.
 //
 //  Solo debo devolver el valor asigando a las texturas, y estas van desde 
-//  0 a n. No puedo utilizar los defines SI (1) o NO (0). El 0 debe ser un
-//  valor válido.
+//  1 a n. Puedo utilizar los defines SI (1) o NO (0). El 0 es un valor de
+//  no valido. Pero como ya había utilizado -1 continuo con ello, hasta que
+//  aclaremos lo de los valores a devolver.
 //
-//  Por lo tanto, no voy a utilizar SI y NO en este módulo.
+//  Por lo tanto, no voy a utilizar SI y NO en este módulo (Por ahora).
 //==========================================================================
 //  Partimos de un puntero que representa el principio de una lista
 //  de nombres.
@@ -56,7 +54,7 @@ int  encola_textura       ( miTextura * prTextura )
 	miTextura * prNomAnt;
 	int         iNum = 0;
 
-	T_FUNC_IN
+	T_FUNC_IN;
 
 	if (prColaTexturas == NULL)			// Iniciamos la lista, no hay ningún
 	{									// nombre guardado.
@@ -71,26 +69,30 @@ int  encola_textura       ( miTextura * prTextura )
 		for ( iNum=0; prNomActual!=NULL; iNum++ )
 		{
 			if ( !strcmp(prNomActual->sFichero, prTextura->sFichero) )
-			{ _return iNum; }			// Devuelve el indice que le corresponde
+			{
+				prTextura->iNText  = prNomActual->iNText;
+				_return prNomActual->iNText;	// Devuelve el indice que le corresponde
+			}
 			prNomAnt    = prNomActual;
 			prNomActual = prNomActual->pSig;
 		}
 		prNomActual = (miTextura *) dar_m(sizeof(miTextura));
-		if (prNomActual==NULL)
+	    if (prNomActual==NULL)
 		{ _return -1; }					// Debo devolver error
 		prNomAnt->pSig = prNomActual;
 	}
-	prNomActual->pSig   = NULL;
-	prNomActual->iNText = iNum;
-	prNomActual->iAlto  = prNomActual->iAncho = 0;
-	prNomActual->iTipo  = prTextura->iTipo;
-	strcpy(prNomActual->sFichero, prTextura->sFichero);
+	glGenTextures (1, (uint *) &prNomActual->iNText);
 
-	prTextura->iNText   = iNum;
+	strcpy(prNomActual->sFichero, prTextura->sFichero);
+	prNomActual->iAlto = prNomActual->iAncho = 0;
+	prNomActual->iTipo = prTextura->iTipo;
+	prNomActual->pSig  = NULL;
+
+	prTextura->iNText  = prNomActual->iNText;
 
 	iNumTexturas = iNum + 1;
 
-	_return iNum;
+	_return prNomActual->iNText;
 }
 
 
@@ -115,29 +117,12 @@ void cerrar_texturas  ( void )
 			prNomAnterior = liberar_m (prNomAnterior);
 		}
 
-		prListaTexturas = liberar_m (prListaTexturas);
+		if (prListaTexturas)
+		{
+			prListaTexturas->vTextura = liberar_m(prListaTexturas->vTextura);
+			prListaTexturas = liberar_m(prListaTexturas);
+		}
 	}
-}
-
-
-//==========================================================================
-//  Función de prueba para ver si funciona la lista/cola de texturas
-//==========================================================================
-void muestra_texturas ( void )
-{
-	miTextura * prNomActual = prColaTexturas;
-
-	T_FUNC_IN
-
-	for ( ; prNomActual!=NULL; )
-	{
-		log_msj( "\n %2d %s", prNomActual->iNText, prNomActual->sFichero );
-		prNomActual = prNomActual->pSig;
-	}
-
-	prListaTexturas = liberar_m (prListaTexturas);
-
-	T_FUNC_OUT
 }
 
 
@@ -151,16 +136,25 @@ void muestra_texturas ( void )
 //==========================================================================
 int carga_listaTexturas ( miLTexturas * vLisTexturas )
 {
-    int i, iTex;
+    int i;
+	miTextura rTextura;
 
-	T_FUNC_IN
+	T_FUNC_IN;
+
+	mInicio(sDirTexturas);
+	sprintf(sDirTexturas,"%s/", configuracion.sDirTexturas);
 
 	for ( i=0; i<vLisTexturas->iNtexturas; i++ )
 	{
-		iTex = encola_textura (&vLisTexturas->vTextura[i]);
-		if (iTex<0)
-		{	_return -1;	}	// Algo ha ido mal.
-		vLisTexturas->vTextura[i].iNText = iTex;
+		rTextura.iAlto = rTextura.iAncho = 0;
+		rTextura.iNText = vLisTexturas->vTextura[i].iTipo;
+		mInicio(rTextura.sFichero);
+		sprintf(rTextura.sFichero,
+			"%s%s", sDirTexturas, vLisTexturas->vTextura[i].sFichero);
+		rTextura.iNText = encola_textura (&rTextura);
+		if (rTextura.iNText<0)
+		{ _return -1;	}	// Algo ha ido mal.
+		vLisTexturas->vTextura[i].iNText = rTextura.iNText;
 	}
 
 	_return 0;
@@ -169,10 +163,13 @@ int carga_listaTexturas ( miLTexturas * vLisTexturas )
 
 //==========================================================================
 //  genera_texturas carga todas la texturas de una sola vez.
-//  Con esto se consigue que en los logs queden agrupados todos los
-//  mensajes referentes a la carga de ficheros de texturas.
-//  Por lo tanto se llamará tantas veces como se reinicien las
-//  texturas
+//
+//  Todas las texturas de la cola de texturas 'prColaTexturas', que se han
+//  ido introduciendo con 'encola_textura', pasan a una lista mas manejable
+//  por indices 'prListaTexturas'.
+//
+//  Hecho esto, se llama a 'carga_texturas' que será la función que se pueda
+//  llamar cada vez que se redefinan las texturas.
 //==========================================================================
 int  genera_texturas  ( void )
 {
@@ -180,52 +177,75 @@ int  genera_texturas  ( void )
 	miTextura * prNomActual = prColaTexturas;
 	miTextura   rTextura;
 
-	T_FUNC_IN
+	T_FUNC_IN;
 
-	mInicio(rTextura.sFichero);
+	if (prColaTexturas==NULL)  // Como no hay nada
+		return 0;              // tampoco hay error
+
+	mInicio (rTextura.sFichero);
+
 	if (prListaTexturas==NULL)
 	{
 		prListaTexturas = dar_m(sizeof(miLTexturas));
 		if (prListaTexturas==NULL)
-		{	_return -1; }
+		{ _return -1; }
 		prListaTexturas->iNtexturas = iNumTexturas;
 		prListaTexturas->vTextura = dar_m(sizeof(miTextura)*iNumTexturas);
 	}
 
-	mInicio(sDirTexturas);
-	directorio(sDirTexturas,"%s/%s/", configuracion.sDirGeneral, configuracion.sDirTexturas );
+	log_msj ("# Pasamos la Cola a la Lista ..\n");
+	for ( i=0; prNomActual!=NULL && i<iNumTexturas; i++ )
+	{
+		// Estos valores se conocen con 'encola_textura'.
+		prListaTexturas->vTextura[i].iTipo  = prNomActual->iTipo;
+		prListaTexturas->vTextura[i].iNText = prNomActual->iNText;
+		prListaTexturas->vTextura[i].pSig   = prNomActual->pSig;
+		strcpy(prListaTexturas->vTextura[i].sFichero,prNomActual->sFichero);
+		// Valores que desconocemos hasta la 'carga_imagen'.
+		prListaTexturas->vTextura[i].iAlto  =
+		prListaTexturas->vTextura[i].iAncho = 0;
 
-	// Cargamos las texturas
+		log_msj( " %2d %s\n", prNomActual->iNText, prNomActual->sFichero );
+		// Pasamos al siguiente en la cola.
+		prNomActual = prNomActual->pSig;
+	}
+	log_msj ("# Lista de texturas generada ..\n");
+
+	_return carga_texturas();
+}
+
+
+//===========================================================================
+// Realiza la carag de las texturas a partir de la lista general de texturas.
+// Es la función que se utiliza para la recarga.
+//===========================================================================
+int carga_texturas ( void )
+{
+	int i;
+
+	T_FUNC_IN;
+
+	// Cargamos la textura
 	glEnable(GL_TEXTURE_2D);
 	glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
 	glTexEnvf (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-	for ( i=0; prNomActual!=NULL && i<iNumTexturas; i++ )
-	{
-		log_msj( " %2d %s\n", prNomActual->iNText, prNomActual->sFichero );
-		prNomActual = prNomActual->pSig;
-	}
-
 	for ( i=0; i<prListaTexturas->iNtexturas; i++ )
 	{
-		rTextura.iNText = rTextura.iAlto = rTextura.iAncho = 0;
-		rTextura.iTipo = prListaTexturas->vTextura[i].iTipo;
-		sprintf(rTextura.sFichero,
-			"%s/%s",
-			sDirTexturas, prListaTexturas->vTextura[i].sFichero );
-		if (carga_textura (&rTextura))
-		{	_return -1; }
-		prListaTexturas->vTextura[i].iNText = rTextura.iNText;
+		if (carga_textura (&prListaTexturas->vTextura[i]))
+		{ _return -1; }
     }
+	glDisable(GL_TEXTURE_2D);
+	log_msj ("# Texturas cargadas y generadas ..\n");
 
-	_return 0;	// Todo ha ido bien.
+	_return 0;
 }
 
 
 // ==================================================================
 //  Realiza la carga de una textura
 // ==================================================================
-int carga_textura ( miTextura * pTextura )
+int carga_textura ( miTextura * prTextura )
 {
     miFic_imagen rFic_imagen;
 
@@ -235,28 +255,35 @@ int carga_textura ( miTextura * pTextura )
 	rFic_imagen.iAncho = 0;
 	rFic_imagen.iTipo  = 0;
 	rFic_imagen.pDatos = NULL;
-	strcpy(rFic_imagen.sFichero, pTextura->sFichero);
+	strcpy(rFic_imagen.sFichero, prTextura->sFichero);
 
 	if ( carga_imagen (&rFic_imagen) )
 	{
-		pTextura->iNText = -1;  // Valor de textura invalida.
-   		log_msj ("\n Error al cargar %s",	pTextura->sFichero);
+		prTextura->iNText = -1;  // Valor de textura invalida.
+		// El mensaje sobra si ya se da el mensaje en carga_imagen.
+   		log_msj ("Error al cargar %s\n",	prTextura->sFichero);
    		_return -1;
 	}
 
+	// Esto creo que sobra, ya se realiza en 'carga_tga'
     if (rFic_imagen.iTipo==FTGA && rFic_imagen.iAncho!=rFic_imagen.iAlto)
 	{
-   		log_msj ("\n Ancho y Alto distinto en Textura: %s", pTextura->sFichero);
+   		log_msj ("Ancho y Alto distinto en Textura: %s\n", prTextura->sFichero);
 		rFic_imagen.pDatos = (char *) liberar_m(rFic_imagen.pDatos);
    		_return -1;
 	}
 
-	pTextura->iAlto  = rFic_imagen.iAlto;
-	pTextura->iAncho = rFic_imagen.iAncho;
+	prTextura->iAlto  = rFic_imagen.iAlto;
+	prTextura->iAncho = rFic_imagen.iAncho;
 
-	glGenTextures (1, (unsigned int *) &pTextura->iNText);
-	glBindTexture (GL_TEXTURE_2D, pTextura->iNText);
-	switch(pTextura->iTipo)
+	//---------------------------------------------------------
+	//  Ahora esto se realiza en 'encola_textura'
+	// glGenTextures (1, (unsigned int *) &prTextura->iNText);
+	//---------------------------------------------------------
+	log_msj ("%3d [%s]\n", prTextura->iNText, prTextura->sFichero);
+
+	glBindTexture (GL_TEXTURE_2D, prTextura->iNText);
+	switch(prTextura->iTipo)
 	{
 		case AT0:  // Texturas BMP sin canal Alpha
 			 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -299,7 +326,7 @@ int carga_textura ( miTextura * pTextura )
 			break;
 	}
 	rFic_imagen.pDatos = (char *) liberar_m(rFic_imagen.pDatos);
-	log_msj ("\t\t\t%d", pTextura->iNText);
+
 	_return 0;
 }
 
@@ -309,12 +336,11 @@ int carga_textura ( miTextura * pTextura )
 // ==================================================================
 void activa_textura  ( int iTextura )
 {
-	if (iTextura>-1)
+	if (iTextura>0)
 	{
 		if ( !glIsEnabled(GL_TEXTURE_2D) )
 			glEnable(GL_TEXTURE_2D);
-		glBindTexture (GL_TEXTURE_2D,
-			prListaTexturas->vTextura[iTextura].iNText);
+		glBindTexture (GL_TEXTURE_2D, iTextura );
 	}
 }
 

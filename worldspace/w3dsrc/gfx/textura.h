@@ -40,9 +40,9 @@ typedef struct  {
 //==========================================================================
 int  encola_textura       ( miTextura * prTextura );
 void cerrar_texturas      ( void );
-void muestra_texturas     ( void );
 int  carga_listaTexturas  ( miLTexturas * prListaTexturas );
 int  genera_texturas      ( void );
+int  carga_texturas       ( void );
 int  carga_textura        ( miTextura * prTextura );
 void activa_textura       ( int iTextura );
 //==========================================================================
