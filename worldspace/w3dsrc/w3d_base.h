@@ -16,16 +16,35 @@
  ***************************************************************************/
 
 
+#ifndef _W3D_BASE_
+#define _W3D_BASE_
+
+/*!
+============================================== DEFINE
+!*/
+
 /*!
 Valor devuelto por las funciones
 !*/
 #define SI 1
 #define NO 0
 
+
 /*!
 Longitud por defecto de los buffer (arrays)
 !*/
 #define LON_BUFF      1024
+
+
+/*!
+============================================== MACROS
+!*/
+
+/*!
+Control de indentacion de las trazas
+!*/
+#define T_FUNC_IN nivel_traza++;
+#define T_FUNC_OUT nivel_traza--;
 
 
 /*!
@@ -42,3 +61,7 @@ typedef struct config_tag {
     char sDirModelos[LON_BUFF];
     char sDirEspacios[LON_BUFF];
 } estr_config;
+
+
+#endif
+

@@ -35,7 +35,6 @@ echo $L_TARGET  $TAR;
 
 CC=gcc
 CCPP=g++
-INCLUDE=./w3d/ui/libgli/include
 BINARY=w3d_x86.exe
 
 
@@ -45,7 +44,7 @@ echo "C : " $C_SOURCES
 CPP_SOURCES=`find -name *.cpp`
 echo "C++: " $CPP_SOURCES
 
-for x in `find w3dsrc -type d|grep -v CVS`
+for x in `find ./w3dsrc/ -type d|grep -v CVS`
 do
 	INCDIRS="$INCDIRS -I$x"
 done
@@ -60,9 +59,8 @@ echo "ALL: "$BINARY>>Makefile.kk
 
 for i in $C_SOURCES
 do
-
         echo $L_DEPENDS $i
-        $CC -I$INCLUDE -MM $i -I$INCLUDE 2>aguconf.log >>Makefile.kk
+        $CC -w -MM $i  $INCLUDE 2>aguconf.log >>Makefile.kk
         echo -n -e "\t">>Makefile.kk
         echo $CC "\$(CFLAGS)" -c $i -o `echo $i|sed s/.c$/.o/`>>Makefile.kk
 
@@ -71,7 +69,7 @@ done
 for i in $CPP_SOURCES
 do
         echo $L_DEPENDS $i
-        $CCPP -MM $i -I$INCLUDE 2>aguconf.log >>Makefile.kk
+        $CCPP -w -MM $i $INCLUDE 2>aguconf.log >>Makefile.kk
         echo -n -e "\t">>Makefile.kk
         echo $CCPP "\$(CXXFLAGS)"  -c $i -o `echo $i|sed s/.c$/.o/`>>Makefile.kk
 done

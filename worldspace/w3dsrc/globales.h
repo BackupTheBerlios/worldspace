@@ -16,9 +16,34 @@
  ***************************************************************************/
 
 #include "w3d_base.h"
+#include <stdio.h>
 
 
 /*!
 Variable para guardar la configuración
 !*/
 extern estr_config configuracion;
+
+/*!
+Descriptor del fichero de logs
+!*/
+FILE *log;
+
+/*!
+Nivel de traza
+*/
+extern char nivel_traza;
+
+
+/*!
+Salida de logs
+*/
+extern int log_msj(char *cadena,...);
+
+/*!
+Wrapper para fopen, que inserta al nombre del fichero
+el directorio de los datos
+*/
+extern FILE *abre_fichero(char *nombre,char *modo);
+
+

@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 
+#include <stdio.h>
 
 /*!
 Esta función inicializa los sistemas básicos de salida de errores y warnings.
@@ -26,3 +27,10 @@ por defecto.
 */
 
 extern int ini_bios(int iArg, char **cArg);
+
+/*!
+Wrapper para fopen, que inserta al nombre del fichero
+el directorio de los datos
+*/
+extern FILE *abre_fichero(char *nombre,char *modo);
+
