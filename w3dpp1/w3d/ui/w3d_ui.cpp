@@ -63,9 +63,9 @@ void setup()
 
     win1.SetDimensions(200, 180, 1);
   	win1.SetCaptionHeight(8);
-  	win1.SetWindowColor(0, 0, 0, 1);
-  	win1.SetCaptionColor(0.1, 0.1, 0.1, 0.99);
-  	win1.SetCaptionTextColor(0.9, 0.9, 0.9, 0.99);
+  	win1.SetWindowColor(0.5, 0.5, 0.5, 0.5);
+  	win1.SetCaptionColor(0.1, 0.1, 0.1, 0.2);
+  	win1.SetCaptionTextColor(0.9, 0.9, 0.4, 1);
 	  win1.SetCaptionText("WorldSpace 3D");
   	win1.SetFontType(GLI_FONT_BITMAP);
     
@@ -94,7 +94,7 @@ void setup()
   	text.AddNewString(" ");
   	text.AddNewString(" Codigo disponible bajo licencia GPL. CopyRight Grupo WorldSpace");
     text.SetDimensions(5, 5, 1);
-    text.SetPosition(-100,80, 2);
+    text.SetPosition(-100,80, 0);
     text.SetFontType(GLI_FONT_BITMAP);
     
     
@@ -109,12 +109,7 @@ void setup()
     win1.AddObject(&bexit);
     win1.AddObject(&text);
 
-    fuente=prepara_apertura("img/fondo_1.tga");
-    a=iface.LoadTextureFromFile(fuente);
-  	iface.AddObject(&img);
-	  img.SetDimensions(640, 480, 0);
-  	img.SetTexture(a);
-       
+           
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_TEXTURE_2D);
     glClearColor(0, 0, 0, 0);
@@ -138,9 +133,6 @@ void redraw()
       past_time=now;
     } */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-/*    glLoadIdentity();
-    wall.Draw();
-    glClear(GL_DEPTH_BUFFER_BIT);*/
     glLoadIdentity();
     iface.Draw();
     glFlush();
