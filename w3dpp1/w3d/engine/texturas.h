@@ -16,5 +16,7 @@
  ***************************************************************************/
 
 
+#include "../opengl.h"
+ 
 extern  int encola_textura(char *nombre);
-extern int genera_texturas(void);
+extern int genera_texturas(GLuint tipo);

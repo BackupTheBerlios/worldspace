@@ -23,6 +23,16 @@
 #include "texturas.h"
 #include <math.h>
 
+
+GLfloat LightAmbient1[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+GLfloat LightDiffuse1[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+GLfloat LightPosition1[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+GLfloat LightAmbient0[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+GLfloat LightDiffuse0[] = { 0.9f, 0.9f, 0.9f, 1.0f };
+GLfloat LightPosition0[] = { 0.0f, 1.0f, 0.0f, 0.0f };
+
+
 double matriz_proyeccion_A[4][4];
 double matriz_proyeccion_B[4][4];
 double matriz_proyeccion_C[4][4];
@@ -47,6 +57,7 @@ unsigned int n_estrellas;
 float *polvo_espacial;          /* Nada de connotaciones pornográficas eh? */
 unsigned int n_polvo_espacial;
 
+modelo *nave;
 
 
 int init_espacio(void)
@@ -67,10 +78,12 @@ int init_espacio(void)
         return NO;
     }
 
-    if (!(crea_polvo_espacial(500))) {
+    if (!(crea_polvo_espacial(50))) {
         _sis_msj("\n\t\tFallé al crear polvo_espacial [KO]");
         return NO;
     }
+
+    nave=carga_mad("yodai.mad");
 
 
     return SI;
@@ -82,7 +95,8 @@ int init_engine()
 
     SDL_ShowCursor(0);
     SDL_WM_GrabInput(SDL_GRAB_ON);
-
+    gl_basic_ini(NO);
+    
     if (init_espacio()) {
         _sis_msj("\n[OK]\t\tEspacio inicializado");
     } else
@@ -115,13 +129,25 @@ int init_engine()
     camara[2][2] = 1.0f;
     camara[3][2] = -1.0f;
 
-    if (!genera_texturas()) {
+    if (!genera_texturas(GL_LINEAR)) {
         _sis_msj("\n\t\t\tError generando texturas [KO]");
         return NO;
     } else
         _sis_msj("\n[OK]\t\t\tTexturas Generadas");
 
+    glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient0);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDiffuse0);
+    glLightfv(GL_LIGHT0, GL_POSITION, LightPosition0);
 
+    glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient1);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse0);
+
+
+    glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
+
+    
+    
 
     return SI;
 }
@@ -129,10 +155,13 @@ int init_engine()
 int renderiza_escena()
 {
 
-    int aux, aux2;
+    int aux;
+    float aux2, aux3;
+
+    GLboolean visible;
 
 
-    gl_basic_ini(NO);
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     /* Dibujamos el fondo */
@@ -140,21 +169,22 @@ int renderiza_escena()
     /* Primero preparamos el estado de OpenGL */
 
     glMatrixMode(GL_PROJECTION);
+    gluPerspective(45.0, config.SCREEN_SIZE_X / config.SCREEN_SIZE_Y, 0.1, 100.0);      // Do the perspective calculations. Last value = max clipping depth
+
     glLoadMatrixd(&matriz_proyeccion_B[0][0]);
-    gluLookAt(camara[3][0], camara[3][1], camara[3][2], // Posición
-              camara[3][0] + camara[2][0], camara[3][1] + camara[2][1], camara[3][2] + camara[2][2],    // Punto al que miramos
+    gluLookAt(0, 0, 0, camara[2][0], camara[2][1], camara[2][2],        // Punto al que miramos
               camara[1][0], camara[1][1], camara[1][2]);        // Orientación Y
 
 
 
-
+    glDisable(GL_CULL_FACE);
     glMatrixMode(GL_MODELVIEW);
     glDisable(GL_DEPTH_TEST);
-    glDisable(GL_TEXTURE_2D);
     glLoadIdentity();
     glDisable(GL_LIGHTING);
 
     /* Dibujamos estrellas */
+/*
     glColor3f(1.0f, 1.0f, 1.0f);
     for (aux = 0; aux < n_estrellas; aux += 4) {
         glPointSize(estrellas[aux + 3]);
@@ -163,53 +193,149 @@ int renderiza_escena()
         glEnd();
     }
 
-    glColor3f(0.0f, 1.0f, 0.0f);
+*/
+
+/*
+
+*/
+
+    glColor3f(1.0f, 1.0f, 1.0f);
+
+
+    /* Dibujamos Sky-Boxes */
+    glEnable(GL_TEXTURE_2D);
+
+    glBindTexture(GL_TEXTURE_2D, matriz_texturas[sprites_spc[0].textura]);      // Bind the Texture to the object
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(-1.01, -1.01, 1.0);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3f(1.005, -1.005, 1.0);
+    glTexCoord2f(1.0, 1.0);
+    glVertex3f(1.005, 1.005, 1.0);
+    glTexCoord2f(0.0, 1.0);
+    glVertex3f(-1.005, 1.005, 1.0);
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, matriz_texturas[sprites_spc[1].textura]);
+    glBegin(GL_QUADS);
+    glNormal3f(0.0, 0.0, -1.0);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3f(-1.005, -1.005, -1.0);
+    glTexCoord2f(1.0, 1.0);
+    glVertex3f(-1.005, 1.005, -1.0);
+    glTexCoord2f(0.0, 1.0);
+    glVertex3f(1.005, 1.005, -1.0);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(1.005, -1.005, -1.0);
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, matriz_texturas[sprites_spc[2].textura]);
+    glBegin(GL_QUADS);
+    glNormal3f(0.0, 1.0, 0.0);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(-1.005, 1.0, -1.005);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3f(-1.005, 1.0, 1.005);
+    glTexCoord2f(1.0, 1.0);
+    glVertex3f(1.005, 1.0, 1.005);
+    glTexCoord2f(0.0, 1.0);
+    glVertex3f(1.005, 1.0, -1.005);
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, matriz_texturas[sprites_spc[3].textura]);
+    glBegin(GL_QUADS);
+    glNormal3f(0.0, -1.0, 0.0);
+    glTexCoord2f(0.0, 1.0);
+    glVertex3f(-1.005, -1.0, -1.005);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(1.005, -1.0, -1.005);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3f(1.005, -1.0, 1.005);
+    glTexCoord2f(1.0, 1.0);
+    glVertex3f(-1.005, -1.0, 1.005);
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, matriz_texturas[sprites_spc[4].textura]);
+    glBegin(GL_QUADS);
+    glNormal3f(1.0, 0.0, 0.0);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3f(1.0, -1.005, -1.005);
+    glTexCoord2f(1.0, 1.0);
+    glVertex3f(1.0, 1.005, -1.005);
+    glTexCoord2f(0.0, 1.0);
+    glVertex3f(1.0, 1.005, 1.005);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(1.0, -1.005, 1.005);
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, matriz_texturas[sprites_spc[5].textura]);
+    glBegin(GL_QUADS);
+    glNormal3f(-1.0, 0.0, 0.0);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(-1.0, -1.005, -1.005);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3f(-1.0, -1.005, 1.005);
+    glTexCoord2f(1.0, 1.0);
+    glVertex3f(-1.0, 1.005, 1.005);
+    glTexCoord2f(0.0, 1.0);
+    glVertex3f(-1.0, 1.005, -1.005);
+
+    glEnd();
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrixd(&matriz_proyeccion_B[0][0]);
+
+    gluLookAt(camara[3][0], camara[3][1], camara[3][2], // Posición
+              camara[3][0] + camara[2][0], camara[3][1] + camara[2][1], camara[3][2] + camara[2][2],    // Punto al que miramos
+              camara[1][0], camara[1][1], camara[1][2]);        // Orientación Y
+
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glEnable(GL_DEPTH_TEST);
+    glClear(GL_DEPTH_BUFFER_BIT);
+    glDisable(GL_TEXTURE_2D);
+    glPointSize(4.0f);
+
+    glColor3f(1.0f, 1.0f, 1.0f);
     for (aux = 0; aux < n_polvo_espacial; aux += 4) {
+
+
+        glRasterPos3f(polvo_espacial[aux], polvo_espacial[aux + 1],
+                      polvo_espacial[aux + 2]);
+        glGetBooleanv(GL_CURRENT_RASTER_POSITION_VALID, &visible);
+
+        if (!visible) {
+            polvo_espacial[aux] = camara[3][0] + camara[2][0] * 10;
+            polvo_espacial[aux + 1] = camara[3][1] + camara[2][1] * 10;
+            polvo_espacial[aux + 2] = camara[3][2] + camara[2][2] * 10;
+
+            polvo_espacial[aux] += camara[0][0] * ((rand() % 10) - 5);
+            polvo_espacial[aux + 1] += camara[0][1] * ((rand() % 10) - 5);
+            polvo_espacial[aux + 2] += camara[0][2] * ((rand() % 10) - 5);
+
+            polvo_espacial[aux] += camara[1][0] * ((rand() % 10) - 5);
+            polvo_espacial[aux + 1] += camara[1][1] * ((rand() % 10) - 5);
+            polvo_espacial[aux + 2] += camara[0][2] * ((rand() % 10) - 5);
+
+
+        }
+
         glPointSize(polvo_espacial[aux + 3]);
         glBegin(GL_POINTS);
         glVertex3f(polvo_espacial[aux], polvo_espacial[aux + 1],
                    polvo_espacial[aux + 2]);
         glEnd();
-        
-        if (pow(polvo_espacial[aux] - camara[3][0],2)+
-        	pow(polvo_espacial[aux+1] - camara[3][1],2)+
-	         pow(polvo_espacial[aux+2] - camara[3][2],2)>3600) {
-/*	    printf("%f ",pow(polvo_espacial[aux] - camara[3][0],2)+
-        	pow(polvo_espacial[aux+1] - camara[3][1],2)+
-	         pow(polvo_espacial[aux+2] - camara[3][2],2));*/
-            polvo_espacial[aux] = camara[3][0]+polvo_espacial[aux]*camara[0][0];
-            polvo_espacial[aux + 1] =  camara[3][1]+polvo_espacial[aux+1]*camara[1][1];
-            polvo_espacial[aux + 2] =  camara[3][2]+polvo_espacial[aux+2]*camara[2][2];
-            
-        }
-        
+
     }
-
-    glColor3f(1.0f, 1.0f, 1.0f);
-    glPointSize(4.0f);
-
-    /* Dibujamos sprites de fondo */
     glEnable(GL_TEXTURE_2D);
-    for (aux = 0; aux < n_sprites_spc; aux++) {
-        glLoadMatrixf(&sprites_spc[aux].matriz);
-        glBindTexture(GL_TEXTURE_2D,
-                      matriz_texturas[sprites_spc[aux].textura]);
-        aux2 = sprites_spc[aux].tam_x;
-        glBegin(GL_QUADS);
-        glTexCoord2f(1.0f, 1.0f);
-        glVertex2f(aux2, aux2);
-        glTexCoord2f(1.0f, 0.0f);
-        glVertex2f(aux2, -aux2);
-        glTexCoord2f(0.0f, 0.0f);
-        glVertex2f(-aux2, -aux2);
-        glTexCoord2f(0.0f, 1.0f);
-        glVertex2f(-aux2, aux2);
-        glEnd();
-    }
-
-    glEnable(GL_DEPTH_TEST);
-    glClear(GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_LIGHTING);
     glLoadIdentity();
+
+    render_mad(nave);
 
     glFlush();
     SDL_GL_SwapBuffers();
@@ -258,6 +384,7 @@ int game_loop()
         input_teclado();
         input_mouse();
         renderiza_escena();
+        SDL_Delay(1);
 
     }
 

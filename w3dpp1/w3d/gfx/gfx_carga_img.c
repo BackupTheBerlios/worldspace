@@ -93,7 +93,6 @@ void *carga_tga(char f_imagen[], int *tam_x, int *tam_y)
     /* Vemos las características y comprobamos si son correctas */
     if (texture.width <= 0 ||
         texture.height <= 0 ||
-        texture.width > 256 ||
         texture.height != texture.width || (header[4] != 32)) {
         fclose(fichero);
         return NULL;

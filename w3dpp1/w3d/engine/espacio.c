@@ -39,6 +39,11 @@ extern float *polvo_espacial;   /* Nada de connotaciones pornográficas eh? */
 extern unsigned int n_polvo_espacial;
 
 
+/*
+int carga_espacio(char *fichero_spc)
+
+Carga los sky-boxes
+*/
 int carga_espacio(char *fichero_spc)
 {
 
@@ -52,79 +57,30 @@ int carga_espacio(char *fichero_spc)
     char *textura_datos;
     int tam_x, tam_y;
     unsigned int numero_texturas = 0;
+    char sky_box[6][1024] = {
+        "def_sky_front.tga",
+        "def_sky_back.tga",
+        "def_sky_top.tga",
+        "def_sky_bottom.tga",
+        "def_sky_left.tga",
+        "def_sky_right.tga"
+    };
 
 
     lista_sprites_spc lista_aux;
 
 
-    strcpy(fichero, "/espacios/");
-    strcat(fichero, fichero_spc);
-
-    _sis_msje("\n\t\t\tCargando sprites del escenario...%s", fichero);
-
-    fich = abre_fichero(fichero, "rt");
-
-    if (fich == NULL) {
-        _sis_msje("\n\t\t\tNo pude cargar fichero %s [KO])\n", fichero);
-        return NO;
-    }
-
-    while (!feof(fich)) {
-        fscanf(fich, "<TIPO>SPRITE\n");
-        fscanf(fich, "<TEXTURA>%s\n", &textura_f);
-        fscanf(fich, "<POSICION>%f,%f,%f\n", &lista_aux.matriz[0][3],
-               &lista_aux.matriz[1][3], &lista_aux.matriz[2][3]);
-        fscanf(fich, "<EJE_X>%f,%f,%f\n", &lista_aux.matriz[0][0],
-               &lista_aux.matriz[1][0], &lista_aux.matriz[2][0]);
-        fscanf(fich, "<EJE_Y>%f,%f,%f\n", &lista_aux.matriz[0][1],
-               &lista_aux.matriz[1][1], &lista_aux.matriz[2][1]);
-        fscanf(fich, "<EJE_Z>%f,%f,%f\n", &lista_aux.matriz[0][2],
-               &lista_aux.matriz[1][2], &lista_aux.matriz[2][2]);
-        fscanf(fich, "<TAMA_X>%f\n", &lista_aux.tam_x);
-        fscanf(fich, "<TAMA_Y>%f\n", &lista_aux.tam_y);
-        contador++;
-    }
-    n_sprites_spc = contador;
-
-    fclose(fich);
-    fich = abre_fichero(fichero, "rt");
-
-    if (fich == NULL) {
-        _sis_msje
-            ("\n\t\t\tNo pude cargar fichero %s (tal vez no exista)[KO]",
-             fichero);
-        return NO;
-    }
     sprites_spc =
-        (lista_sprites_spc *) malloc(sizeof(lista_sprites_spc) * contador);
-
-    while (!feof(fich)) {
-        fscanf(fich, "<TIPO>SPRITE\n");
-        fscanf(fich, "<TEXTURA>%s\n", &textura_f);
-        fscanf(fich, "<POSICION>%f,%f,%f\n", &lista_aux.matriz[3][0],
-               &lista_aux.matriz[3][1], &lista_aux.matriz[3][2]);
-        fscanf(fich, "<EJE_X>%f,%f,%f\n", &lista_aux.matriz[0][0],
-               &lista_aux.matriz[0][1], &lista_aux.matriz[0][2]);
-        fscanf(fich, "<EJE_Y>%f,%f,%f\n", &lista_aux.matriz[1][0],
-               &lista_aux.matriz[1][1], &lista_aux.matriz[1][2]);
-        fscanf(fich, "<EJE_Z>%f,%f,%f\n", &lista_aux.matriz[2][0],
-               &lista_aux.matriz[2][1], &lista_aux.matriz[2][2]);
-        fscanf(fich, "<TAMA_X>%f\n", &lista_aux.tam_x);
-        fscanf(fich, "<TAMA_Y>%f\n", &lista_aux.tam_y);
-
-        /* Otras inicializaciones */
-
-        lista_aux.matriz[0][3] = 0.0f;
-        lista_aux.matriz[1][3] = 0.0f;
-        lista_aux.matriz[2][3] = 0.0f;
-        lista_aux.matriz[3][3] = 1.0f;
-        lista_aux.textura = encola_textura(textura_f);
-        _sis_msje(" %d", lista_aux.textura);
-        memcpy(&sprites_spc[contador2], &lista_aux,
+        (lista_sprites_spc *) malloc(sizeof(lista_sprites_spc) * 6);
+    /* Otras inicializaciones */
+    for (contador = 0; contador < 6; contador++) {
+        lista_aux.textura = encola_textura(sky_box[contador]);
+        _sis_msje("\n\t\t\tSky Box Blues %d", lista_aux.textura);
+        memcpy(&sprites_spc[contador], &lista_aux,
                sizeof(lista_sprites_spc));
 
-        contador2++;
     }
+
     return SI;
 
 }
@@ -171,18 +127,13 @@ int crea_polvo_espacial(unsigned int numero)
 
     for (i = 0; i < numero * 4; i += 4) {
 
-        z = (float) (rand() % 60);
-//              z=(float)(i/8);
+        z = (float) (rand() % 10);
+        z = z - 5;
 
-        y = rand() % ((int) sqrt(pow(60, 2) - pow(z, 2)));
-        x = sqrt(pow(60, 2) - pow(y, 2) - pow(z, 2));
-        if (rand() % 2 == 0)
-
-            z = z * -1;
-        if (rand() % 2 == 0)
-            x = x * -1;
-        if (rand() % 2 == 0)
-            y = y * -1;
+        y = (float) (rand() % 10);
+        y = y - 5;
+        x = (float) (rand() % 10);
+        x = x - 5;
         polvo_espacial[i] = x;
         polvo_espacial[i + 1] = y;
         polvo_espacial[i + 2] = z;
