@@ -3,13 +3,13 @@
 <KDevPrjSession>
 <LastCompileConfig>(Predeterminado)</LastCompileConfig>
  <Mainframe MaximizeMode="1" />
- <DocsAndViews NumberOfDocuments="9" >
+ <DocsAndViews NumberOfDocuments="11" >
 <Doc0 CursorPosLine="20" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="19" FileName="/home/abeiro/personal/w3d/w3d/gfx/gfx_carga_img.c" >
 <View0 Top="0" Width="756" Attach="1" Height="381" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc0>
   <Doc1 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/w3d/w3d/display/display.c" >
-<View0 Top="0" Width="756" Attach="1" Height="381" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc1>
+<View0 Top="0" Width="98" Attach="1" Height="28" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc1>
   <Doc2 CursorPosLine="1" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="41" FileName="/home/abeiro/personal/w3d/w3d/gfx/gfx_carga_img.h" >
-<View0 Top="0" Width="756" Attach="1" Height="381" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />  </Doc2>
+<View0 Top="0" Width="756" Attach="1" Height="381" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc2>
   <Doc3 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/w3d/w3d/global.h" >
 <View0 Top="0" Width="756" Attach="1" Height="381" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc3>
   <Doc4 CursorPosLine="136" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/w3d/w3d/bios/bios.c" >
@@ -20,5 +20,9 @@
 <View0 Top="0" Width="756" Attach="1" Height="381" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc6>
   <Doc7 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/w3d/w3d/gfx/fuentes.h" >
 <View0 Top="0" Width="756" Attach="1" Height="381" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc7>
-  <Doc8 Type="CDocBrowser" NumberOfViews="1" FileName="/home/abeiro/personal/w3d/w3d-api/index.html" >
-<View Top="0" Width="756" Attach="1" Height="381" Left="0" Focus="0" Type="KHTMLView" MinMaxMode="0" />  </Doc8> </DocsAndViews></KDevPrjSession>
+  <Doc8 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/w3d/TODO" >
+<View0 Top="0" Width="756" Attach="1" Height="381" Left="0" Focus="0" Type="KWriteView" MinMaxMode="0" />  </Doc8>
+  <Doc9 CursorPosLine="0" Type="KWriteDoc" NumberOfViews="1" CursorPosCol="0" FileName="/home/abeiro/personal/w3d/README" >
+<View0 Top="0" Width="756" Attach="1" Height="381" Left="0" Focus="1" Type="KWriteView" MinMaxMode="0" />  </Doc9>
+  <Doc10 Type="CDocBrowser" NumberOfViews="1" FileName="/home/abeiro/personal/w3d/w3d-api/index.html" >
+<View Top="0" Width="756" Attach="1" Height="381" Left="0" Focus="0" Type="KHTMLView" MinMaxMode="0" />  </Doc10> </DocsAndViews></KDevPrjSession>
