@@ -59,7 +59,7 @@ int  encola_textura       ( miTextura * prTextura )
 
 	if (prColaTexturas == NULL)			// Iniciamos la lista, no hay ningún
 	{									// nombre guardado.
-		prColaTexturas = (miTextura *) dar_m(sizeof(miTextura));
+		prColaTexturas = (miTextura *) dar_m(sizeof(miTextura),"encola_textura 1");
 		if (prColaTexturas==NULL)
 		{ _return -1; }					// Debo devolver error
 		prNomActual = prColaTexturas;
@@ -77,7 +77,7 @@ int  encola_textura       ( miTextura * prTextura )
 			prNomAnt    = prNomActual;
 			prNomActual = prNomActual->pSig;
 		}
-		prNomActual = (miTextura *) dar_m(sizeof(miTextura));
+		prNomActual = (miTextura *) dar_m(sizeof(miTextura),"encola_textura 2");
 	    if (prNomActual==NULL)
 		{ _return -1; }					// Debo devolver error
 		prNomAnt->pSig = prNomActual;
@@ -187,11 +187,16 @@ int  genera_texturas  ( void )
 
 	if (prListaTexturas==NULL)
 	{
-		prListaTexturas = dar_m(sizeof(miLTexturas));
+		prListaTexturas = dar_m(sizeof(miLTexturas),"genera_texturas 1");
 		if (prListaTexturas==NULL)
 		{ _return -1; }
 		prListaTexturas->iNtexturas = iNumTexturas;
-		prListaTexturas->vTextura = dar_m(sizeof(miTextura)*iNumTexturas);
+		prListaTexturas->vTextura = dar_m(sizeof(miTextura)*iNumTexturas,"genera_texturas 2");
+		if (prListaTexturas->vTextura==NULL)
+		{
+			prListaTexturas = liberar_m(prListaTexturas);
+			_return -1;
+		}
 	}
 
 	log_msj ("# Pasamos la Cola a la Lista ..\n");

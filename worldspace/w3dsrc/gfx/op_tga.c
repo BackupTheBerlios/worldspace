@@ -85,7 +85,7 @@ void * carga_tga  ( char * sFichero, int *tam_x, int *tam_y )
 	imageSize	  = rImgTga.width*rImgTga.height*bytesPerPixel;
 
 	// Reservamos memoria.
-	rImgTga.imageData=(GLubyte *)dar_m(imageSize);
+	rImgTga.imageData=(GLubyte *)dar_m(imageSize,"carga_tga 1");
 	if (rImgTga.imageData==NULL)
 	{
 		fclose(fichero);								
@@ -113,7 +113,13 @@ void * carga_tga  ( char * sFichero, int *tam_x, int *tam_y )
     
 	// Ahora, cambiamos el orden de las líneas, como si hiciesemos
 	// un flip vertical.
-	aux=(GLubyte *)dar_m(imageSize);
+	aux=(GLubyte *)dar_m(imageSize,"carga_tga 2");
+	if (aux==NULL)
+	{
+		rImgTga.imageData = (GLubyte *) liberar_m(rImgTga.imageData);
+		_return NULL;
+	}
+
 	for(i=0; i<rImgTga.height; i++)			
 		memcpy(&aux[imageSize-((i+1)*rImgTga.width*4)],
 		       &rImgTga.imageData[i*rImgTga.width*4],

@@ -1,5 +1,5 @@
 //==========================================================================
-//  util.c - Módulo de fucniones utiles. Deberían estar desplegadas en
+//  util.c - Módulo de funciones utiles. Deberían estar desplegadas en
 //           el resto de los módulos, pero no se donde poner cada una.
 //           Para saber que estas funciones vienen de este módulo la
 //           letra inicial será la 'u' seguida por la inicial de la funcion
@@ -48,7 +48,15 @@ char * uCopia_cadena ( char * sCadena )
 {
 	char * sDestino;
 
-	sDestino = (char *) dar_m (strlen(sCadena)+1);
+	sDestino = (char *) dar_m (strlen(sCadena)+1, "uCopia_cadena");
+	if (sDestino==NULL)
+	{
+		// Debería de detener el programa, con una función general que
+		// restableciese los estados antes de lanzamiento del programa.
+		// Una función tipo 'Salida'.
+		// O controlar su salida.
+		return NULL;
+	}
 	strcpy (sDestino, sCadena);
 
 	return sDestino;

@@ -44,7 +44,10 @@ SDL_Surface * carga_bmp_SDL (char *sFichero)
     }
 
     /* GL surfaces are upsidedown and RGB, not BGR :-) */
-    tmpbuf = (Uint8 *)dar_m(image->pitch);
+    tmpbuf = (Uint8 *)dar_m(image->pitch,"carga_bmp_SDL 1");
+	if (tmpbuf==NULL)
+	{ _return (NULL); }
+
     rowhi = (Uint8 *)image->pixels;
     rowlo = rowhi + (image->h * image->pitch) - image->pitch;
     for ( i=0; i<image->h/2; ++i ) {
@@ -138,7 +141,7 @@ void * carga_bmp ( char * sFichero, int * TamX, int * TamY )
 
 	infosize = header.bfBitsSuma - sizeof(headerLec);
 
-	info = (miBitmap *) dar_m(infosize);
+	info = (miBitmap *) dar_m(infosize,"carga_bmp_SDL 2");
 	if ( info == NULL)
 	{
 		log_msj("\n Memoria para el 'Info' del Bitmap: %s",sFichero);
@@ -165,7 +168,7 @@ void * carga_bmp ( char * sFichero, int * TamX, int * TamY )
 		 bitsize = (*TamX * info->bmiHeader.biCuentaBits + 7) / 8 * abs(*TamY);
 
 	info = liberar_m(info);
-	bits = dar_m (bitsize);
+	bits = dar_m (bitsize,"carga_bmp_SDL 3");
 	if (bits == NULL)
 	{
 		log_msj("\n Memoria para la imagen del Bitmap: %s",sFichero);
