@@ -69,7 +69,7 @@ int logo(void)
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING);
     logo = carga_mad("logo.mad");
-    carga_sonido("logo.wav",1);
+    cargar_sonido("logo.wav",1);
 
     reproducir_sonido(1, SonPosition, SonVelocidad,1.0,1.0,100.0,AL_FALSE);
 
