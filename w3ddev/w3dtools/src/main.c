@@ -45,11 +45,10 @@
 //  modificaciones el MingW32 cascaba pidiendo la funcion WinMain.
 //===========================================================================
 
-
 //===========================================================================
 #if !(defined(_WIN32) && defined(_MSVC)) && !(defined(_LINUX))
 #include "mimain.h"
-#endif // !(defined(_WIN32) && defined(_MSVC)) && !(defined(_LINUX))
+#endif                          // !(defined(_WIN32) && defined(_MSVC)) && !(defined(_LINUX))
 //===========================================================================
 //  Añadimos una construcción de argumentos con WinMain, ya que lo que
 //  pusimos fue para salir del paso.
@@ -59,53 +58,43 @@
 
 int main(int iArg, char *vArg[])
 {
-	int iError = 0;
-
-
+    int iError = 0;
 
     /* Inicializamos bios */
-    if (ini_bios(iArg, vArg))
-	{
-	/* Inicializamos display */
-        if (ini_display())
-	{
-		/* Inicializamos el audio */
+    if (ini_bios(iArg, vArg)) {
+        /* Inicializamos display */
+        if (ini_display()) {
+            /* Inicializamos el audio */
 
-		/* Cargamos las listas de fuentes,texturas,modelos,etc */
-	        if (( carga_listaFuentes(&vListaFuentes))
+            /* Cargamos las listas de fuentes,texturas,modelos,etc */
+            if ((carga_listaFuentes(&vListaFuentes))
                 /*|| ( carga_listaTexturas(&vListaTexturas)) Lista de texturas */
                 /*|| ( carga_listaModelos(&vListaModelos)) Lista de modelos */
-		|| ( genera_texturas()))
-		{
-			iError = 1;
-		}
-		else
-		{
-			if (!ini_gl(SI)) // Bucle principal
-			{
-				iError = 1;
-			}
+                || (genera_texturas())) {
+                iError = 1;
+            } else {
+                if (!ini_gl(SI))        // Bucle principal
+                {
+                    iError = 1;
+                }
 
-		}
-		/* Cerramos las texturas */
-		cerrar_texturas();
-		/* Cerramos el audio */
-		/* Cerramos el display */
-		cerrar_display();
-	}
-	else
-		iError = 1;
+            }
+            /* Cerramos las texturas */
+            cerrar_texturas();
+            /* Cerramos el audio */
+            /* Cerramos el display */
+            cerrar_display();
+        } else
+            iError = 1;
 
-	/* Controlamos la memoria y cerramos bios */
-	control_memoria ();
+        /* Controlamos la memoria y cerramos bios */
+        control_memoria();
         cerrar_bios();
-    }
-	else
-		iError = 1;
+    } else
+        iError = 1;
 
     return iError;
 }
-
 
 //===========================================================================
 //  Fin de main.c

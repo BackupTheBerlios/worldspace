@@ -29,5 +29,3 @@
 #endif                          // __APPLE__ && __MACH__
 #include <SDL/SDL.h>
 #include <SDL/SDL_thread.h>
-
-

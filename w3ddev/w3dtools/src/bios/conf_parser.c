@@ -35,17 +35,16 @@ int establece_var_conf_numero(FILE * fl_fichero, char *s_token)
     char token[LON_BUFF];
     char valor[LON_BUFF];
     char s_aux[LON_BUFF];
-    int  i_ini_token = 0;
-    int  i_fin_token = 0;
-    int  i_ini_valor = 0;
-    int  i_fin_valor = 0;
-    int  j, k = NO;
-	uint i;
+    int i_ini_token = 0;
+    int i_fin_token = 0;
+    int i_ini_valor = 0;
+    int i_fin_valor = 0;
+    int j, k = NO;
+    uint i;
 
     T_FUNC_IN;
-	
-	while (!feof(fl_fichero))
-	{
+
+    while (!feof(fl_fichero)) {
         if (fgets(s_linea, LON_BUFF, fl_fichero) != NULL) {
 
             if (s_linea[0] == '\n')
@@ -105,7 +104,6 @@ int establece_var_conf_numero(FILE * fl_fichero, char *s_token)
     T_FUNC_OUT return k;
 }
 
-
 //==========================================================================
 // Eric: 'establece_var_conf_cadena' estaba fallando cuando no se
 // encontraba el patrón aportado: devuelve NULL
@@ -115,7 +113,7 @@ int establece_var_conf_numero(FILE * fl_fichero, char *s_token)
 // Si no encuentra nada, el primer valor en la dirección devuelta es '\0'.
 // Y hago que salga con el primero que encuentre.
 //==========================================================================
-static char sAux [LON_BUFF];
+static char sAux[LON_BUFF];
 //==========================================================================
 char *establece_var_conf_cadena(FILE * fl_fichero, char *s_token)
 {
@@ -124,21 +122,19 @@ char *establece_var_conf_cadena(FILE * fl_fichero, char *s_token)
     char token[LON_BUFF];
     char valor[LON_BUFF];
     char s_aux[LON_BUFF];
-    int  i_ini_token = 0;
-    int  i_fin_token = 0;
-    int  i_ini_valor = 0;
-    int  i_fin_valor = 0;
-    int  j;
-    char * k = sAux;
-	uint i;
+    int i_ini_token = 0;
+    int i_fin_token = 0;
+    int i_ini_valor = 0;
+    int i_fin_valor = 0;
+    int j;
+    char *k = sAux;
+    uint i;
 
     T_FUNC_IN;
 
-	mInicio(sAux);
-	while (!feof(fl_fichero))
-	{
-        if (fgets(s_linea, LON_BUFF, fl_fichero) != NULL)
-		{
+    mInicio(sAux);
+    while (!feof(fl_fichero)) {
+        if (fgets(s_linea, LON_BUFF, fl_fichero) != NULL) {
             if (s_linea[0] == '\n')
                 continue;
 
@@ -159,10 +155,8 @@ char *establece_var_conf_cadena(FILE * fl_fichero, char *s_token)
             strcpy(valor, &s_aux[i_ini_valor]);
             valor[i_fin_valor - i_ini_valor] = '\0';
 
-            for (i=0, j=0 ; i <= strlen(token); i++)
-			{
-                if (token[i] != ' ')
-				{
+            for (i = 0, j = 0; i <= strlen(token); i++) {
+                if (token[i] != ' ') {
                     s_linea[j] = toupper(token[i]);
                     j++;
                 }
@@ -187,7 +181,7 @@ char *establece_var_conf_cadena(FILE * fl_fichero, char *s_token)
                         token, valor);
                 // k = (char *) malloc(LON_BUFF); // ya le asignamos sAux.
                 strcpy(k, valor);
-				break;  // Se sale con el primero que encuentra
+                break;          // Se sale con el primero que encuentra
             }
 
         }

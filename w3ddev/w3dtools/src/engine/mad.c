@@ -72,8 +72,8 @@ int render_mad(modelo * mad)
     uint j;
 
     T_FUNC_IN;
-	
-	for (j = 0; j < mad->n_caras; j++) {
+
+    for (j = 0; j < mad->n_caras; j++) {
 
 /*if (mad->n_textura != 0)
             

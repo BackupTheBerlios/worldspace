@@ -33,8 +33,9 @@ posición del observador, osea, nosotros
 float camara[4][4];
 
 //==========================================================================
-miColor           vPaleta [256*2];
-float             fFondo  [] = { 0.0f, 0.0f, 0.0f, 1.0f };  // Negro
+miColor vPaleta[256 * 2];
+float fFondo[] = { 0.0f, 0.0f, 0.0f, 1.0f };    // Negro
+
 //==========================================================================
 
 // ==================================================================
@@ -43,20 +44,21 @@ float             fFondo  [] = { 0.0f, 0.0f, 0.0f, 1.0f };  // Negro
 #define PfCOORD  { 0.0f, 0.0f, 0.0f, 0.0f },
 
 #define LfCOORD  PfCOORD PfCOORD PfCOORD PfCOORD \
-                 PfCOORD PfCOORD PfCOORD PfCOORD 
+                 PfCOORD PfCOORD PfCOORD PfCOORD
 
 #define XfCOORD  LfCOORD LfCOORD LfCOORD LfCOORD \
                  LfCOORD LfCOORD LfCOORD LfCOORD \
                  LfCOORD LfCOORD LfCOORD LfCOORD \
                  LfCOORD LfCOORD LfCOORD LfCOORD
 // ==================================================================
-miFuente vFuente [] = {
-	{ 0, 15, -3, 0, 0, FT2, "def.tga"   , 0, 0, { XfCOORD } },
-	{ 0, 16, -4, 0, 0, FT2, "agulon.tga", 0, 0, { XfCOORD } },
-	{ 0, 16, -2, 0, 0, AT1, "font.bmp"  , 0, 0, { XfCOORD } },
-};	//! Un par de fuentes...
+miFuente vFuente[] = {
+    {0, 15, -3, 0, 0, FT2, "def.tga", 0, 0, {XfCOORD}},
+    {0, 16, -4, 0, 0, FT2, "agulon.tga", 0, 0, {XfCOORD}},
+    {0, 16, -2, 0, 0, AT1, "font.bmp", 0, 0, {XfCOORD}},
+};                              //! Un par de fuentes...
 
-miLFuentes  vListaFuentes = { NUM_FUENTES, vFuente };
+miLFuentes vListaFuentes = { NUM_FUENTES, vFuente };
+
 // ==================================================================
 
 //==========================================================================

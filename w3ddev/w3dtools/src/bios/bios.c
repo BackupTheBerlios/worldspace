@@ -77,11 +77,11 @@ int log_msj(char *cadena, ...)
     va_list ap;                 // puntero a la lista de argumentos (los ...)
 
     va_start(ap, cadena);       // Busca variables en el texto
-    vsprintf(texto, cadena, ap);// y las sustituye por su valor
+    vsprintf(texto, cadena, ap);        // y las sustituye por su valor
     va_end(ap);                 // almacenando el resultado en text
 
-	if (salida_log==NULL)
-		salida_log = stdout;
+    if (salida_log == NULL)
+        salida_log = stdout;
 
     fprintf(salida_log, &cad_traza[79 - nivel_traza * 2]);
     fprintf(salida_log, texto);
@@ -118,10 +118,10 @@ int ini_sis_log()
         estado = NO;
     } else
         estado = SI;
-    
+
     log_msj
-    ("\n\n##########################################################################\n");
-    log_msj("w3dtools version build: %d\n\n",BUILD);	
+        ("\n\n##########################################################################\n");
+    log_msj("w3dtools version build: %d\n\n", BUILD);
     log_msj
         ("           WorldSpace 3D. copyright 2003 Grupo WorldSpace            \n");
     log_msj
@@ -258,11 +258,11 @@ int establece_conf()
         configuracion.Ytam = WYSCREEN;
         configuracion.bpp = WNBITS;
         configuracion.FullScreen = WALLSCREEN;
-        strcpy(configuracion.sDirGeneral , WDIR_GENERAL );
+        strcpy(configuracion.sDirGeneral, WDIR_GENERAL);
         strcpy(configuracion.sDirTexturas, WDIR_TEXTURAS);
-        strcpy(configuracion.sDirFuentes , WDIR_FUENTES );
-        strcpy(configuracion.sDirModelos , WDIR_MODELOS );
-        strcpy(configuracion.sDirSonidos , WDIR_SONIDOS );
+        strcpy(configuracion.sDirFuentes, WDIR_FUENTES);
+        strcpy(configuracion.sDirModelos, WDIR_MODELOS);
+        strcpy(configuracion.sDirSonidos, WDIR_SONIDOS);
         strcpy(configuracion.sDirEspacios, WDIR_ESPACIOS);
         graba_conf();
 
@@ -317,11 +317,9 @@ FILE *abre_fichero(char *nombre, char *modo)
 {
 
     FILE *tmp;
-	char nombre_completo[LON_BUFF];
+    char nombre_completo[LON_BUFF];
 
-    T_FUNC_IN
-
-    strcpy(nombre_completo, configuracion.sDirGeneral);
+    T_FUNC_IN strcpy(nombre_completo, configuracion.sDirGeneral);
     strcat(nombre_completo, "/");
     strcat(nombre_completo, nombre);
     log_msj("[bios.c] Abriendo %s\n", nombre_completo);

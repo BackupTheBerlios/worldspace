@@ -61,8 +61,8 @@ Control de indentacion de las trazas
 #define mInicio(s)  memset((s), 0, sizeof(s))
 
 #ifdef WIN32
-typedef unsigned int  uint;
-#endif // WIN32
+typedef unsigned int uint;
+#endif                          // WIN32
 typedef unsigned char byte;
 
 
@@ -74,11 +74,11 @@ typedef struct config_tag {
     int Ytam;
     int FullScreen;
     int bpp;
-    char sDirGeneral [LON_BUFF];
+    char sDirGeneral[LON_BUFF];
     char sDirTexturas[LON_BUFF];
-    char sDirFuentes [LON_BUFF];
-    char sDirModelos [LON_BUFF];
-    char sDirSonidos [LON_BUFF];
+    char sDirFuentes[LON_BUFF];
+    char sDirModelos[LON_BUFF];
+    char sDirSonidos[LON_BUFF];
     char sDirEspacios[LON_BUFF];
 } estr_config;
 

@@ -16,12 +16,11 @@
  ***************************************************************************/
 
  /*!
-=================================================================
-Funcion         : ini_ui ( )
-Objetivo        : Esta funcion muestra el gui en pantalla
-Parametros      : No hay que pasarle ningun parametro
-=================================================================
-*/
+    =================================================================
+    Funcion         : ini_ui ( )
+    Objetivo        : Esta funcion muestra el gui en pantalla
+    Parametros      : No hay que pasarle ningun parametro
+    =================================================================
+  */
 
 extern int ini_ui();
-

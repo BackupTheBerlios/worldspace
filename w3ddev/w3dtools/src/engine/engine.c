@@ -23,8 +23,7 @@
 #include "globales.h"
 #include "mad.h"
 
-
-static GLfloat fFondo []        = { 1.0f,  0.5f, 0.5f, 0.0f };
+static GLfloat fFondo[] = { 1.0f, 0.5f, 0.5f, 0.0f };
 
 /*!
   Esta función muestra un logo por pantalla para demostrar que la inicialización
@@ -38,12 +37,11 @@ int logo(void)
     int intervalo;
     modelo *logo;
     float fAngulo, fSize, fInc, fIter;
-    GLfloat Ambient0[]       = { 0.0f,  0.0f, 1.0f, 0.0f };
+    GLfloat Ambient0[] = { 0.0f, 0.0f, 1.0f, 0.0f };
     GLfloat LightPosition0[] = { 1.0f, -1.0f, 1.0f, 0.0f };
     GLfloat Diffuse0[4];
 
-
-	T_FUNC_IN;
+    T_FUNC_IN;
 
     log_msj("[engine.c] Veamos ese logo...\n");
     Diffuse0[3] = 1.0f;
@@ -55,43 +53,36 @@ int logo(void)
 
     logo = carga_mad("logo.mad");
 
-
     taux = SDL_GetTicks();
-	iAncho = configuracion.Xtam;
-	iAlto = configuracion.Ytam;
-	fAngulo = fIter = fInc = fSize = 0.0f;
+    iAncho = configuracion.Xtam;
+    iAlto = configuracion.Ytam;
+    fAngulo = fIter = fInc = fSize = 0.0f;
 
-    
-    while (fIter < 1000.0f)
-	{
-		glClearColor(fFondo[0], fFondo[1], fFondo[2], fFondo[3]);
+    while (fIter < 1000.0f) {
+        glClearColor(fFondo[0], fFondo[1], fFondo[2], fFondo[3]);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         glLightfv(GL_LIGHT0, GL_DIFFUSE, Diffuse0);
 
         glPushMatrix();
-            glTranslatef(0.0f, 0.0f, -(fAngulo / 34.28f) + 1.0f);
-            glRotatef(0.0f, 1.0f, 0.0f, 0.0f);
-            glRotatef(0.0f, 0.0f, 1.0f, 0.0f);
-            glRotatef(-fAngulo / 2, 1.0f, 1.0f, 1.0f);
-            if (logo != NULL)
-                render_mad(logo);
+        glTranslatef(0.0f, 0.0f, -(fAngulo / 34.28f) + 1.0f);
+        glRotatef(0.0f, 1.0f, 0.0f, 0.0f);
+        glRotatef(0.0f, 0.0f, 1.0f, 0.0f);
+        glRotatef(-fAngulo / 2, 1.0f, 1.0f, 1.0f);
+        if (logo != NULL)
+            render_mad(logo);
         glPopMatrix();
 
-
         SDL_GL_SwapBuffers();
-
-
-
 
         Diffuse0[0] = fAngulo / 1000.0f;
         Diffuse0[1] = (fAngulo - 360) / 1000.0f;
         Diffuse0[2] = fAngulo / 360.0f;
 
-	fFondo[0] = (fFondo[0]>0.0f)? fFondo[0] - 0.002f : 0.0f;
-	fFondo[1] = (fFondo[1]>0.0f)? fFondo[1] - 0.001f : 0.0f;
-	fFondo[2] = (fFondo[2]>0.0f)? fFondo[2] - 0.001f : 0.0f;
+        fFondo[0] = (fFondo[0] > 0.0f) ? fFondo[0] - 0.002f : 0.0f;
+        fFondo[1] = (fFondo[1] > 0.0f) ? fFondo[1] - 0.001f : 0.0f;
+        fFondo[2] = (fFondo[2] > 0.0f) ? fFondo[2] - 0.001f : 0.0f;
 
         SDL_PollEvent(&event);
         keys = SDL_GetKeyState(NULL);
@@ -99,37 +90,38 @@ int logo(void)
             break;
         }
 
-	intervalo=SDL_GetTicks()-taux;
+        intervalo = SDL_GetTicks() - taux;
         taux = SDL_GetTicks();
-	fInc = (float)((intervalo*1000.0f)/2000.0f);
-	fIter += fInc;
-        if (fAngulo < 720.0f) fAngulo += fInc;
-	    if (fSize   < 3.0f  )   fSize += 0.01f;
+        fInc = (float) ((intervalo * 1000.0f) / 2000.0f);
+        fIter += fInc;
+        if (fAngulo < 720.0f)
+            fAngulo += fInc;
+        if (fSize < 3.0f)
+            fSize += 0.01f;
     }
 
-    
-	    w_begin ();
-		    //---------------------------------------------------
-		    imprime (vFuente[eAgulon], (float) iAncho * 0.32f , (float) iAlto * 0.9f, 2.0f,
-			    "WorldSpace");
-		    imprime (vFuente[eAgulon], (float) iAncho * 0.47f , (float) iAlto * 0.2f, 2.0f,
-			    "3D");
-		    //---------------------------------------------------
-	    w_end ();
+    w_begin();
+    //---------------------------------------------------
+    imprime(vFuente[eAgulon], (float) iAncho * 0.32f, (float) iAlto * 0.9f,
+            2.0f, "WorldSpace");
+    imprime(vFuente[eAgulon], (float) iAncho * 0.47f, (float) iAlto * 0.2f,
+            2.0f, "3D");
+    //---------------------------------------------------
+    w_end();
 
-	 while (1) {   
-	    SDL_PollEvent(&event);
+    while (1) {
+        SDL_PollEvent(&event);
         keys = SDL_GetKeyState(NULL);
         if (keys[SDLK_ESCAPE]) {
             break;
-        }	
-	   if (event.type == SDL_QUIT) {
-                log_msj(">>Abortado<<<");
-		exit(0);
-	   }
-	SDL_Delay(15);
-	SDL_GL_SwapBuffers();
-	}    
+        }
+        if (event.type == SDL_QUIT) {
+            log_msj(">>Abortado<<<");
+            exit(0);
+        }
+        SDL_Delay(15);
+        SDL_GL_SwapBuffers();
+    }
     glDisable(GL_LIGHT0);
     glDisable(GL_LIGHTING);
 

@@ -18,18 +18,17 @@
 //==========================================================================
 //¡ Utilizamos esta estructura para cargar TGA.!
 //==========================================================================
-typedef	struct
-{
-	GLubyte	* imageData;
-	GLuint	  bpp;
-	GLuint	  width;
-	GLuint	  height;
-	GLuint	  texID;
+typedef struct {
+    GLubyte *imageData;
+    GLuint bpp;
+    GLuint width;
+    GLuint height;
+    GLuint texID;
 } miImagenTGA;
 
-void * carga_tga ( char * sFichero, int * tam_x, int * tam_y );
+void *carga_tga(char *sFichero, int *tam_x, int *tam_y);
 //==========================================================================
-#endif //_Carga_TGA_
+#endif                          //_Carga_TGA_
 
 //==========================================================================
 //  Fin de op_tga.h

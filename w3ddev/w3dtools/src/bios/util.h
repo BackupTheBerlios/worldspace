@@ -16,15 +16,15 @@
 #ifndef _UTIL_H_
 #define _UTIL_H_
 //==========================================================================
-void   uMayusculas        ( char * sCad );
-char * uCopia_cadena      ( char * sCadena );
-void   uStrtoken          ( char * sDestino, char * sOrigen, char * sSep );
+void uMayusculas(char *sCad);
+char *uCopia_cadena(char *sCadena);
+void uStrtoken(char *sDestino, char *sOrigen, char *sSep);
 //==========================================================================
-void   uGuardarEstado     ( void );
-void   uRecuperarEstado   ( void );
-void   uRecuperarPila     ( void );
+void uGuardarEstado(void);
+void uRecuperarEstado(void);
+void uRecuperarPila(void);
 //==========================================================================
-#endif // _UTIL_H_
+#endif                          // _UTIL_H_
 
 //==========================================================================
 //  Fin de util.h

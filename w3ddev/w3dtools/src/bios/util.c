@@ -29,13 +29,12 @@
 //  Pasamos una cadena a Mayusculas. Si estuvieramos en C++ debería ser una
 //  función 'inline'.
 //==========================================================================
-void uMayusculas ( char * sCad )
+void uMayusculas(char *sCad)
 {
-	int i;
-	for (i=0; sCad[i]!='\0'; i++ )
-		sCad[i] = toupper(sCad[i]);
+    int i;
+    for (i = 0; sCad[i] != '\0'; i++)
+        sCad[i] = toupper(sCad[i]);
 }
-
 
 //==========================================================================
 //    email : eric@users.berlios.de
@@ -44,24 +43,22 @@ void uMayusculas ( char * sCad )
 //  memoria al destino. 'sCadena' debe de tener fin de cadena '\0'
 //  para calcular bien su longitud.
 //==========================================================================
-char * uCopia_cadena ( char * sCadena )
+char *uCopia_cadena(char *sCadena)
 {
-	char * sDestino;
+    char *sDestino;
 
-	sDestino = (char *) dar_m (strlen(sCadena)+1, "uCopia_cadena");
-	if (sDestino==NULL)
-	{
-		// Debería de detener el programa, con una función general que
-		// restableciese los estados antes de lanzamiento del programa.
-		// Una función tipo 'Salida'.
-		// O controlar su salida.
-		return NULL;
-	}
-	strcpy (sDestino, sCadena);
+    sDestino = (char *) dar_m(strlen(sCadena) + 1, "uCopia_cadena");
+    if (sDestino == NULL) {
+        // Debería de detener el programa, con una función general que
+        // restableciese los estados antes de lanzamiento del programa.
+        // Una función tipo 'Salida'.
+        // O controlar su salida.
+        return NULL;
+    }
+    strcpy(sDestino, sCadena);
 
-	return sDestino;
+    return sDestino;
 }
-
 
 //==========================================================================
 //    email : eric@users.berlios.de
@@ -73,80 +70,71 @@ char * uCopia_cadena ( char * sCadena )
 //    dos tokens.
 //  Por esta última diferencia no se utiliza 'strtok'.
 //==========================================================================
-static char * sCadOrigen = NULL;   // Debería liberarse al final. ¿ Cómo ?
-static int    iLonOrigen = 0;      // Longitud de 'sOrigen'
-static int    iCurOrigen = 0;      // Posicion en 'sOrigen'
+static char *sCadOrigen = NULL; // Debería liberarse al final. ¿ Cómo ?
+static int iLonOrigen = 0;      // Longitud de 'sOrigen'
+static int iCurOrigen = 0;      // Posicion en 'sOrigen'
 //==========================================================================
-void uStrtoken ( char * sDestino, char * sOrigen, char * sSep )
+void uStrtoken(char *sDestino, char *sOrigen, char *sSep)
 {
-	if (sOrigen != NULL)
-	{
-		iLonOrigen = strlen (sOrigen);
-		iCurOrigen = 0;
-		sCadOrigen = (char *) liberar_m (sCadOrigen);
-		sCadOrigen = (char *) uCopia_cadena (sOrigen);
-	}
+    if (sOrigen != NULL) {
+        iLonOrigen = strlen(sOrigen);
+        iCurOrigen = 0;
+        sCadOrigen = (char *) liberar_m(sCadOrigen);
+        sCadOrigen = (char *) uCopia_cadena(sOrigen);
+    }
 
-	if (sCadOrigen != NULL)
-	{
-		int iLonSep, i, k, iCurAnterior;
-		iLonSep = strlen(sSep);
-		iCurAnterior = iCurOrigen;
-		for ( i=iCurOrigen, k=0; i<iLonOrigen; i++, k++ )
-		{
-			if ( !strncmp(sCadOrigen+i, sSep, iLonSep) )
-			{
-				//if (!strcmp(sSep,"\n"))  k = ((k==0)? 0: k-1);
-				strncpy (sDestino, sCadOrigen + iCurOrigen, k );
-				iCurOrigen = i + iLonSep;
-				break;
-			}
-		}
-		if (iCurOrigen == iCurAnterior) // Si no cambia es que no lo encuentra.
-		{
-			strcpy(sDestino,sCadOrigen+iCurOrigen);  // Toda la cadena o el resto de ella.
-		}
-	}
+    if (sCadOrigen != NULL) {
+        int iLonSep, i, k, iCurAnterior;
+        iLonSep = strlen(sSep);
+        iCurAnterior = iCurOrigen;
+        for (i = iCurOrigen, k = 0; i < iLonOrigen; i++, k++) {
+            if (!strncmp(sCadOrigen + i, sSep, iLonSep)) {
+                //if (!strcmp(sSep,"\n"))  k = ((k==0)? 0: k-1);
+                strncpy(sDestino, sCadOrigen + iCurOrigen, k);
+                iCurOrigen = i + iLonSep;
+                break;
+            }
+        }
+        if (iCurOrigen == iCurAnterior) // Si no cambia es que no lo encuentra.
+        {
+            strcpy(sDestino, sCadOrigen + iCurOrigen);  // Toda la cadena o el resto de ella.
+        }
+    }
 }
-
 
 //==========================================================================
 //    email : eric@users.berlios.de
 //==========================================================================
 //  Funciones para salvar el estado de generación OpenGL en pila.
 //==========================================================================
-void uGuardarEstado ( void )
+void uGuardarEstado(void)
 {
-	int iNivelPilaEstados;
-	int iMaxNivelPilaEstados;
-	glGetIntegerv(GL_ATTRIB_STACK_DEPTH, &iNivelPilaEstados);
-	glGetIntegerv(GL_MAX_ATTRIB_STACK_DEPTH, &iMaxNivelPilaEstados);
-	if (iMaxNivelPilaEstados > iNivelPilaEstados)
-		glPushAttrib (GL_ALL_ATTRIB_BITS);
+    int iNivelPilaEstados;
+    int iMaxNivelPilaEstados;
+    glGetIntegerv(GL_ATTRIB_STACK_DEPTH, &iNivelPilaEstados);
+    glGetIntegerv(GL_MAX_ATTRIB_STACK_DEPTH, &iMaxNivelPilaEstados);
+    if (iMaxNivelPilaEstados > iNivelPilaEstados)
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
 }
 
-
-void uRecuperarEstado ( void )
+void uRecuperarEstado(void)
 {
-	int iNivelPilaEstados;
-	glGetIntegerv(GL_ATTRIB_STACK_DEPTH, &iNivelPilaEstados);
-	if (iNivelPilaEstados>0)
-		glPopAttrib ();
+    int iNivelPilaEstados;
+    glGetIntegerv(GL_ATTRIB_STACK_DEPTH, &iNivelPilaEstados);
+    if (iNivelPilaEstados > 0)
+        glPopAttrib();
 }
 
-
-void uRecuperarPila ( void )	// Dejamos la pila de estados vacía recuperando
-{								// el estado original
-	int iNivelPilaEstados;
-	for ( glGetIntegerv(GL_ATTRIB_STACK_DEPTH, &iNivelPilaEstados);
-	      iNivelPilaEstados>0 ;
-		  glGetIntegerv(GL_ATTRIB_STACK_DEPTH, &iNivelPilaEstados)
-		)
-	{
-		glPopAttrib ();
-	}
+void uRecuperarPila(void)       // Dejamos la pila de estados vacía recuperando
+{                               // el estado original
+    int iNivelPilaEstados;
+    for (glGetIntegerv(GL_ATTRIB_STACK_DEPTH, &iNivelPilaEstados);
+         iNivelPilaEstados > 0;
+         glGetIntegerv(GL_ATTRIB_STACK_DEPTH, &iNivelPilaEstados)
+        ) {
+        glPopAttrib();
+    }
 }
-
 
 //==========================================================================
 //  Fin de util.c

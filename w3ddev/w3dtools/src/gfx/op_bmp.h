@@ -24,50 +24,52 @@
 #ifdef _LINUX
 typedef long LONG;
 typedef unsigned short int WORD;
-typedef unsigned long  int DWORD;
-#endif // _LINUX
+typedef unsigned long int DWORD;
+#endif                          // _LINUX
 
 typedef struct stBitmapFicCab {
-    WORD    bfTipo;			// Cadena identificación "BM" (?).
-    DWORD   bfSize;			// Tamaño del fichero en bytes.
-    WORD    bfReservado1;	// Reservado, siempre a 0.
-    WORD    bfReservado2;	// Reservado, siempre a 0.
-    DWORD   bfBitsSuma;		// Corrección de la imagen en bytes.
-} miBitmapFicCab;			// BITMAPFILEHEADER
-
-typedef struct { byte bCad[14]; } miByte14;
+    WORD bfTipo;                // Cadena identificación "BM" (?).
+    DWORD bfSize;               // Tamaño del fichero en bytes.
+    WORD bfReservado1;          // Reservado, siempre a 0.
+    WORD bfReservado2;          // Reservado, siempre a 0.
+    DWORD bfBitsSuma;           // Corrección de la imagen en bytes.
+} miBitmapFicCab;               // BITMAPFILEHEADER
 
 typedef struct {
-	DWORD bfSize;			// 4 Tamaño de BITMAPINFOHEADER ne bytes.
-	LONG  biAncho;			// 4 Ancho de la imagen en pixels.
-	LONG  biAlto;			// 4 Altura de la imagen en pixels
-	WORD  biPlanos;			// 2 Número de planos de color. siempre es 1.
-	WORD  biCuentaBits;		// 2 Número de bits de color
-	DWORD biCompresion;		// 4 Tipo de compresión usada.
-	DWORD biSizeImagen;		// 4 Tamaño de la imagen en bytes.
-	LONG  biXPxlsPorMetro;	// 4 Pixels por metro en horizontal.
-	LONG  biYPxlsPorMetro;	// 4 Pixels por metro en vertical.
-	DWORD biColUsados;		// 4 Número de colores usados.
-	DWORD biColImportantes;	// 4 Número de colores "importantes".
-} miBitmapInfCab;			// BITMAPINFOHEADER
+    byte bCad[14];
+} miByte14;
 
 typedef struct {
-	byte	rgbAzul;
-	byte	rgbVerve;
-	byte	rgbRojo;
-	byte	rgbReservado;
+    DWORD bfSize;               // 4 Tamaño de BITMAPINFOHEADER ne bytes.
+    LONG biAncho;               // 4 Ancho de la imagen en pixels.
+    LONG biAlto;                // 4 Altura de la imagen en pixels
+    WORD biPlanos;              // 2 Número de planos de color. siempre es 1.
+    WORD biCuentaBits;          // 2 Número de bits de color
+    DWORD biCompresion;         // 4 Tipo de compresión usada.
+    DWORD biSizeImagen;         // 4 Tamaño de la imagen en bytes.
+    LONG biXPxlsPorMetro;       // 4 Pixels por metro en horizontal.
+    LONG biYPxlsPorMetro;       // 4 Pixels por metro en vertical.
+    DWORD biColUsados;          // 4 Número de colores usados.
+    DWORD biColImportantes;     // 4 Número de colores "importantes".
+} miBitmapInfCab;               // BITMAPINFOHEADER
+
+typedef struct {
+    byte rgbAzul;
+    byte rgbVerve;
+    byte rgbRojo;
+    byte rgbReservado;
 } miRgbQuad;
 
 typedef struct {
-	miBitmapInfCab	bmiHeader;
-	miRgbQuad		bmiColors[1];
+    miBitmapInfCab bmiHeader;
+    miRgbQuad bmiColors[1];
 } miBitmap;
 
-SDL_Surface * carga_bmp_SDL ( char * sFichero );
+SDL_Surface *carga_bmp_SDL(char *sFichero);
 
-void * carga_bmp ( char * sFichero, int * tam_x, int * tam_y );
+void *carga_bmp(char *sFichero, int *tam_x, int *tam_y);
 //==========================================================================
-#endif //_Carga_BMP_
+#endif                          //_Carga_BMP_
 
 //==========================================================================
 //  Fin de op_bmp.h

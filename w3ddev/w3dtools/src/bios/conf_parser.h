@@ -54,10 +54,9 @@ Patrones para leer la configuracion inicial del fichero ini.
 extern int establece_var_conf_numero(FILE * fl_fichero, char *s_token);
 extern char *establece_var_conf_cadena(FILE * fl_fichero, char *s_token);
 //==========================================================================
-#endif   // _CONF_PARSER_H_
+#endif                          // _CONF_PARSER_H_
 
 
 //==========================================================================
 //  Fin de conf_parser.h
 //==========================================================================
-
