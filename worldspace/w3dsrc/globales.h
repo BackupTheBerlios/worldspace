@@ -27,7 +27,11 @@
 //==========================================================================
 extern float             fFondo  [4];
 extern miColor           vPaleta [256*2];
+extern miFuente          vFuente [NUM_FUENTES];
 extern miLFuentes        vListaFuentes;
+extern double            matriz_proyeccion[4][4];
+extern double            matriz_proyeccion_ortogonal[4][4];
+extern float             camara[4][4];
 //==========================================================================
 /*!
 Variable para guardar la configuración

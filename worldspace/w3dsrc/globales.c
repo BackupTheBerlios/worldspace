@@ -19,6 +19,20 @@
 #include "textura.h"
 
 //==========================================================================
+/*!
+Matrices de proyección. aquí se guardan un par de matrices de proyección.
+Esto nos permite ahorrarnos unas cuantas llamadas a gluPerspective.
+!*/
+double matriz_proyeccion[4][4];
+double matriz_proyeccion_ortogonal[4][4];
+
+/*!
+Esta matriz es una de las más importantes, ya que referenciará siempre la
+posición del observador, osea, nosotros
+!*/
+float camara[4][4];
+
+//==========================================================================
 miColor           vPaleta [256*2];
 float             fFondo  [] = { 0.0f, 0.0f, 0.0f, 1.0f };  // Negro
 //==========================================================================
@@ -27,12 +41,14 @@ float             fFondo  [] = { 0.0f, 0.0f, 0.0f, 1.0f };  // Negro
 //  Fuentes.
 // ==================================================================
 #define PfCOORD  { 0.0f, 0.0f, 0.0f, 0.0f },
+
 #define LfCOORD  PfCOORD PfCOORD PfCOORD PfCOORD \
-		 PfCOORD PfCOORD PfCOORD PfCOORD 
+                 PfCOORD PfCOORD PfCOORD PfCOORD 
+
 #define XfCOORD  LfCOORD LfCOORD LfCOORD LfCOORD \
-		 LfCOORD LfCOORD LfCOORD LfCOORD \
-		LfCOORD LfCOORD LfCOORD LfCOORD \
-		 LfCOORD LfCOORD LfCOORD LfCOORD
+                 LfCOORD LfCOORD LfCOORD LfCOORD \
+                 LfCOORD LfCOORD LfCOORD LfCOORD \
+                 LfCOORD LfCOORD LfCOORD LfCOORD
 // ==================================================================
 miFuente vFuente [] = {
 	{ 0, 15, -3, 0, 0, FT2, "def.tga"   , 0, 0, { XfCOORD } },
