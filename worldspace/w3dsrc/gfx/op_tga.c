@@ -45,19 +45,17 @@ void * carga_tga  ( char * sFichero, int *tam_x, int *tam_y )
 
     miImagenTGA  rImgTga;
 
-	T_FUNC_IN
+	T_FUNC_IN;
 
-	fichero= fopen(sFichero, "rb");
+	fichero = abre_fichero (sFichero, "rb");
 	if (fichero == NULL)
-	{
-			log_msj("\n No pude cargar fichero %s (tal vez no exista)",sFichero);
-			_return NULL;
-	}
+	{ _return NULL; }
 
 	// Esto abre y comprueba que es un TGA.
 	fread(TGAcompare,1,sizeof(TGAcompare),fichero);
 	if (memcmp(TGAheader,TGAcompare,sizeof(TGAheader))!=0)
 	{
+		log_msj("\n No es un fichero TGA: %s",sFichero);
 		fclose(fichero);
 		_return NULL;
 	}
@@ -76,22 +74,28 @@ void * carga_tga  ( char * sFichero, int *tam_x, int *tam_y )
 		rImgTga.height !=rImgTga.width ||
 		( header[4]!=32))					
 	{
-		fclose(fichero);								
-		_return NULL;								
+		log_msj("\n Fichero TGA de características incorrectas: %s",sFichero);
+		fclose(fichero);
+		_return NULL;
 	}
 
 	// Calculamos la memoria que será necesaria.
-	rImgTga.bpp	  = header[4];						
-	bytesPerPixel = rImgTga.bpp/8;				
+	rImgTga.bpp	  = header[4];
+	bytesPerPixel = rImgTga.bpp/8;
 	imageSize	  = rImgTga.width*rImgTga.height*bytesPerPixel;
 
 	// Reservamos memoria.
 	rImgTga.imageData=(GLubyte *)dar_m(imageSize);
+	if (rImgTga.imageData==NULL)
+	{
+		fclose(fichero);								
+		_return NULL;								
+	}
 
 	// Cargamos y hacemos alguna comprobaciones.
-	if(	rImgTga.imageData==NULL ||						
-		fread(rImgTga.imageData, 1, imageSize, fichero)!=imageSize)
+	if (fread(rImgTga.imageData, 1, imageSize, fichero)!=imageSize)
 	{
+		log_msj("\n Lectura de la imagen del TGA: %s",sFichero);
 		rImgTga.imageData = (GLubyte *)liberar_m(rImgTga.imageData);
 		fclose(fichero);								
 		_return NULL;								
