@@ -48,6 +48,8 @@ int  carga_listaFuentes ( miLFuentes * vListaFuentes );
 int  carga_fuente       ( miFuente * Fuente );
 int  imprime            ( miFuente Fuente, float x, float y, float tam, char *texto, ...);
 int  imprimeC           ( miFuente Fuente, int Color, float x, float y, float tam, char *texto, ... );
+void w_begin            ( void );
+void w_end              ( void );
 //==========================================================================
 #endif   // _FUENTE_H_
 
