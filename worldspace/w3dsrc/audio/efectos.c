@@ -25,8 +25,10 @@
 /* Aqui definimos el nº de sonidos, musicas, entornos y listeners que vamos a utilizar */
 
 #define NUM_SONIDOS     1
-#define NUM_ENTORNOS    1
 #define NUM_LISTENER    1
+#ifdef _LINUX
+#define NUM_ENTORNOS    1
+#endif
 
 /* Definimos estructura del listener y lo creamos */
 typedef struct {
@@ -38,8 +40,9 @@ typedef struct {
 LISTENER Listener[NUM_LISTENER];
 static ALuint buffer[NUM_SONIDOS];
 static ALuint source[NUM_SONIDOS];
+#ifdef _LINUX
 static ALuint entornos[NUM_ENTORNOS];
-
+#endif
 
  /*!
  ======================================================================
@@ -110,9 +113,12 @@ ALuint identificador --> Para indicar que sonido hemos cargado
 void  carga_sonido ( char *fichero_wav, int identificador ){
 
 	/* Variables locales */
-	ALsizei *size = NULL, *freq = NULL, *bits = NULL;
+	ALsizei *size = NULL, *freq = NULL;
 	static void **data = NULL;
     ALenum *format = NULL;
+#ifdef _LINUX
+    ALsizei *bits = NULL;
+#endif
 #ifdef _WIN32
 	ALboolean loop = AL_FALSE;
 #endif
@@ -130,9 +136,9 @@ void  carga_sonido ( char *fichero_wav, int identificador ){
 	free (data); /* liberamos */
 #endif
 #ifdef _WIN32
-	alutLoadWAVFile ( fichero_wav, format, data, size, freq, loop );
+	alutLoadWAVFile ( fichero_wav, format, data, size, freq, &loop );
 	alBufferData ( buffer[identificador], *format, data, *size, *freq );
-	alutUnLoadWAV ( format, data, size, freq );
+	alutUnLoadWAV ( *format, data, *size, *freq );
 #endif
 
 	/* Generamos las fuentes de sonido y comprobamos errores */

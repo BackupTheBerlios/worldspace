@@ -24,7 +24,6 @@
 #include <AL\al.h>
 #include <AL\alc.h>
 #include "alut.h"
-#include <AL\eax.h>
 #endif
 
  
