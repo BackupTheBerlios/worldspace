@@ -20,57 +20,13 @@
 #include "globales.h"
 #include "sdl_gl.h"
 
-/* XPM */
-static const char *cursor_xpm[] = {
-    "32 32 3 1",
-    "  c None",
-    ". c None",
-    "X c #000000",
-    /* XPM */
-    "XX                              ",
-    "X.X                             ",
-    "X..X                            ",
-    "X...X                           ",
-    "X....X                          ",
-    "X.....X                         ",
-    "X......X                        ",
-    "X.......X                       ",
-    "X........X                      ",
-    "X.........X                     ",
-    "X..........X                    ",
-    "X...........X                   ",
-    "X............X                  ",
-    "X.............X                 ",
-    "X..............X                ",
-    "XXXXXXXXXXXXXXXXX               ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "                                ",
-    "0,0"
-};
 
-static SDL_Cursor *init_system_cursor(const char *image[]);
-SDL_Cursor *cursor;
 SDL_Rect **resoluciones;
-
 extern double matriz_proyeccion[4][4];
 extern double matriz_proyeccion_ortogonal[4][4];
-/*!
 
-int sis_ini_display(void)
+/*!
+int ini_display(void)
 
 Inicialización del contexto OpenGL mediante SDL.
 Abrirá la ventana SDL y le asignará un contexto OpenGL.
@@ -82,7 +38,6 @@ int ini_display(void)
 
     unsigned short int x_size, y_size, i, resolucion_ok = NO;
     SDL_Surface *screen;
-    SDL_Surface *icon;
 
     T_FUNC_IN x_size = configuracion.Xtam;
     y_size = configuracion.Ytam;
@@ -96,6 +51,7 @@ int ini_display(void)
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     resoluciones = SDL_ListModes ( NULL, SDL_OPENGL | SDL_FULLSCREEN );
+
     if (configuracion.FullScreen == 1) {
         
         /* Comprobamos que la resolucion es valida */
@@ -114,9 +70,8 @@ int ini_display(void)
                 SDL_Quit();
                 _return NO;
         }
-        screen =
-            SDL_SetVideoMode(x_size, y_size, 16,
-                             SDL_OPENGL | SDL_FULLSCREEN);
+
+        screen =  SDL_SetVideoMode(x_size, y_size, 16, SDL_OPENGL | SDL_FULLSCREEN);
         if (!screen) {
             log_msj("[KO] No se pudo inicializar OpenGL en pantalla completa %s\n", SDL_GetError());
             SDL_Quit();
@@ -133,11 +88,9 @@ int ini_display(void)
 
     log_msj("[OK] Contexto OpenGL inicializado\n");
 
-    cursor = init_system_cursor(cursor_xpm);
-    SDL_SetCursor(cursor);
 
-    /* Cursor fuera */
-    SDL_ShowCursor(0);
+    /* Cursor desabilitado. Se utilizara el del GUI */
+    SDL_ShowCursor(SDL_DISABLE);
 
     /* Título de la ventana */
     SDL_WM_SetCaption("WorldSpace", "WorldSpace");
@@ -170,18 +123,31 @@ Cambia la resolucion del contexto gráfico
 int cambia_display( int xdis, int ydis, int pan_completa){
 
   SDL_Surface *screen;
-  
+
+  T_FUNC_IN
   configuracion.Xtam = xdis;
   configuracion.Ytam = ydis;
   configuracion.FullScreen = pan_completa;
-  
+
+  /* Cambiamos la resolucion con los parametros pasados */
   if (configuracion.FullScreen == 1){
     screen =  SDL_SetVideoMode ( configuracion.Xtam, configuracion.Ytam, 16, SDL_OPENGL | SDL_FULLSCREEN);
+    if (!screen) {
+       log_msj("[KO] No se pudo inicializar OpenGL en pantalla completa %s\n", SDL_GetError());
+       SDL_Quit();
+       _return NO;
+    }
   }
   else {
     screen =  SDL_SetVideoMode ( configuracion.Xtam, configuracion.Ytam, 16, SDL_OPENGL);
+    if (!screen) {
+       log_msj("[KO] No se pudo inicializar OpenGL en ventana %s\n", SDL_GetError());
+       SDL_Quit();
+       _return NO;
+    }
   }
 
+  /* Redimensionamos la ventana y actualizamos las matrices de proyeccion */
   glViewport( 0, 0, ( GLsizei )configuracion.Xtam, ( GLsizei )configuracion.Ytam );
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
@@ -195,39 +161,4 @@ int cambia_display( int xdis, int ydis, int pan_completa){
   return SI;
 }
 
-/* Stolen from the mailing list */
-/* Creates a new mouse cursor from an XPM */
 
-static SDL_Cursor *init_system_cursor(const char *image[])
-{
-    int i, row, col;
-    Uint8 data[4 * 32];
-    Uint8 mask[4 * 32];
-    int hot_x, hot_y;
-
-    i = -1;
-    for (row = 0; row < 32; ++row) {
-        for (col = 0; col < 32; ++col) {
-            if (col % 8) {
-                data[i] <<= 1;
-                mask[i] <<= 1;
-            } else {
-                ++i;
-                data[i] = mask[i] = 0;
-            }
-            switch (image[4 + row][col]) {
-            case 'X':
-                data[i] |= 0x01;
-                mask[i] |= 0x01;
-                break;
-            case '.':
-                mask[i] |= 0x01;
-                break;
-            case ' ':
-                break;
-            }
-        }
-    }
-    sscanf(image[4 + row], "%d,%d", &hot_x, &hot_y);
-    return SDL_CreateCursor(data, mask, 32, 32, hot_x, hot_y);
-}
