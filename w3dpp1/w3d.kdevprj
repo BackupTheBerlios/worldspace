@@ -67,7 +67,7 @@ install_location=
 type=DATA
 
 [Makefile.am]
-files=w3d.kdevprj,AUTHORS,COPYING,ChangeLog,INSTALL,README,TODO,Makefile
+files=w3d.kdevprj,AUTHORS,COPYING,ChangeLog,INSTALL,README,TODO,Makefile,VERSION
 sub_dirs=w3d
 type=normal
 
@@ -78,6 +78,12 @@ install_location=
 type=DATA
 
 [TODO]
+dist=true
+install=false
+install_location=
+type=DATA
+
+[VERSION]
 dist=true
 install=false
 install_location=

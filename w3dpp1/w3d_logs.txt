@@ -1280,3 +1280,59 @@ Configuración:
 [OK]		Contexto OpenGL preparado
 [OK]			OpenGL inicializado con éxito
 [OK]	Sistema gráfico inicializado
+
+
+
+
+
+ ***************************************************************************
+ *                 Hello World! WorldSpace has just arrived!               *
+ ***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************
+
+Configuración:
+	Resolución horz.(X)	 640
+	Resolución vert.(Y)	 480
+	Pantalla completa	 0
+	Directorio base	 ws_datos
+
+[OK]	Sistema básico inicializado
+[OK]		Subsistema SDL_video inicializado
+[OK]		Contexto OpenGL inicializado
+[OK]		Contexto OpenGL preparado
+[OK]			OpenGL inicializado con éxito
+[OK]	Sistema gráfico inicializado
+
+
+
+
+
+ ***************************************************************************
+ *                 Hello World! WorldSpace has just arrived!               *
+ ***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************
+
+Configuración:
+	Resolución horz.(X)	 640
+	Resolución vert.(Y)	 480
+	Pantalla completa	 0
+	Directorio base	 ws_datos
+
+[OK]	Sistema básico inicializado
+[OK]		Subsistema SDL_video inicializado
+[OK]		Contexto OpenGL inicializado
+[OK]		Contexto OpenGL preparado
+[OK]			OpenGL inicializado con éxito
+[OK]	Sistema gráfico inicializado

@@ -1,3 +1,5 @@
+BUILD= `cat VERSION`
+UPDATEV= $(BUILD)+1
 CC := gcc
 RANLIB ?= ranlib
 LIBS ?=
@@ -16,8 +18,10 @@ INSTALL_USER ?= root
 SHAREDFLAGS := $(SHAREDFLAGS)
 LIBS := $(LIBS) -lX11 -lXi -lXmu  -lGL  -lm -lpthread -lSDL -lXxf86dga -lXv -lGLU
 SHAREDLIBS := $(SHAREDLIBS)
-CFLAGS := $(CFLAGS) -g -ggdb    -Wall -D_LINUX
+CFLAGS := $(CFLAGS) -g -ggdb    -Wall -D_LINUX -DBUILD=$(UPDATEV)
 LDFLAGS := -L/usr/X11R6/lib -L/usr/lib $(LDFLAGS)
+
+
 .PHONY: all clean distclean binaries static shared install install-binaries install-conf install-headers install-shared install-static install-man1 install-man2 install-man3 install-man4 install-man5 install-man6 install-man7 install-man8 install-man9
 
 all: binaries static shared
