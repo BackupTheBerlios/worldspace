@@ -33,6 +33,7 @@ Valores de configuracion inicial.
 #define WDIR_TEXTURAS "texturas"
 #define WDIR_FUENTES  "fuentes"
 #define WDIR_MODELOS  "modelos"
+#define WDIR_SONIDOS  "sonidos"
 #define WDIR_ESPACIOS "espacios"
 #define WDIR_NODIR    "no_hay_directorio"
 /*!
@@ -46,6 +47,7 @@ Patrones para leer la configuracion inicial del fichero ini.
 #define PDIR_TEXTURAS "DirTexturas"
 #define PDIR_FUENTES  "DirFuentes"
 #define PDIR_MODELOS  "DirModelos"
+#define PDIR_SONIDOS  "DirSonidos"
 #define PDIR_ESPACIOS "DirEspacios"
 
 
