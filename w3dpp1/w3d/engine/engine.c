@@ -18,6 +18,7 @@
 #include "../opengl.h"
 #include "../global.h"
 #include "estructuras.h"
+#include "../gfx/fuentes.h"
 
 #include "espacio.h"
 #include "texturas.h"
@@ -42,6 +43,8 @@ float camara[4][4];
 float intervalo;
 
 extern GLuint *matriz_texturas;
+
+extern float velocidad;
 
 
 /* Matriz de sprites de fondo del espacio */
@@ -336,6 +339,8 @@ int renderiza_escena()
     glLoadIdentity();
 
     render_mad(nave);
+    print_p(def,IZQUIERDA,config.SCREEN_SIZE_Y,.25f,"Velocidad %f m/s",velocidad*10);
+
 
     glFlush();
     SDL_GL_SwapBuffers();

@@ -136,10 +136,74 @@ int print(FUENTE * fuente, float x, float y, float tam, char *texto, ...)
 
     glBindTexture(GL_TEXTURE_2D, fuente->mapabits);
     i = strlen(text);
+    /*_sis_msj("\t[dbg] ");
+    _sis_msj(text);
+    _sis_msj("\n");*/
+
+
+
+    glDisable(GL_DEPTH_TEST);
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrixd(&matriz_proyeccion_fuentes[0][0]);
+
+    /* Aquí se renderiza el plano y su textura */
+
+    for (i = 0; i < (int) strlen(text); i++) {
+        glBegin(GL_QUADS);
+
+        glTexCoord2f(tipo1[(text[i] - 32)][0], tipo1[(text[i] - 32)][3]);
+        glVertex2f(x, y - fuente->tam_base * tam);
+
+        glTexCoord2f(tipo1[(text[i] - 32)][2], tipo1[(text[i] - 32)][3]);
+        glVertex2f(x + fuente->tam_base * tam, y - fuente->tam_base * tam);
+
+        glTexCoord2f(tipo1[(text[i] - 32)][2], tipo1[(text[i] - 32)][1]);
+        glVertex2f(x + fuente->tam_base * tam, y);
+
+        glTexCoord2f(tipo1[(text[i] - 32)][0], tipo1[(text[i] - 32)][1]);
+        glVertex2f(x, y);
+
+        glEnd();
+        x += fuente->tam_base * tam + fuente->espacio_base * tam;
+    }
+    glLoadIdentity();
+    glEnable(GL_DEPTH_TEST);
+    return SI;
+}
+
+
+int print_p(FUENTE * fuente, char align, float y, float tam, char *texto, ...)
+{
+
+    char text[1024];            // almacena el texto a escribir
+    va_list ap;                 // puntero a la lista de argumentos (los ...)
+    int i;
+    if (texto == NULL)          // si no hay texto
+        return 0;               // nos vamos
+    va_start(ap, texto);        // Busca variables en el texto
+    vsprintf(text, texto, ap);  // y las sustituye por su valor
+    va_end(ap);                 // almacenando el resultado en text
+    float x;
+
+
+    if (fuente->inicializado != SI)
+        return NO;
+
+    glBindTexture(GL_TEXTURE_2D, fuente->mapabits);
+    i = strlen(text);
     _sis_msj("\t[dbg] ");
     _sis_msj(text);
     _sis_msj("\n");
 
+
+    if (align==CENTRO) {
+    	x=config.SCREEN_SIZE_X/2;
+	x=x-(fuente->tam_base+fuente->espacio_base)*tam*strlen(texto)/2;
+	}
+    else if (align==IZQUIERDA)
+    	x=0;
+    else if (align==DERECHA)
+    	x=config.SCREEN_SIZE_X-(fuente->tam_base+fuente->espacio_base)*tam*strlen(texto);
 
 
     glDisable(GL_DEPTH_TEST);
@@ -187,9 +251,9 @@ int ini_fuente(void)
     glOrtho(0, config.SCREEN_SIZE_X, 0, config.SCREEN_SIZE_Y, -100, 100);
     glGetDoublev(GL_PROJECTION_MATRIX, &matriz_proyeccion_fuentes[0][0]);
 
-    def = carga_fuente("def.tga", 30, 0);
-    print(def, config.SCREEN_SIZE_X / 2 - 12 * 15, config.SCREEN_SIZE_Y,
-          0.5f, "WorldSpace 3D BUILD: %d", BUILD);
+    def = carga_fuente("def.tga", 30, -5);
+    print_p(def, CENTRO, config.SCREEN_SIZE_Y,
+          0.75f, "WorldSpace 3D BUILD: %d", BUILD);
 
 
     SDL_GL_SwapBuffers();
