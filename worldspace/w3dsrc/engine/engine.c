@@ -22,6 +22,7 @@
 #include "w3d_base.h"
 #include "globales.h"
 #include "mad.h"
+#include "audio.h"
 
 /*!
 ================================== DECLARACION DE VARIABLES
@@ -56,6 +57,8 @@ int logo(void)
     GLfloat Ambient0[] = { 0.0f, 0.0f, 1.0f, 0.0f };
     GLfloat LightPosition0[] = { 1.0f, -1.0f, 1.0f, 0.0f };
     GLfloat Diffuse0[4];
+    ALfloat SonPosition [] = {0.0,0.0,0.0};
+    ALfloat SonVelocidad [] = {1.0,1.0,1.0};
 
     log_msj("[engine.c] Veamos ese logo...\n");
     Diffuse0[3] = 1.0f;
@@ -66,6 +69,9 @@ int logo(void)
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHTING);
     logo = carga_mad("logo.mad");
+    carga_sonido("ws_datos/sonidos/prueba.wav",1);
+
+    reproducir_sonido(1, SonPosition, SonVelocidad,1.0,1.0,100.0,AL_FALSE);
 
     while (angulo < 720) {
         Diffuse0[0] = angulo / 720.0f;

@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "w3d_base.h"
 #include "globales.h"
 #include "audio.h"
@@ -113,16 +114,24 @@ ALuint identificador --> Para indicar que sonido hemos cargado
 void  carga_sonido ( char *fichero_wav, int identificador ){
 
 	/* Variables locales */
-	ALsizei *size = NULL, *freq = NULL;
-	static void **data = NULL;
-    ALenum *format = NULL;
+	ALsizei size, freq;
+	static void *data = NULL;
+    ALenum format;
 #ifdef _LINUX
-    ALsizei *bits = NULL;
+    ALsizei bits;
 #endif
 #ifdef _WIN32
-	ALboolean loop = AL_FALSE;
+	ALboolean loop;
 #endif
 
+    /*char filename[LON_BUFF];*/
+    /* Establecemos donde estara situado el directorio para los sonidos */
+    /*strcpy(filename, configuracion.sDirGeneral); // Arreglarlo para que funcione con configuracion.sDirGeneral
+    strcat(filename, "/");
+    strcpy(filename, "sonidos");
+    strcat(filename, "/");
+    strcat(filename, fichero_wav); */
+    
 	/* Generamos buffer, le asignamos un identificador y comprobamos errores */
 	alGenBuffers( 1, &buffer[identificador] );
 	if ( !alIsBuffer ( buffer[identificador] )){
@@ -131,14 +140,14 @@ void  carga_sonido ( char *fichero_wav, int identificador ){
 
 	/* Cargamos ficheros Wave */
 #ifdef _LINUX
-	alutLoadWAV ( fichero_wav, data, format, size, bits, freq ); /* Cargamos en memoria */
-	alBufferData ( buffer[identificador], *format, data, *size, *freq ); /* Almacenamos en buffer */
+	alutLoadWAV ( fichero_wav, &data, &format, &size, &bits, &freq ); /* Cargamos en memoria */
+	alBufferData ( buffer[identificador], format, data, size, freq ); /* Almacenamos en buffer */
 	free (data); /* liberamos */
 #endif
 #ifdef _WIN32
-	alutLoadWAVFile ( fichero_wav, format, data, size, freq, &loop );
-	alBufferData ( buffer[identificador], *format, data, *size, *freq );
-	alutUnLoadWAV ( *format, data, *size, *freq );
+	alutLoadWAVFile ( fichero_wav, &format, &data, &size, &freq, &loop );
+	alBufferData ( buffer[identificador], format, data, size, freq );
+	alutUnLoadWAV ( format, data, size, freq );
 #endif
 
 	/* Generamos las fuentes de sonido y comprobamos errores */
