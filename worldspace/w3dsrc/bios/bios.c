@@ -285,8 +285,9 @@ FILE *abre_fichero(char *nombre, char *modo)
 {
 
     FILE *tmp;
+	char nombre_completo[LON_BUFF];
 
-    T_FUNC_IN char nombre_completo[LON_BUFF];
+    T_FUNC_IN
 
     strcpy(nombre_completo, configuracion.sDirGeneral);
     strcat(nombre_completo, "/");
