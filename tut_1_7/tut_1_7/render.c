@@ -9,9 +9,7 @@
 #include "sys_data.h"
 
 #include <stdlib.h>
-#include "IL/il.h"
-#include "IL/ilu.h"
-#include "IL/ilut.h"
+
 
 extern void W1_C(void);
 
@@ -161,13 +159,6 @@ int logo(void) {
 	
 		glMatrixMode(GL_MODELVIEW);
 
-		ilInit();
-    iluInit();
-    ilutInit();
-    ilutRenderer(ILUT_OPENGL);
-
-    ilGenImages(1,&ilshot);
-    ilBindImage(ilshot);
 
 
     while (angulo<720) {
@@ -187,33 +178,17 @@ int logo(void) {
 			W1_C();
 			SDL_GL_SwapBuffers();
 
-     /* Render a fichero */
-     sprintf(shotname,"shot%.4d.jpg",n);
-
-/*     glPixelStorei (GL_UNPACK_ALIGNMENT, 4);
-     glPixelStorei (GL_UNPACK_SKIP_ROWS, 0);
-     glPixelStorei (GL_UNPACK_SKIP_PIXELS, 0);
-     glPixelStorei (GL_UNPACK_ROW_LENGTH, 0);
-     glReadPixels (0, 0, config.SCREEN_SIZE_X, config.SCREEN_SIZE_Y, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-     ilLoadL(IL_RAW, pixels, 640*480*3);
-     shot=fopen(shotname,"wb");
-     fwrite(pixels,640*480*3,1,shot);
-     fclose(shot);  */
-
-     ilutGLScreen();
-     ilSave(IL_JPG,shotname );
-
 
      n++;
-    /* Fin de Render a fichero */
 
-     angulo+=0.5f;
+
+     angulo+=1.5f;
 		}
 
     while (angulo<1440) {
-			Diffuse0[0]-=0.004f;
-			Diffuse0[1]-=0.002f;
-			Diffuse0[2]-=0.01f;
+			Diffuse0[0]-=0.008f;
+			Diffuse0[1]-=0.004f;
+			Diffuse0[2]-=0.02f;
 			glLightfv(GL_LIGHT0, GL_DIFFUSE, Diffuse0);
 	   	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			glLoadIdentity();
@@ -224,27 +199,8 @@ int logo(void) {
 			W1_C();
 			SDL_GL_SwapBuffers();
 
-     /* Render a fichero */
-     sprintf(shotname,"shot%.4d.jpg",n);
 
-/*     glPixelStorei (GL_UNPACK_ALIGNMENT, 4);
-     glPixelStorei (GL_UNPACK_SKIP_ROWS, 0);
-     glPixelStorei (GL_UNPACK_SKIP_PIXELS, 0);
-     glPixelStorei (GL_UNPACK_ROW_LENGTH, 0);
-     glReadPixels (0, 0, config.SCREEN_SIZE_X, config.SCREEN_SIZE_Y, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-     ilLoadL(IL_RAW, pixels, 640*480*3);
-     shot=fopen(shotname,"wb");
-     fwrite(pixels,640*480*3,1,shot);
-     fclose(shot);  */
-
-     ilutGLScreen();
-     ilSave(IL_JPG,shotname );
-
-
-     n++;
-    /* Fin de Render a fichero */
-
-     angulo+=2.0f;
+     angulo+=4.0f;
 		}
 
 		glLoadIdentity();
