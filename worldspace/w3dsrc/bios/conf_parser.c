@@ -105,6 +105,18 @@ int establece_var_conf_numero(FILE * fl_fichero, char *s_token)
     T_FUNC_OUT return k;
 }
 
+
+//==========================================================================
+// Eric: 'establece_var_conf_cadena' estaba fallando cuando no se
+// encontraba el patrón aportado: devuelve NULL
+// Se está utilizando en 'strcpy' y eso produce 'access violation'.
+// Corrijo la función dado al puntero 'char * k' la dirección de 'sAux'.
+// Así siempre devuelve una dirección.
+// Si no encuentra nada, el primer valor en la dirección devuelta es '\0'.
+// Y hago que salga con el primero que encuentre.
+//==========================================================================
+static char sAux [LON_BUFF];
+//==========================================================================
 char *establece_var_conf_cadena(FILE * fl_fichero, char *s_token)
 {
 
@@ -117,11 +129,12 @@ char *establece_var_conf_cadena(FILE * fl_fichero, char *s_token)
     int  i_ini_valor = 0;
     int  i_fin_valor = 0;
     int  j;
-    char *k = NULL;
+    char * k = sAux;
 	uint i;
 
     T_FUNC_IN;
 
+	mInicio(sAux);
 	while (!feof(fl_fichero))
 	{
         if (fgets(s_linea, LON_BUFF, fl_fichero) != NULL)
@@ -172,8 +185,9 @@ char *establece_var_conf_cadena(FILE * fl_fichero, char *s_token)
             if (strcmp(s_linea, token) == 0) {
                 log_msj("[conf_parser.c] Token:\"%s\" Valor:\"%s\" .\n",
                         token, valor);
-                k = (char *) malloc(LON_BUFF);
+                // k = (char *) malloc(LON_BUFF); // ya le asignamos sAux.
                 strcpy(k, valor);
+				break;  // Se sale con el primero que encuentra
             }
 
         }
