@@ -52,6 +52,7 @@ ALCcontext *Context = NULL;  /* Contexto para Windows */
 ALuint frecuencia; /* Utilizados en la carga de archivos OGG */
 ALuint bitrate; /* Utilizados en la carga de archivos OGG */
 ALenum formato; /* Utilizado en la carga de archivos OGG */
+int tamanyo_cancion; /* Utilizado en la carga de archivos OGG */
 ALuint streambuffers[NUM_BUFFER_MUSICA]; /* Utilizado en la carga de archivos OGG */
 int NUM_BUFFER_MUSICA;
 ALuint streamsource[1]; /* Utilizado en la carga de archivos OGG */
@@ -427,31 +428,34 @@ void CargarMusica ( char *fichero_ogg ){
 		formato = AL_FORMAT_MONO16;
 	}
 
-      /* FIXME : Esto tendria que funcionar con un numero y tamanyo de buffers fijo
-      en vez de lo que hacemos ahora. Corrijeme */
-      /* Preferiblemente usa archivos con un bitrate superior a 92 kbps. Una cantidad inferior a
-      esto podria hacer que el archivo no se reprodujera correctamente */
-     if (((informacion->bitrate) >= 16000) & ((informacion->bitrate) < 48000)){
-         NUM_BUFFER_MUSICA = 4;
-         BUFFER_MUSICA = 4096;
-     }
-     else if (((informacion->bitrate) >= 48000) & ((informacion->bitrate) < 92000)){
-         NUM_BUFFER_MUSICA = 50;
-         BUFFER_MUSICA = 512;
-     }
-     else if ((informacion->bitrate) >= 92000){
-         NUM_BUFFER_MUSICA = 200;
-         BUFFER_MUSICA = 256;
-     }
-         
+      	/* FIXME : Esto tendria que funcionar con un numero y tamanyo de buffers fijo
+      	en vez de lo que hacemos ahora. Corrijeme */
+      	/* Preferiblemente usa archivos con un bitrate superior a 92 kbps. Una cantidad inferior a
+      	esto podria hacer que el archivo no se reprodujera correctamente */
+     	if (((informacion->bitrate) >= 16000) & ((informacion->bitrate) < 48000)){
+        	NUM_BUFFER_MUSICA = 4;
+        	BUFFER_MUSICA = 4096;
+     	}
+     	else if (((informacion->bitrate) >= 48000) & ((informacion->bitrate) < 92000)){
+        	NUM_BUFFER_MUSICA = 50;
+        	BUFFER_MUSICA = 512;
+     	}
+     	else if ((informacion->bitrate) >= 92000){
+        	NUM_BUFFER_MUSICA = 200;
+        	BUFFER_MUSICA = 256;
+     	}
+
+	/* Obtenemos el tamanyo de la cancion*/
+	tamanyo_cancion = ov_pcm_total ( &buff, -1 );
+	
 	/* Generamos  buffers para hacer el streaming */
 	alGenBuffers ( NUM_BUFFER_MUSICA, streambuffers);
-     if ( alGetError() != AL_NO_ERROR){
-         fprintf ( logs,"Fallo al crear los buffers para la musica\n");
-         exit (2);
-     }
+     	if ( alGetError() != AL_NO_ERROR){
+        	fprintf ( logs,"Fallo al crear los buffers para la musica\n");
+        	exit (2);
+     	}
 
-
+}
 /********************************************************
 Funcion       : ReproducirMusica ( )
 Objetivo      : reproduce la musica seleccionada
@@ -460,13 +464,13 @@ Parametros : No hay que pasarle parametros
 
 void ReproducirMusica (  ){
 
-    musica_on=1;
+    	musica_on=1;
     
-    /* Creamos thread independiente para la musica */
-    threadmusica = SDL_CreateThread (ActualizarMusica, NULL);
-    if (threadmusica == NULL) {
-	    fprintf(logs,"No podemos crear el thread para la musica.\n");
-    }
+    	/* Creamos thread independiente para la musica */
+    	threadmusica = SDL_CreateThread (ActualizarMusica, NULL);
+    	if (threadmusica == NULL) {
+		fprintf(logs,"No podemos crear el thread para la musica.\n");
+    	}
 }
 
 
@@ -478,10 +482,10 @@ Parametros : No hay que pasarle parametros
 
 void PararMusica (  ){
 
-    /* Paramos la musica */
-    alSourceStop ( streamsource[0] );
-    musica_on = 0;
-    streambuffer_vacio = 1;
+    	/* Paramos la musica */
+    	alSourceStop ( streamsource[0] );
+    	musica_on = 0;
+    	streambuffer_vacio = 1;
 }
 
 
@@ -519,23 +523,22 @@ Parametros : No hay que pasarle parametros
 
 void ActualizarMusica (  ){
 
-    int cont=0;
-    int contador=0;
-    int i;
-    int posicion = 0;
+    	int cont=0;
+    	int contador=0;
+    	int i;
+    	int posicion = 0;
     
 
-	while ( contador =! tamao_cancion){
-          /* Rellenamos los buffers creados con la musica decodificada */
-		for ( i=0; i < NUM_BUFFER_MUSICA ; i++){
-			cont = ov_read ( &buff, (char *)&waveout[posicion], BUFFER_MUSICA , 0, 2, 1, &current_section ) / 2;
-             contador += cont;
-             /*fprintf ( logs,"Decodificado %i bytes en el %i buffer\n",contador,i);*/
-             alBufferData ( streambuffers[i], formato, waveout , BUFFER_MUSICA , frecuencia );
-             if ( alGetError != AL_NO_ERROR ){
-                  fprintf ( logs, "Error al anyadir datos al buffer");
-             }
-		}
+	
+	/* Rellenamos los buffers creados con la musica decodificada */
+	for ( i=0; i < NUM_BUFFER_MUSICA ; i++){
+		cont = ov_read ( &buff, (char *)&waveout[posicion], BUFFER_MUSICA , 0, 2, 1, &current_section ) / 2;
+        	contador += cont;
+             	alBufferData ( streambuffers[i], formato, waveout , BUFFER_MUSICA , frecuencia );
+             	if ( alGetError != AL_NO_ERROR ){
+                	fprintf ( logs, "Error al anyadir datos al buffer");
+             	}
+	}
 
         /* Creamos la fuente y definimos sus propiedades */
         alGenSources( 1, streamsource[0] );
@@ -557,16 +560,15 @@ void ActualizarMusica (  ){
         if ( alGetError != AL_NO_ERROR ){
               fprintf ( logs, "Error al reproducir musica");
         }
+	
+	/* A partir de aqui es donde realmente empieza el Streaming*/
+	while ( contador < tamanyo_cancion ){
 
-/* Variables locales */
-    int i,cont1,contador1,cont2,contador2;
-    if ( musica_on == 1 && streambuffer_vacio == 1){
-
-        /* Comprobamos estado de los buffers */
-        alGetSourcei ( streamsource[0], AL_BUFFERS_PROCESSED, &buffers_vacios);
-        fprintf(logs,"hay %i buffers vacios\n", buffers_vacios);
-       /* Si algun buffer esta vacio, lo rellenamos */
-       if ( buffers_vacios > 0 ){
+ 		/* Comprobamos estado de los buffers */
+        	alGetSourcei ( streamsource[0], AL_BUFFERS_PROCESSED, &buffers_vacios);
+        
+       		/* Si algun buffer esta vacio, lo rellenamos */
+       		if ( buffers_vacios > 0 ){
           /* Desasignamos buffers para rellenarlos */
           alSourceUnqueueBuffers ( streamsource[0], buffers_vacios, &streambuffers );
           if ( (alGetError( )) != AL_NO_ERROR ){
