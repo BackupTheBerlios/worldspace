@@ -21,6 +21,10 @@
 #include "engine.h"
 #include "audio.h"
 
+#ifdef _MSVC
+#include "sdl_gl.h"
+#endif // _MSVC
+
 /*!
 ==================================================================
 Inicio de la aplicación. Punto de entrada.
