@@ -17,11 +17,23 @@
 
 #ifndef _Memoria_h_
 #define _Memoria_h_
-//==========================================================================
-void * dar_m              ( int iSize );
+// ==================================================================
+#define LIM_MEM	  60		// Tamaño del vector de bloques
+#define mNULO(s)  if (s==NULL) return -1;
+
+typedef struct stMem {
+	int    iDes;			// Descriptor de memoria
+	char   sChivato[32];	// Indica se quien es el bloque de memoria
+	void * pMem;			// Puntero al bloque de memoria
+	struct stMem * pSig;	// Puntero al siguiente bloque cuando se use
+} miMemoria;
+
+// ==================================================================
+void * dar_m              ( int iSize, char * sDonde );
 void * liberar_m          ( void * );
 int    bloques_asignados  ( void );
-//==========================================================================
+void   control_memoria    ( void );
+// ==================================================================
 #endif // _Memoria_h_
 
 //==========================================================================
