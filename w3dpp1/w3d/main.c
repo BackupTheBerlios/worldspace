@@ -18,6 +18,7 @@
 
 #include "global.h"
 #include "display/display.h"
+#include "gfx/fuentes.h"
 
 
 /*!
@@ -48,7 +49,29 @@ int main(void)
   else
       _sis_msj("[OK]\tSistema gráfico inicializado\n");
 	
+  if (!ini_fuente()) {
+        _sis_msj("[KO]\tNo se pudo iniciar el sistema de renderizado de fuentes\n");
+        cerrar_bios();
+        return NO;
+    }
+  else
+      _sis_msj("[OK]\tSistema de renderizado de fuentes inicializado\n");
 	
-	return SI;
+
+
+
+
+  /* Salida de la aplicación */
+  if (!sis_cerrar_display()) {
+        _sis_msj("[KO]\tError al cerrar el Sistema gráfico\n");
+        cerrar_bios();
+        return NO;
+    }
+  else
+      _sis_msj("[OK]\tSistema gráfico cerrado\n");
+  
+  cerrar_bios();
+  
+  return SI;
 }
 

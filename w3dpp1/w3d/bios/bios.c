@@ -38,13 +38,15 @@ int init_bios(void) {
  *                 Hello World! WorldSpace has just arrived!               *
  ***************************************************************************
  *                                                                         *
+ *                               BUILD: %d                                 *
+ *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************
-\n");
+\n",BUILD);
 	if (carga_conf()) {
 		fprintf(logs,"Configuración:\n");
 		fprintf(logs,"\tResolución horz.(X)\t %d\n",config.SCREEN_SIZE_X);
@@ -124,7 +126,8 @@ int cerrar_bios(void) {
 		fprintf(conf,"Pantalla completa\t %d\n",config.FULLSCREEN);
 		fprintf(conf,"Directorio base\t %s\n",config.dir);
 		fclose(conf);
-    fprintf(logs,"\t\tGuardada la configuración\n");
+    fprintf(logs,"\n....Guardada la configuración\n");
+    fprintf(logs,"\n\nWorldSpace 3D se cerró correctamente");
     fclose(logs);
 
     return SI;
@@ -146,7 +149,9 @@ FILE *abre_fichero(char *nombre, char *modo) {
       char f_fich[1024];
       strcpy(f_fich,config.dir);
       strcat(f_fich,"/");
-      strcat(f_fich,nombre);      
+      strcat(f_fich,nombre);
+      _sis_msj("\t\t[bios]bios.c -> Cargando fichero ");
+      _sis_msj(f_fich);
       aux=fopen(f_fich,modo);
       if (aux)
         return aux;

@@ -1,1 +1,1 @@
-w3d.x86: ./w3d/bios/bios.o ./w3d/display/init_gl.o ./w3d/display/display.o ./w3d/display/logo.o ./w3d/main.o ./w3d/gfx/gfx_carga_img.o ./w3d/gfx/fuentes.o
+w3d.x86: ./w3d/gfx/fuentes.o ./w3d/gfx/gfx_carga_img.o ./w3d/bios/bios.o ./w3d/display/display.o ./w3d/display/init_gl.o ./w3d/display/logo.o ./w3d/main.o

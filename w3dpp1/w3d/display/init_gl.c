@@ -59,7 +59,9 @@ int logo(void) {
     glDisable(GL_LIGHT0);
     glDisable(GL_LIGHTING);
 
-
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
 		return SI;
 
 }

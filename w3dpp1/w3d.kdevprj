@@ -23,19 +23,19 @@ cflags=
 cppflags=
 cxxflags=\s-O0 -g3 -Wall
 ldadd=
-ldflags=\s           \s
+ldflags=\s            \s
 libtool_dir=
 path_to_bin_program=.
 
 [General]
 AMChanged=false
 author=neuralgya
-configure_args=
+configure_args=\s--build=i386-linux --host=i386-linux --target=i386-linux\s
 dir_where_make_will_be_called=./
 email=neuralgya@users.berlios.de
 kdevprj_version=1.3
 lfv_open_groups=Cabeceras,Fuentes,GNU,Otros
-make_options=\s-j1 -C /home/abeiro/personal/w3d
+make_options=\s-w -j1
 makefiles=Makefile.am,w3d/Makefile.am,w3d/docs/Makefile.am,w3d/docs/en/Makefile.am,w3d/bios/Makefile.am,w3d/display/Makefile.am,w3d/gfx/Makefile.am
 modifyMakefiles=false
 project_name=W3d

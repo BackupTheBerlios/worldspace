@@ -61,16 +61,18 @@ void *carga_tga(char f_imagen[],int *tam_x,int *tam_y)
 	FILE *fichero;
 
 	
-  _sis_msj("\t\tcarga_tga.c -> Cargando fichero %s ");
+  _sis_msj("\t\t[gfx]carga_tga.c -> Cargando fichero ");
+  _sis_msj(f_imagen);
+  _sis_msj("\n");
   fichero=abre_fichero(f_imagen,"rb");					
 
 
 	
 	if (fichero == NULL) {
-      _sis_msj("[KO]\n");
-      return NULL;					
+      _sis_msj(" [KO]\n");
+      return NULL;
 	}
- _sis_msj("[OK]\n");
+ _sis_msj(" [OK]\n");
 
 
   /* Esto abre y comprueba que es un TGA */
