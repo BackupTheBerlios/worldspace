@@ -17,9 +17,8 @@
 #define _wTextura_h_
 //==========================================================================
 #define LIM_TEXTURAS      100
-#define TIPO_TEXTURA_NUM  AT0 = 0, AT1, FT0, FT1, FT2
+#define TIPO_TEXTURA_NUM  AT0 = 0, AT1, FT0, FT1, FT2, TIPO_TEXTURA_LIM
 #define TIPO_TEXTURA_CAD  "AT0", "AT1", "FT0", "FT1", "FT2"
-#define TIPO_TEXTURA_LIM  5
 
 enum { TIPO_TEXTURA_NUM };  // Tipo de texturas (enumerado)
 
@@ -38,7 +37,7 @@ typedef struct  {
 } miLTexturas;
 
 //==========================================================================
-int  encola_textura       ( miTextura * prTextura );
+int  encola_textura       ( char * sTextura, int iTipo );
 void cerrar_texturas      ( void );
 int  carga_listaTexturas  ( miLTexturas * prListaTexturas );
 int  genera_texturas      ( void );

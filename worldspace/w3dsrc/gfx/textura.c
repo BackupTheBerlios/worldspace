@@ -49,7 +49,7 @@ static miTextura *		prColaTexturas = NULL;
 static int				iNumTexturas  = 0;
 static miLTexturas *	prListaTexturas = NULL;
 //==========================================================================
-int  encola_textura       ( miTextura * prTextura )
+int  encola_textura  ( char * sTextura, int iTipo )
 {
 	miTextura * prNomActual = prColaTexturas;
 	miTextura * prNomAnt;
@@ -69,9 +69,8 @@ int  encola_textura       ( miTextura * prTextura )
 		prNomActual = prColaTexturas;
 		for ( iNum=0; prNomActual!=NULL; iNum++ )
 		{
-			if ( !strcmp(prNomActual->sFichero, prTextura->sFichero) )
+			if ( !strcmp(prNomActual->sFichero, sTextura) )
 			{
-				prTextura->iNText  = prNomActual->iNText;
 				_return prNomActual->iNText;	// Devuelve el indice que le corresponde
 			}
 			prNomAnt    = prNomActual;
@@ -84,12 +83,10 @@ int  encola_textura       ( miTextura * prTextura )
 	}
 	glGenTextures (1, (uint *) &prNomActual->iNText);
 
-	strcpy(prNomActual->sFichero, prTextura->sFichero);
+	strcpy(prNomActual->sFichero, sTextura);
 	prNomActual->iAlto = prNomActual->iAncho = 0;
-	prNomActual->iTipo = prTextura->iTipo;
+	prNomActual->iTipo = iTipo;
 	prNomActual->pSig  = NULL;
-
-	prTextura->iNText  = prNomActual->iNText;
 
 	iNumTexturas = iNum + 1;
 
@@ -135,27 +132,24 @@ void cerrar_texturas  ( void )
 //  Dejaremos para antes de empezar a 'dibujar' la generación real
 //  de las texturas.
 //==========================================================================
-int carga_listaTexturas ( miLTexturas * vLisTexturas )
+int carga_listaTexturas ( miLTexturas * vLText )
 {
     int i;
-	miTextura rTextura;
+	char sFichero[256];
 
 	T_FUNC_IN;
 
 	mInicio(sDirTexturas);
 	sprintf(sDirTexturas,"%s/", configuracion.sDirTexturas);
 
-	for ( i=0; i<vLisTexturas->iNtexturas; i++ )
+	for ( i=0; i<vLText->iNtexturas; i++ )
 	{
-		rTextura.iAlto = rTextura.iAncho = 0;
-		rTextura.iNText = vLisTexturas->vTextura[i].iTipo;
-		mInicio(rTextura.sFichero);
-		sprintf(rTextura.sFichero,
-			"%s%s", sDirTexturas, vLisTexturas->vTextura[i].sFichero);
-		rTextura.iNText = encola_textura (&rTextura);
-		if (rTextura.iNText<0)
-		{ _return -1;	}	// Algo ha ido mal.
-		vLisTexturas->vTextura[i].iNText = rTextura.iNText;
+		mInicio(sFichero);
+		sprintf(sFichero,"%s%s",
+			sDirTexturas, vLText->vTextura[i].sFichero);
+		vLText->vTextura[i].iNText = encola_textura (sFichero,vLText->vTextura[i].iTipo);
+		if (vLText->vTextura[i].iNText<0)
+		{ _return -1; }	// Algo ha ido mal.
 	}
 
 	_return 0;

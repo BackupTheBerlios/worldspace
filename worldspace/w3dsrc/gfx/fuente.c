@@ -72,29 +72,23 @@ int carga_listaFuentes ( miLFuentes * vLisFuentes )
 int  carga_fuente   ( miFuente * prFuente )
 {
 	int          i, j, k;          // Indices.
-	miTextura    rTextura;
 	miFic_imagen rFic_imagen;
 
 	T_FUNC_IN;
 
-	rTextura.iNText = rTextura.iAlto = rTextura.iAncho = 0;
-	rTextura.iTipo  = prFuente->iTipo;
-	mInicio(rTextura.sFichero);
-	sprintf(rTextura.sFichero,"%s%s", sDirFuentes, prFuente->sFichero);
+	mInicio(rFic_imagen.sFichero);
+	sprintf(rFic_imagen.sFichero,"%s%s", sDirFuentes, prFuente->sFichero);
 
-	if (encola_textura (&rTextura) < 0)
-	{	_return -1; }
+	prFuente->mapabits = encola_textura (rFic_imagen.sFichero, prFuente->iTipo);
+	if (prFuente->mapabits < 0)
+	{ _return -1; }
 
-	rFic_imagen.iAlto  = 0;
-	rFic_imagen.iAncho = 0;
-	rFic_imagen.iTipo  = 0;
+	rFic_imagen.iAlto  = rFic_imagen.iAncho = rFic_imagen.iTipo  = 0;
 	rFic_imagen.pDatos = NULL;
-	strcpy(rFic_imagen.sFichero, rTextura.sFichero);
 
 	if ( carga_imagen (&rFic_imagen) )
-	{	_return -1; }
+	{ _return -1; }
 
-	prFuente->mapabits = rTextura.iNText;
 	prFuente->iAncho   = rFic_imagen.iAncho;
 	prFuente->iAlto    = rFic_imagen.iAlto;
     rFic_imagen.pDatos = liberar_m(rFic_imagen.pDatos);
