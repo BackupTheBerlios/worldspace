@@ -15,7 +15,7 @@
 //==========================================================================
 
 #include <string.h>
-
+#include <stdarg.h>
 #include "sdl_gl.h"
 #include "op_bmp.h"
 #include "op_tga.h"

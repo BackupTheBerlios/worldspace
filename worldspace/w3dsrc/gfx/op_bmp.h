@@ -16,7 +16,7 @@
 #ifndef _Carga_BMP_
 #define _Carga_BMP_
 //==========================================================================
-#include <sdl/sdl.h>
+#include "sdl_gl.h"
 
 SDL_Surface * carga_bmp ( char * sFichero );
 //==========================================================================

@@ -62,8 +62,9 @@ Control de indentacion de las trazas
 
 #ifdef WIN32
 typedef unsigned int  uint;
-typedef unsigned char byte;
 #endif // WIN32
+typedef unsigned char byte;
+
 
 /*!
 Estructura para guardar la configuración

@@ -14,13 +14,14 @@
 //                                                                         *
 //==========================================================================
 
-#include "globales.H"
+#include "globales.h"
 #include "conf_parser.h"
 #include "carga_imagen.h"
 #include "textura.h"
 #include "fuente.h"
 #include "util.h"
-
+#include <stdarg.h>
+#include <string.h>
 
 // ==================================================================
 //  Variables internas del módulo

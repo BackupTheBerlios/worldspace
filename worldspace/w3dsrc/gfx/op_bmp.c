@@ -17,6 +17,7 @@
 #include "globales.h"
 #include "sdl_gl.h"
 #include "op_bmp.h"
+#include <string.h>
 
 //==========================================================================
 // Carga un fichero BMP. Devuelve un puntero al bitmap si hay exito,
