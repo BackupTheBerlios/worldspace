@@ -1,7 +1,7 @@
 /***************************************************************************
-                          w3d_base.h  -  Defines y estructuras básicas.
+                          globales.h  -  variables y estructuras globales
                              -------------------
-    begin                : dom feb 9 2003
+    begin                : lun feb 10 2003
     copyright            : (C) 2003 by Grupo WorldSpace
     email                : neuralgya@users.berlios.de
  ***************************************************************************/
@@ -15,30 +15,10 @@
  *                                                                         *
  ***************************************************************************/
 
-
-/*!
-Valor devuelto por las funciones
-!*/
-#define SI 1
-#define NO 0
-
-/*!
-Longitud por defecto de los buffer (arrays)
-!*/
-#define LON_BUFF      1024
+#include "w3d_base.h"
 
 
 /*!
-Estructura para guardar la configuración
+Variable para guardar la configuración
 !*/
-typedef struct config_tag {
-    int Xtam;
-    int Ytam;
-    int FullScreen;
-    int bpp;
-    char sDirGeneral[LON_BUFF];
-    char sDirTexturas[LON_BUFF];
-    char sDirFuentes[LON_BUFF];
-    char sDirModelos[LON_BUFF];
-    char sDirEspacios[LON_BUFF];
-} estr_config;
+extern estr_config configuracion;

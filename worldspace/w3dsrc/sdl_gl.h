@@ -1,7 +1,7 @@
 /***************************************************************************
-                          w3d_base.h  -  Defines y estructuras básicas.
+                          sdl_gl.h  -  Inclusión de librerías SDL y GL
                              -------------------
-    begin                : dom feb 9 2003
+    begin                : lun feb 10 2003
     copyright            : (C) 2003 by Grupo WorldSpace
     email                : neuralgya@users.berlios.de
  ***************************************************************************/
@@ -16,29 +16,15 @@
  ***************************************************************************/
 
 
-/*!
-Valor devuelto por las funciones
-!*/
-#define SI 1
-#define NO 0
-
-/*!
-Longitud por defecto de los buffer (arrays)
-!*/
-#define LON_BUFF      1024
-
-
-/*!
-Estructura para guardar la configuración
-!*/
-typedef struct config_tag {
-    int Xtam;
-    int Ytam;
-    int FullScreen;
-    int bpp;
-    char sDirGeneral[LON_BUFF];
-    char sDirTexturas[LON_BUFF];
-    char sDirFuentes[LON_BUFF];
-    char sDirModelos[LON_BUFF];
-    char sDirEspacios[LON_BUFF];
-} estr_config;
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif                          // WIN32
+#if defined(__APPLE__) && defined(__MACH__)
+#include <OpenGL/gl.h>          // Cabecera para la librería  OpenGL32
+#include <OpenGL/glu.h>         // Cabecera para la librería  GLu32
+#else                           /*  */
+#include <GL/gl.h>              // Cabecera para la librería  OpenGL32
+#include <GL/glu.h>             // Cabecera para la librería  GLu32
+#endif                          // __APPLE__ && __MACH__
+#include <SDL/SDL.h>

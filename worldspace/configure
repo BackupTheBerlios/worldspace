@@ -45,10 +45,11 @@ echo "C : " $C_SOURCES
 CPP_SOURCES=`find -name *.cpp`
 echo "C++: " $CPP_SOURCES
 
-for x in `find -type d`
+for x in `find w3dsrc -type d|grep -v CVS`
 do
 	INCDIRS="$INCDIRS -I$x"
 done
+INCLUDE=$INCDIRS
 
 
 echo "#">Makefile.kk
