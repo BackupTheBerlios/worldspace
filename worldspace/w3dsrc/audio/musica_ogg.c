@@ -23,15 +23,9 @@
 #include "sdl_gl.h"
 #include "audio.h"
 
-/* Esto es debido a un bug de openal para linux en un futuro se cambiara*/
-#ifdef _LINUX
-#define NUM_BUFFER_MUSICA 100
+/* Estos defines puede que se cambien en un futuro */
+#define NUM_BUFFER_MUSICA 40
 #define BUFFER_MUSICA 256
-#endif
-#ifdef _WIN32
-#define NUM_BUFFER_MUSICA 4
-#define BUFFER_MUSICA 4096
-#endif
 
 
 ALenum formato; /* Utilizado en la carga de archivos OGG */
@@ -74,7 +68,7 @@ int cargar_musica ( char *fichero_ogg ){
     log_msj("[musica_ogg.c] Cargando musica %s\n", filename);
 
     /* Abrimos fichero para lectura */
-	if ( ( fichero = abre_fichero ( filename, "r" )) == NULL ){
+	if ( ( fichero = abre_fichero ( filename, "rb" )) == NULL ){
       log_msj( "[KO] No se puede cargar fichero %s\n", fichero_ogg );
       return NO;
 	}
