@@ -111,12 +111,14 @@ void display(void)
 
   	if (luces==1)
       glEnable(GL_LIGHTING);	
-    if (textura_cargada!=0)
+    if ((modo_dibujo==3)&&(textura_cargada==1))
     	glEnable(GL_TEXTURE_2D);
+    else
+      glDisable(GL_TEXTURE_2D);
 
 
 		
-    if (modo_dibujo==3)
+    if ((modo_dibujo==3)&&(textura_cargada==1))
       glBindTexture(GL_TEXTURE_2D, textura);
     for (j = 0; j < model->n_caras; j++) {
         view_x1 = model->triangulos[j].vertices[0].x;
@@ -145,7 +147,7 @@ void display(void)
           glBegin(GL_TRIANGLES);
         }
 
-        if (modo_dibujo==3)
+        if ((modo_dibujo==3)&&(textura_cargada==1))
             glTexCoord2f(model->triangulos[j].vertices[0].u,
                      model->triangulos[j].vertices[0].v);
 
@@ -157,7 +159,7 @@ void display(void)
         glVertex3f(view_x1, view_y1, view_z1);
 
 
-        if (modo_dibujo==3)
+        if ((modo_dibujo==3)&&(textura_cargada==1))
           glTexCoord2f(model->triangulos[j].vertices[1].u,
                      model->triangulos[j].vertices[1].v);
 
@@ -166,7 +168,7 @@ void display(void)
                    model->triangulos[j].vertices[1].Nz);
         glVertex3f(view_x2, view_y2, view_z2);
 
-        if (modo_dibujo==3)
+        if ((modo_dibujo==3)&&(textura_cargada==1))
           glTexCoord2f(model->triangulos[j].vertices[2].u,
                      model->triangulos[j].vertices[2].v);
 

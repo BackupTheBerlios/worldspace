@@ -133,6 +133,7 @@ char RUNPATH[2048];         // Path de ejecución.
 
   {
 
+
     // This will be called BEFORE a window has been unregistered or
 
     // closed.  Default behavior: unregister and close the window.
@@ -207,14 +208,14 @@ int AppMain(int argc, char** argv)
     int i;
    
     
-    /*strcpy(RUNPATH,argv[0]);
+    strcpy(RUNPATH,argv[0]);
     for (i=strlen(RUNPATH)-1;i>=0;i--)
         if ((RUNPATH[i]=='\\')||(RUNPATH[i]=='/')) {
                 RUNPATH[i+1]='\0';
                 break;
         }
-    */
-    getcwd(RUNPATH,2046);
+
+//    getcwd(RUNPATH,2046);
     strcat(RUNPATH,"/");
 
      printf("RUNPATH : %s\n", RUNPATH);

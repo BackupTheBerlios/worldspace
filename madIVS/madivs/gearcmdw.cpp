@@ -74,7 +74,8 @@ extern modelo *model;
 
 	{"&Exportar", M_SaveAs, isSens, notChk, noKeyLbl, noKey, noSub},
 
-	{"&Importar textura...", M_Open_T, isSens, notChk, noKeyLbl, noKey, noSub},
+	{"&Importar textura TGA...", M_Open_TGA, isSens, notChk, noKeyLbl, noKey, noSub},
+	{"&Importar textura PCX...", M_Open_PCX, isSens, notChk, noKeyLbl, noKey, noSub},
 
 	{"-", M_Line, notSens, notChk, noKeyLbl, noKey, noSub},
 
@@ -441,7 +442,7 @@ extern modelo *model;
 	    break;
 
 	  }	//@V@:EndCase
-	case M_Open_T:
+	case M_Open_TGA:
 
 	  {
 
@@ -459,6 +460,44 @@ extern modelo *model;
       if (textura_cargada!=1)
         glGenTextures(0, &textura);
       textura_datos = (char *) CargaTGA(fich_imp, &tam_x, &tam_y);
+      if (tam_x != tam_y)
+          return ;
+      if (textura_datos == NULL) {
+         return ;
+      }
+
+      glBindTexture(GL_TEXTURE_2D, textura);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                    GL_LINEAR_MIPMAP_LINEAR);
+      gluBuild2DMipmaps(GL_TEXTURE_2D, 4, tam_x, tam_y, GL_RGBA,
+                      GL_UNSIGNED_BYTE, textura_datos);
+      free(textura_datos);
+
+      textura_cargada=1;
+
+
+	    break;
+
+	  }	//@V@:EndCase
+	case M_Open_PCX:
+
+	  {
+
+      char fich_imp[1024]="";
+      int indice=0;
+      int tam_x, tam_y;
+      char *textura_datos;
+      vFileSelect importar(this);
+      char msg[1024];
+      vNoticeDialog note(this);
+      char *extensiones[]={"*.pcx;*.PCX",0};
+  	  importar.FileSelect("Importar textura...",fich_imp,1023,extensiones,indice);
+
+
+      if (textura_cargada!=1)
+        glGenTextures(0, &textura);
+      textura_datos = (char *) CargaPCX(fich_imp, &tam_x, &tam_y);
       if (tam_x != tam_y)
           return ;
       if (textura_datos == NULL) {

@@ -21,6 +21,24 @@ typedef struct {
     GLuint texID;
 } Imagen;
 
+typedef char byte;
+typedef struct pcx_header_tag {
+	
+	byte manufacturer;
+	byte version;
+	byte encoding;
+	byte bpp;
+	short int size[4];
+	short int res[2];
+	byte colormap[48];
+	byte reserved;
+	byte nplanes;
+	unsigned short int bpl;
+	unsigned short int pa_info;
+	byte filler[58];
+} pcx_h;
+
+
 /*! Carga un TGA en memoria. El TGA debe cumplir las siguientes características:
 Ser de 24 bits + Canal ALPHA. (32 bits) y SIN COMPRIMIR
 El tamaño debe ser cuadrado (x=y) y 32x32 o 64x64 o 128x128 o 256x256
@@ -127,3 +145,93 @@ void *CargaTGA(char filename[], int *tam_x, int *tam_y)
     /* Todo fue bien! */
     return aux;
 }
+
+
+void *CargaPCX(char filename[], int *x, int *y)
+{
+
+	FILE *input;
+
+	
+	pcx_h input_h;
+  byte *data;
+  GLubyte *datos,*aux;
+  byte buffer;
+  byte count,i;
+  byte done=0;
+  byte paleta[256][3];
+  int tam_x,tam_y,tc,j;
+
+
+	input =fopen(filename,"rb");
+	printf ("Tamaño cabecera PCX %d bytes\n",sizeof(pcx_h));
+	fread(&input_h,sizeof(pcx_h),1,input);
+
+	printf("Información...\n");
+	printf("Magic Number: %d\n",input_h.manufacturer);
+	printf("Version: %d\n",input_h.version);
+  printf("Encoding: %d\n",input_h.encoding);
+  printf("Bits per Pixel: %d\n",input_h.bpp);
+  printf("Bytes per Line: %d\n",input_h.bpl);
+  printf("Pal. info: %d\n",input_h.pa_info);
+  printf("(%d,%d)-(%d,%d)\n",input_h.size[0],input_h.size[1],input_h.size[2],input_h.size[3]);
+  printf("X res: %d\n",input_h.res[0]);
+  printf("Y res: %d\n",input_h.res[1]);
+
+  tam_x=input_h.size[2]-input_h.size[0]+1;
+  tam_y=input_h.size[3]-input_h.size[1]+1;
+
+  data=(byte *)malloc(tam_x*tam_y);
+
+
+  fread(&buffer,1,1,input);
+  tc=0;
+  /* Compresión RLE */
+  while (done==0) {
+    if ((buffer&192)==192) {
+      /* Los siguientes 6 bits indican cuantas veces repetir el siguiente byte */
+      count=buffer&63;
+      fread(&buffer,1,1,input);
+      if (count==0)
+        count++;
+      }
+    else
+      count=1;
+
+    for (i=0;i<count;i++) {
+      data[tc]=buffer;
+      tc++;
+    }
+    if (tc==tam_x*tam_y)
+      done=1;
+    else
+      fread(&buffer,1,1,input);
+    if (feof(input))
+      done=1;
+  }
+
+  /*   El PCX ya está decodificado. Ahora debemos leer la paleta   */
+  bzero(&paleta,768);
+  fread(&buffer,1,1,input);
+  if (buffer==12)
+    printf("Comienza la paleta..ok\n");
+
+  printf("Colores en la paleta %d\n",fread(paleta,3,256,input));
+  datos=(GLubyte *)malloc(tam_x*tam_y*4);
+  aux=datos;
+
+  for (j=0;j<tc;j++) {
+    *datos=paleta[(GLubyte)data[j]][0];datos++;
+    *datos=paleta[(GLubyte)data[j]][0];datos++;
+    *datos=paleta[(GLubyte)data[j]][0];datos++;
+    *datos=255;datos++;     // PCX no tienen canal ALPHA
+  }
+	
+	printf("\nTotal bytes a memoria %d . Deberían ser: %d\n",j*4+3,tam_x*tam_y*4);
+	fclose(input);
+  *x=tam_x;
+  *y=tam_y;
+  return aux;
+}
+
+

@@ -42,7 +42,8 @@
 
 
 
-const ItemVal M_Open_T =    40000;
+const ItemVal M_Open_TGA =    40000;
+const ItemVal M_Open_PCX =    40007;
 const ItemVal M_T_Wire =    40001;
 const ItemVal M_T_NULL =    99999;
 const ItemVal M_T_Tex =     40002;
