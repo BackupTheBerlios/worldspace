@@ -271,13 +271,13 @@ install_location=
 type=HEADER
 
 [w3d/input/Makefile.am]
-files=w3d/input/teclado.c
+files=w3d/input/input.c
 sharedlib_LDFLAGS=-version-info 0:0:0
 sharedlib_rootname=input
 sub_dirs=
 type=static_library
 
-[w3d/input/teclado.c]
+[w3d/input/input.c]
 dist=true
 install=false
 install_location=

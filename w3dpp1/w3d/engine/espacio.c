@@ -35,6 +35,9 @@ extern unsigned int n_sprites_spc;
 extern float *estrellas;
 extern unsigned int n_estrellas;
 
+extern float *polvo_espacial;   /* Nada de connotaciones pornográficas eh? */
+extern unsigned int n_polvo_espacial;
+
 
 int carga_espacio(char *fichero_spc)
 {
@@ -155,4 +158,35 @@ int crea_estrellas(unsigned int numero)
         estrellas[i + 3] = (float) (rand() % 2 + 1);
     }
     n_estrellas = numero;
+}
+
+int crea_polvo_espacial(unsigned int numero)
+{
+
+    float z, y, x;
+    unsigned int i;
+    /* Punto aleatorio de una esfera de radio 60 */
+
+    polvo_espacial = (float *) malloc(sizeof(float) * 4 * numero);
+
+    for (i = 0; i < numero * 4; i += 4) {
+
+        z = (float) (rand() % 60);
+//              z=(float)(i/8);
+
+        y = rand() % ((int) sqrt(pow(60, 2) - pow(z, 2)));
+        x = sqrt(pow(60, 2) - pow(y, 2) - pow(z, 2));
+        if (rand() % 2 == 0)
+
+            z = z * -1;
+        if (rand() % 2 == 0)
+            x = x * -1;
+        if (rand() % 2 == 0)
+            y = y * -1;
+        polvo_espacial[i] = x;
+        polvo_espacial[i + 1] = y;
+        polvo_espacial[i + 2] = z;
+        polvo_espacial[i + 3] = (float) (rand() % 2 + 1);
+    }
+    n_polvo_espacial = numero;
 }

@@ -21,6 +21,7 @@
 
 #include "espacio.h"
 #include "texturas.h"
+#include <math.h>
 
 double matriz_proyeccion_A[4][4];
 double matriz_proyeccion_B[4][4];
@@ -42,6 +43,10 @@ unsigned int n_sprites_spc;
 float *estrellas;
 unsigned int n_estrellas;
 
+/* Lista de puntos del polvo espacial */
+float *polvo_espacial;          /* Nada de connotaciones pornográficas eh? */
+unsigned int n_polvo_espacial;
+
 
 
 int init_espacio(void)
@@ -58,9 +63,15 @@ int init_espacio(void)
        de los sprites de espacio. */
 
     if (!(crea_estrellas(10000))) {
-        _sis_msj("\n\t\tFallé al crear estrellas[KO]");
+        _sis_msj("\n\t\tFallé al crear estrellas [KO]");
         return NO;
     }
+
+    if (!(crea_polvo_espacial(500))) {
+        _sis_msj("\n\t\tFallé al crear polvo_espacial [KO]");
+        return NO;
+    }
+
 
     return SI;
 }
@@ -68,6 +79,9 @@ int init_espacio(void)
 
 int init_engine()
 {
+
+    SDL_ShowCursor(0);
+    SDL_WM_GrabInput(SDL_GRAB_ON);
 
     if (init_espacio()) {
         _sis_msj("\n[OK]\t\tEspacio inicializado");
@@ -117,7 +131,7 @@ int renderiza_escena()
 
     int aux, aux2;
 
-    SDL_ShowCursor(0);
+
     gl_basic_ini(NO);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -149,6 +163,29 @@ int renderiza_escena()
         glEnd();
     }
 
+    glColor3f(0.0f, 1.0f, 0.0f);
+    for (aux = 0; aux < n_polvo_espacial; aux += 4) {
+        glPointSize(polvo_espacial[aux + 3]);
+        glBegin(GL_POINTS);
+        glVertex3f(polvo_espacial[aux], polvo_espacial[aux + 1],
+                   polvo_espacial[aux + 2]);
+        glEnd();
+        
+        if (pow(polvo_espacial[aux] - camara[3][0],2)+
+        	pow(polvo_espacial[aux+1] - camara[3][1],2)+
+	         pow(polvo_espacial[aux+2] - camara[3][2],2)>3600) {
+/*	    printf("%f ",pow(polvo_espacial[aux] - camara[3][0],2)+
+        	pow(polvo_espacial[aux+1] - camara[3][1],2)+
+	         pow(polvo_espacial[aux+2] - camara[3][2],2));*/
+            polvo_espacial[aux] = camara[3][0]+polvo_espacial[aux]*camara[0][0];
+            polvo_espacial[aux + 1] =  camara[3][1]+polvo_espacial[aux+1]*camara[1][1];
+            polvo_espacial[aux + 2] =  camara[3][2]+polvo_espacial[aux+2]*camara[2][2];
+            
+        }
+        
+    }
+
+    glColor3f(1.0f, 1.0f, 1.0f);
     glPointSize(4.0f);
 
     /* Dibujamos sprites de fondo */
@@ -205,10 +242,23 @@ int game_loop()
             keys = SDL_GetKeyState(NULL);
             if (keys[SDLK_ESCAPE])
                 done = 1;
-        }
 
-        //input_mouse();
+            if (keys[SDLK_F1]) {
+                if (SDL_WM_GrabInput(SDL_GRAB_QUERY) == SDL_GRAB_ON) {
+                    SDL_ShowCursor(1);
+                    SDL_WM_GrabInput(SDL_GRAB_OFF);
+                } else {
+                    SDL_ShowCursor(0);
+                    SDL_WM_GrabInput(SDL_GRAB_ON);
+                }
+
+            }
+
+        }
+        input_teclado();
+        input_mouse();
         renderiza_escena();
+
     }
 
     return SI;
