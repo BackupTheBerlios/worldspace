@@ -1,0 +1,29 @@
+
+
+
+
+
+ ***************************************************************************
+ *                 Hello World! WorldSpace has just arrived!               *
+ *                        Tutorial 1.7 by neuralgya                        *
+ ***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************
+
+Configuración:
+	Resolución horz.(X)	 640
+	Resolución vert.(Y)	 480
+	Pantalla completa	 0
+	Directorio base	 ws_datos
+
+[OK]	Sistema básico inicializado
+[OK]		Subsistema SDL_video inicializado
+[OK]		Subsistema de video inicializado
+[OK]		Contexto OpenGL preparado
+[OK]	Sistema gráfico inicializado
+[OK]	Cierre satisfactorio
