@@ -103,14 +103,20 @@ void cerrar_texturas  ( void )
 	miTextura * prNomActual = prColaTexturas;
 	miTextura * prNomAnterior;
 
-	for ( ; prNomActual!=NULL; )
+	if (prColaTexturas!=NULL)
 	{
-		prNomAnterior = prNomActual;
-		prNomActual   = prNomActual->pSig;
-		prNomAnterior = liberar_m (prNomAnterior);
-	}
+		prNomActual = prNomActual->pSig;
+		prColaTexturas = liberar_m(prColaTexturas);
 
-	prListaTexturas = liberar_m (prListaTexturas);
+		for ( ; prNomActual!=NULL; )
+		{
+			prNomAnterior = prNomActual;
+			prNomActual   = prNomActual->pSig;
+			prNomAnterior = liberar_m (prNomAnterior);
+		}
+
+		prListaTexturas = liberar_m (prListaTexturas);
+	}
 }
 
 
@@ -176,7 +182,7 @@ int  genera_texturas  ( void )
 
 	T_FUNC_IN
 
-	memset (rTextura.sFichero,0,sizeof(rTextura.sFichero));
+	mInicio(rTextura.sFichero);
 	if (prListaTexturas==NULL)
 	{
 		prListaTexturas = dar_m(sizeof(miLTexturas));
@@ -186,7 +192,7 @@ int  genera_texturas  ( void )
 		prListaTexturas->vTextura = dar_m(sizeof(miTextura)*iNumTexturas);
 	}
 
-	memset (sDirTexturas,0,sizeof(sDirTexturas));
+	mInicio(sDirTexturas);
 	directorio(sDirTexturas,"%s/%s/", configuracion.sDirGeneral, configuracion.sDirTexturas );
 
 	// Cargamos las texturas

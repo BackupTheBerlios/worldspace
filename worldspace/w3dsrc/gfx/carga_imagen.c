@@ -14,23 +14,16 @@
 //                                                                         *
 //==========================================================================
 
-#include <ctype.h>
 #include <string.h>
 
 #include "sdl_gl.h"
 #include "op_bmp.h"
 #include "op_tga.h"
-#include "conf_parser.h"
+#include "util.h"
 #include "globales.h"
+#include "w3d_base.h"
 #include "carga_imagen.h"
 
-
-//==========================================================================
-//  Defines
-//==========================================================================
-#ifndef LON_BUFF
-#define LON_BUFF 1024
-#endif // LON_BUFF
 //==========================================================================
 // Extensiones de ficheros de imagenes
 //==========================================================================
@@ -46,17 +39,6 @@ static SDL_Surface * pFicBmp = NULL;   // Para imagenes BMP
 static char sAux1[LON_BUFF];           // Buffer auxiliar.
 static char sAux2[LON_BUFF];           // Buffer auxiliar.
 //==========================================================================
-
-
-//==========================================================================
-//  Pasamos una cadena a Mayusculas.
-//==========================================================================
-void mayusculas ( char * sCad )
-{
-	int i;
-	for (i=0; sCad[i]!='\0'; i++ )
-		sCad[i] = toupper(sCad[i]);
-}
 
 
 //==========================================================================
@@ -83,14 +65,14 @@ int carga_imagen  ( miFic_imagen * pFic_imagen )
 		//---------------------------------------------------
 		// Primero extraemos la extension del fichero
 		//---------------------------------------------------
-		memset (sColaFic,0,sizeof(sColaFic));
-		memset (sCadena ,0,sizeof(sCadena) );
+		mInicio(sColaFic);
+		mInicio(sCadena );
 
 		strcpy (sColaFic, pFic_imagen->sFichero + strlen(pFic_imagen->sFichero)-7);   // Extraemos la cola del nombre del fichero
-		strtoken (sCadena, sColaFic, ".");    // El primero se queda con la izquierda
-		strtoken (sCadena, NULL    , ".");    // El segundo se queda con la extensión
+		uStrtoken (sCadena, sColaFic, ".");    // El primero se queda con la izquierda
+		uStrtoken (sCadena, NULL    , ".");    // El segundo se queda con la extensión
 		//---------------------------------------------------
-		mayusculas (sCadena);
+		uMayusculas (sCadena);
 		for ( i=0; i<NUM_FICIMAGEN; i++ )
 		{
 			if ( ! strcmp(sCadena, vsFicImagen[i]) ) break;
@@ -189,8 +171,8 @@ char * directorio ( char * sDir, char * sFormat, ... )
 	int     i;
 	char  * sCad;
 
-	memset(sAux1,0,sizeof(sAux1));
-	memset(sAux2,0,sizeof(sAux2));
+	mInicio (sAux1);
+	mInicio (sAux2);
 
 	va_start(lista,sFormat);
 	vsprintf(sAux1,sFormat,lista);
