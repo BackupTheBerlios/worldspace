@@ -8,14 +8,7 @@
 ================================== DECLARACION DE VARIABLES
 !*/
 ALCdevice *Device = NULL;       /* Dispositivo de sonido */
-#ifdef _LINUX
-ALvoid * Context = NULL;    /* Contexto para Linux */
-#endif  
-#ifdef _WIN32
-ALCcontext * Context = NULL;        /* Contexto para Windows */
-#endif
-
-
+ALCcontext *Context = NULL;    /* Contexto */
 
 /*!
 ================================== DECLARACION DE FUNCIONES
@@ -37,6 +30,13 @@ int ini_audio(void)
     log_msj("No existe ALSA Backend\n");
     if ((Device = alcOpenDevice((ALubyte *) "emu10k1")) == NULL) {
       log_msj("No existe Sound Blaster Live Backend\n");
+#endif
+#ifdef _WIN32
+  if ((Device = alcOpenDevice((ALubyte *) "DirectSound3D")) == NULL) {
+    log_msj("No existe DirectSound3D Backend\n");
+    if ((Device = alcOpenDevice((ALubyte *) "DirectSound")) == NULL) {
+      log_msj("No existe DirectSound Backend\n");
+#endif
       if ((Device = alcOpenDevice((ALubyte *) "waveout")) == NULL) {
         log_msj("No existe waveout Backend\n");
         if ((Device = alcOpenDevice(NULL)) == NULL) {
@@ -46,23 +46,7 @@ int ini_audio(void)
       }
     }
   }
-#endif
-#ifdef _WIN32
-  if ((Device = alcOpenDevice((ALubyte *) "DirectSound3D")) == NULL) {
-    log_msj("No existe DirectSound3D Backend\n");
-    if ((Device = alcOpenDevice((ALubyte *) "DirectSound")) == NULL) {
-      log_msj("No existe DirectSound Backend\n");
-      if ((Device = alcOpenDevice((ALubyte *) "WaveOut")) == NULL) {
-        log_msj("No existe WaveOut Backend\n");
-        if ((Device = alcOpenDevice(NULL)) == NULL) {
-          log_msj ("No hay disponible ningun dispositivo de audio\n");
-          return NO;
-        }
-      }
-    }
-  }
-#endif 
-        
+         
   /* Creamos un contexto y lo asignamos (comprobando si hay errores) */ 
   if (Device != NULL) {
     Context = alcCreateContext(Device, NULL);      /* Creamos */

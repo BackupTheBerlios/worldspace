@@ -117,20 +117,8 @@ void  carga_sonido ( char *fichero_wav, int identificador ){
 	ALsizei size, freq;
 	static void *data = NULL;
     ALenum format;
-#ifdef _LINUX
-    ALsizei bits;
-#endif
-#ifdef _WIN32
 	ALboolean loop;
-#endif
 
-    /*char filename[LON_BUFF];*/
-    /* Establecemos donde estara situado el directorio para los sonidos */
-    /*strcpy(filename, configuracion.sDirGeneral); // Arreglarlo para que funcione con configuracion.sDirGeneral
-    strcat(filename, "/");
-    strcpy(filename, "sonidos");
-    strcat(filename, "/");
-    strcat(filename, fichero_wav); */
     
 	/* Generamos buffer, le asignamos un identificador y comprobamos errores */
 	alGenBuffers( 1, &buffer[identificador] );
@@ -139,16 +127,10 @@ void  carga_sonido ( char *fichero_wav, int identificador ){
 	}
 
 	/* Cargamos ficheros Wave */
-#ifdef _LINUX
-	alutLoadWAV ( fichero_wav, &data, &format, &size, &bits, &freq ); /* Cargamos en memoria */
+
+	alutLoadWAV ( fichero_wav,  &format, &data, &size, &freq, &loop ); /* Cargamos en memoria */
 	alBufferData ( buffer[identificador], format, data, size, freq ); /* Almacenamos en buffer */
-	free (data); /* liberamos */
-#endif
-#ifdef _WIN32
-	alutLoadWAVFile ( fichero_wav, &format, &data, &size, &freq, &loop );
-	alBufferData ( buffer[identificador], format, data, size, freq );
-	alutUnLoadWAV ( format, data, size, freq );
-#endif
+	alutUnloadWAV ( format, data, size, freq ); /* liberamos */
 
 	/* Generamos las fuentes de sonido y comprobamos errores */
 	alGenSources( 1, &source[identificador] );

@@ -18,7 +18,7 @@
 #ifdef _LINUX
 #include <AL/al.h>
 #include <AL/alc.h>
-#include <AL/alut.h>
+#include "alut.h"
 #endif
 #ifdef _WIN32
 #include <AL\al.h>
