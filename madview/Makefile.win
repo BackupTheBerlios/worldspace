@@ -1,0 +1,43 @@
+# Project: madview
+# Makefile created by Dev-C++ 4.9.1.0
+
+CC   = gcc.exe
+WINDRES = windres.exe
+OBJ  = "fuentes.o" "init_sys.o" "mad.o" "render.o" "sys_linux.o" "teclado.o" "timer_linux.o" "carga_tga.o"  "rsrc.o"
+LIBS =  -L"C:\archivos" -L"de" -L"programa\Dev-C++\lib" -lsdl -lopengl32 -lglu32
+INCS = 
+BIN  = "C:\proyectos\w3d\madview\madview.exe"
+CFLAGS = $(INCS) -D_WIN32W3D -DFECHA=20020323 -s -O1 -O3 -fexpensive-optimizations -mwindows
+
+clean :
+	cmd /C del $(OBJ) $(BIN)
+
+all : $(OBJ)
+	$(CC) $(OBJ) -o $(BIN) $(RES) $(LIBS) $(CFLAGS)
+
+"fuentes.o" :
+	$(CC) -c "madview\fuentes.c" $(CFLAGS)
+
+"init_sys.o" :
+	$(CC) -c "madview\init_sys.c" $(CFLAGS)
+
+"mad.o" :
+	$(CC) -c "madview\mad.c" $(CFLAGS)
+
+"render.o" :
+	$(CC) -c "madview\render.c" $(CFLAGS)
+
+"sys_linux.o" :
+	$(CC) -c "madview\sys_linux.c" $(CFLAGS)
+
+"teclado.o" :
+	$(CC) -c "madview\teclado.c" $(CFLAGS)
+
+"timer_linux.o" :
+	$(CC) -c "madview\timer_linux.c" $(CFLAGS)
+
+"carga_tga.o" :
+	$(CC) -c "madview\carga_tga.c" $(CFLAGS)
+
+"rsrc.o" :
+	$(WINDRES) -i "rsrc.rc" -I rc -o "rsrc.o"

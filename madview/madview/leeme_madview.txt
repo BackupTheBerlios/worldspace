@@ -1,0 +1,63 @@
+*******************************************************************************
+* Proyecto WorldSpace 3D                                                      *
+* http://usuarios.tripod.es/worldspace                                        *
+* -------------------------------------                                       *
+*                                                                             *
+* Esta aplicación es 'free-software' (software libre); puedes redistribuirla  *    
+* y/o modificarla bajo los términso de la GNU General Public License (Licen-  *
+* cias General Pública) tanto la versión 2 de la Licencia como alguna versión *
+* superior.                                                                   *
+*                                                                             *
+* Además, el autor no se hace responsable de ningún daño que pueda ocasionar  *
+* aplicación                                                                  *
+*******************************************************************************
+
+Aplicación:  
+	Madview
+Versión:
+	0.90 (beta)
+Versión de estructuras:
+	0.20
+Versión de Motor:
+	0.40
+Función:
+	Visiona en una ventana OpenGL un modelo especificado por línea de comandos
+	o realiza la petición de uno si no se ha especificado.
+Autor:
+	neuralgya (q3arena@ciudadfutura.com)
+
+
+Esta aplicación visiona los modelos de formato MAD (versión 0.2). Utiliza los cursores,
+Re.Pág, Av. Pág para rotarlo y Espacio para habilitar y deshabilitar las texturas, junto
+con el + y - del teclado numérico para acercar o alejar el modelo.
+El programa espera encontrar la textura/skin en el mismo directorio que el modelo, o en
+en el directorio textures (que debe colgar del directorio del modelo).
+
+Está en fase beta todavía, así si encontráis algún bug mandarme un e-mail.
+
+La aplicación crea un fichero (log.txt) donde se pueden encontrar algunos mensajes por
+si hay fallos)
+
+Además muestra los FPS (Frames per Second) por pantalla.
+
+NOTAS: La textura debe ser TGA SIN COMPRIMIR de 24 bits CON CANAL ALPHA y de tamaño:
+32x32 o 64x64 o 128x128 o 256x256
+
+Podéis utilizar transparencias con el canal ALPHA.
+
+
+
+
+BUGS conocidos:
+
+- Se puede sobreponer el modelo al texto de los FPS
+- El modo fullscreen está deshabilitado. No funciona por culpa de los
+  bitmap fonts. (El tutorial de Nehe en el que se basa el código de
+  las bitmap fonts tampoco me funciona en fullscreen ¿¿¿????)
+
+
+Agradecimientos a :
+
+- Josemi josemimg@euskalnet.net
+
+
