@@ -51,9 +51,14 @@ int hh=384;
 
     /* Un poco de luz*/
 
-GLfloat LightAmbient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+GLfloat LightAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 GLfloat LightDiffuse1[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-GLfloat LightPosition1[] = { 0.0f, 0.0f, -1.0f, 1.0f };
+GLfloat LightPosition1[] = { 0.0f, 1.0f, 1.0f, 0.0f };
+
+GLfloat ambRefl[] = {0.2, 0.2, 0.2, 1.0}; // default
+GLfloat diffRefl[] = {0.8, 0.8, 0.8, 1.0}; // default
+GLfloat specRefl[] = {1.0, 1.0, 1.0, 1.0}; // default
+
 
 double matriz_proyeccion_A[4][4];
 double matriz_modelview[4][4];
@@ -103,11 +108,18 @@ void display(void)
 			 glVertex3f(0.0f,0.0f,0.0f);
 			 glVertex3f(0.0f,0.1f,0.0f);
 
+
 		glColor3f(0.0f,0.0f,1.0f);
 			 glVertex3f(0.0f,0.0f,0.0f);
 			 glVertex3f(0.0f,0.0f,10.1f);
 	glEnd();
 				glColor3f(1.0f,1.0f,1.0f);
+        glMaterialfv(GL_FRONT, GL_SPECULAR, specRefl);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, diffRefl);
+        glMaterialfv(GL_FRONT, GL_AMBIENT, ambRefl);
+        glMaterialfv(GL_FRONT, GL_EMISSION , ambRefl);
+
+
 
   	if (luces==1)
       glEnable(GL_LIGHTING);	
@@ -136,6 +148,7 @@ void display(void)
 
         if (modo_dibujo==0) {
           glLineWidth(6);
+
           glBegin(GL_TRIANGLES);
         }
         else if (modo_dibujo==1){
@@ -249,7 +262,8 @@ myinit(void)
 
     glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);	
     glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse1);	
-    //glLightfv(GL_LIGHT1, GL_POSITION, LightPosition1);	
+    glLightfv(GL_LIGHT1, GL_POSITION, LightPosition1);	
+
 
   	glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT1);

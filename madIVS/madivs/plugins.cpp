@@ -466,9 +466,12 @@ int importar_modelo(int n_plugin,char *file) {
 
       ok=(*importar_modelo_dll)(file,&model_tag);
 
+      if (ok==1) {
       printf("Dirección de memoria madvis %d\n",(int)&model_tag);
-
       printf("Dirección de memoria madvis %d\n",(int)model_tag);
+      }
+      else
+        model_tag=NULL;
 
       CierraDLL;
 
