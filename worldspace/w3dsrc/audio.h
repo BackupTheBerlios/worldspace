@@ -22,7 +22,14 @@
 #include <vorbis/vorbisfile.h>
 #include "mikmod.h"
 
- 
+#define OGG  0
+#define MOD  1
+#define S3M  2
+#define IT   3
+#define XM   4
+
+
+
  /*!
 =================================================================
 Funcion         : ini_audio ( )
@@ -184,17 +191,6 @@ int repeticion ---> -1 bucle infinito y 1,2,3.... numero de veces
 
 extern int reproducir_musica ( int repetir );
 
-/*!
-=======================================================================================
-Funcion       : actualizar_musica (  )
-Objetivo      : Esta funcion rellena los buffers segun se van vaciando. Hay que llamarla
-                    muy muy a menudo ya que es la que realmente realiza el streaming.
-                    Preferiblemente hay que incluirla en un thread independiente.
-Parametros : No hay que pasarle parametros
-========================================================================================
-*/
-
-extern int  actualizar_musica (void);
 
 /*!
 ========================================================================================
@@ -221,14 +217,14 @@ extern int pausar_musica (int pausa);
 
 /*!
 =======================================================================================
-Funcion       : cargar_musica ( char *fichero_ogg )
+Funcion       : cargar_musica ( char *sMusica )
 Objetivo      : Esta funcion decodifica un fichero ogg y lo pasa a un buffer
                     en formato wav
-Parametros : Hay que pasarle 2 parametros
+Parametros : Hay que pasarle 1 parametros
 
-char *fichero_ogg --> Nombre del archivo de musica que queremos cargar
+char *sMusica --> Nombre del archivo de musica que queremos cargar
 ========================================================================================
 */
 
-extern int cargar_musica ( char *fichero_ogg );
+extern int cargar_musica ( char *sMusica );
 

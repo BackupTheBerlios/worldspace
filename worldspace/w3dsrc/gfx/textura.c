@@ -18,6 +18,7 @@
 #include "conf_parser.h"
 #include "carga_imagen.h"
 #include "textura.h"
+#include <string.h>
 
 //==========================================================================
 //  Variables internas del módulo
