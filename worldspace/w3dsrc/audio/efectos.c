@@ -97,7 +97,7 @@ ALuint identificador --> Para indicar que sonido hemos cargado
 ===========================================================================
 */
 
-void  carga_sonido ( char *fichero_wav, int identificador ){
+void  cargar_sonido ( char *fichero_wav, int identificador ){
 
 	/* Variables locales */
 	ALsizei size, freq;
