@@ -90,8 +90,8 @@ int InicializarAudio(){
 		fprintf ( logs,"No existe WaveOut Backend\n");
 		if (( Device = alcOpenDevice (( ALubyte* ) "SDL" )) == NULL ){
 			fprintf ( logs,"No existe SDL Backend\n");
-			if (( Device = alcOpenDevice (( ALubyte* ) "ALSA" )) == NULL ){
-				fprintf ( logs,"No existe ALSA Backend\n");
+			if (( Device = alcOpenDevice (( ALubyte* ) "arts" )) == NULL ){
+				fprintf ( logs,"No existe arts Backend\n");
 				if (( Device = alcOpenDevice ( NULL )) == NULL ){
 					fprintf ( logs,"No hay disponible ningun dispositivo de audio\n");
 					return -1;
@@ -527,6 +527,7 @@ void ActualizarMusica (  ){
     	int contador=0;
     	int i;
     	int posicion = 0;
+	ALboolean bufferacabado = AL_FALSE;
     
 
 	
@@ -550,7 +551,7 @@ void ActualizarMusica (  ){
         /* Defino propiedades para la fuente */
         alSourcei ( streamsource[0], AL_SOURCE_RELATIVE, AL_TRUE ); /* Para que se mueva con el listener */
         alSourcei ( streamsource[0], AL_LOOPING, AL_FALSE ); /* No se repite por ella sola */
-        alSourcef ( streamsource[0], AL_GAIN, 0.8f ); /* Para que suene menos que los sonidos */
+        alSourcef ( streamsource[0], AL_GAIN, 0.9f ); /* Para que suene menos que los sonidos */
 
         /* Asignamos los buffers creados a la fuente */
         alSourceQueueBuffers ( streamsource[0], NUM_BUFFER_MUSICA, streambuffers );
@@ -569,32 +570,32 @@ void ActualizarMusica (  ){
         
        		/* Si algun buffer esta vacio, lo rellenamos */
        		if ( buffers_vacios > 0 ){
-          /* Desasignamos buffers para rellenarlos */
-          alSourceUnqueueBuffers ( streamsource[0], buffers_vacios, &streambuffers );
-          if ( (alGetError( )) != AL_NO_ERROR ){
-              fprintf ( logs,"No va el streaming\n");
-          }
-          for ( i=0; i < buffers_vacios; i++){
-             int cont = 0 ;
-             int contador = 0;
-             /* Reseteamos el buffer intermedio */
-	          memset ( waveout, 0 , 65532);
-		      while ( contador < 65536 ){
-			      cont = ov_read ( &buff, (char *)&waveout[contador], (65536-contador)*2, 0, 2, 1, &current_section ) ;
-                contador += cont;
-                numero_total +=cont;
-			      if ( cont == 0 ){
-                   musica_decodificada = 1;
-				     i=buffers_vacios;
-                   contador = 65532;
-			      }
-              fprintf(logs,"Recargando buffer desasignado con %i bytes\n",contador);
-		      }
-              alBufferData ( &streambuffers[i], formato, &waveout[0], contador, frecuencia );
-          }
-          /* Asignamos de nuevo los buffers al streamsource */
-          alSourceQueueBuffers ( streamsource[0], buffers_vacios, &streambuffers );
-          buffers_vacios -= buffers_vacios;
-        }
-      }
+         
+			while ( buffers_vacios ){
+				
+				/* Desasignamos buffers para rellenarlos */
+          			alSourceUnqueueBuffers ( streamsource[0], 1, &streambuffers );
+          			if ( (alGetError( )) != AL_NO_ERROR ){
+              				fprintf ( logs,"No va el streaming\n");
+          			}
+				
+				if ( !bufferacabado){		
+			   		cont = ov_read ( &buff, (char *)&waveout, BUFFER_MUSICA, 0, 2, 1, &current_section);
+                			contador += cont;
+              				alBufferData ( streambuffers, formato, waveout, BUFFER_MUSICA, frecuencia );
+					if ((alGetError()) != AL_NO_ERROR ){
+						fprintf ( logs, "No se puede añadir datos al buffer\n");
+					}
+					
+          				/* Asignamos de nuevo los buffers al streamsource */
+          				alSourceQueueBuffers ( streamsource[0], 1, &streambuffers );
+          				buffers_vacios --;
+        			}
+				else
+				{
+					
+      				}
+			}
+		}
+	}
 }
