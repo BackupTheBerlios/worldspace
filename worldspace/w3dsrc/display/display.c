@@ -1,8 +1,3 @@
-/*!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-Este fichero no es oficial, el oficial será el proporcionado por Loki
-
-*/
 
 /***************************************************************************
                           display.c  -  description
@@ -69,7 +64,7 @@ static const char *cursor_xpm[] = {
 
 static SDL_Cursor *init_system_cursor(const char *image[]);
 SDL_Cursor *cursor;
-
+SDL_Rect **resoluciones;
 /*!
 
 int sis_ini_display(void)
@@ -82,7 +77,7 @@ A su vez, llamará a la inicialización de OpenGL.
 int ini_display(void)
 {
 
-    unsigned short int x_size, y_size;
+    unsigned short int x_size, y_size, i, resolucion_ok = NO;
     SDL_Surface *screen;
     SDL_Surface *icon;
 
@@ -97,8 +92,25 @@ int ini_display(void)
     }
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
+    resoluciones = SDL_ListModes ( NULL, SDL_OPENGL | SDL_FULLSCREEN );
     if (configuracion.FullScreen == 1) {
+        
+        /* Comprobamos que la resolucion es valida */
+        for(i=0;resoluciones[i];++i){
+                if ( (resoluciones[i]->w == x_size) && (resoluciones[i]->h == y_size) ){
+                                log_msj("La resolucion de %d x %d que has elegido es soportada por tu ordenador\n", x_size, y_size);
+                                resolucion_ok = SI;
+                                break;
+                }
+        }
+        if ( resolucion_ok == NO ){
+                fprintf(logs, "La resolucion del fichero w3d.ini no es válida, prueba con alguna de estas:\n");
+                for (i=0;resoluciones[i];++i){
+                                log_msj(" %d x %d \n", resoluciones[i]->w, resoluciones[i]->h);
+                }
+                SDL_Quit();
+                _return NO;
+        }
         screen =
             SDL_SetVideoMode(x_size, y_size, 16,
                              SDL_OPENGL | SDL_FULLSCREEN);
