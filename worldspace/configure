@@ -38,12 +38,9 @@ CCPP=g++
 BINARY=w3d_x86.exe
 
 EXCEP=$*
-
 if test -z $EXCEP
-then
-EXCEP=esternocleidomastoideo
+then	EXCEP=dummycadenainmposible
 fi
-
 C_SOURCES=`find -name *.c |grep -v $EXCEP`
 echo "C : " $C_SOURCES
 
@@ -93,7 +90,7 @@ do
 done
 echo>>Makefile.kk
 echo -n -e "\t">>Makefile.kk
-echo -n $CCPP -I$INCLUDE -o $BINARY " " >>Makefile.kk
+echo -n $CCPP  -o $BINARY " " >>Makefile.kk
 for i in $C_SOURCES
 do
         echo -n $i  |sed s/.c$/.o/ >>Makefile.kk
