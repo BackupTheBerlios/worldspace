@@ -62,7 +62,7 @@ Control de indentacion de las trazas
 
 #ifdef WIN32
 typedef unsigned int uint;
-#endif                          // WIN32
+#endif				// WIN32
 typedef unsigned char byte;
 
 
@@ -90,7 +90,7 @@ Estructura de un vector
 typedef struct vector_tag {
     float x, y, z;
     float u, v;
-    float Nx, Ny, Nz;           // Normales
+    float Nx, Ny, Nz;		// Normales
 } vertice;
 
 
@@ -99,7 +99,7 @@ Estructura de un triangulo o cara
 !*/
 
 typedef struct tag_face {
-    vertice vertices[3];        // Puntos del triángulo
+    vertice vertices[3];	// Puntos del triángulo
 } cara;
 
 
@@ -108,12 +108,12 @@ Estructura de un modelo
 !*/
 
 typedef struct tag_object {
-    unsigned int n_caras;       // Numero de caras
-    cara *triangulos;           // Matriz de caras
-    char id_textura[16];        // Fichero de textura
-    unsigned int n_textura;     // Identificación de textura
-    float x, y, z;              // Posición en el espacio
-    vertice base[3];            // Base;
+    unsigned int n_caras;	// Numero de caras
+    cara *triangulos;		// Matriz de caras
+    char id_textura[16];	// Fichero de textura
+    unsigned int n_textura;	// Identificación de textura
+    float x, y, z;		// Posición en el espacio
+    vertice base[3];		// Base;
 } modelo;
 
 

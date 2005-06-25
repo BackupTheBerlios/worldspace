@@ -40,13 +40,13 @@ modelo *carga_mad(char *file)
     log_msj("[mad.c] Cargando modelo %s\n", filename);
     f_object = abre_fichero(filename, "rb");
     if (f_object == NULL) {
-        log_msj("[KO] No pude encontrar %s\n", filename);
-        return NULL;
+	log_msj("[KO] No pude encontrar %s\n", filename);
+	return NULL;
     }
     fread(&magic, 1, 1, f_object);
     if (magic != MAD_MAGIC) {
-        log_msj("[KO] Fichero no válido\n");
-        return NULL;
+	log_msj("[KO] Fichero no válido\n");
+	return NULL;
     }
     fread(modelo_1, sizeof(modelo), 1, f_object);
     modelo_1->x = 0.0;
@@ -55,11 +55,11 @@ modelo *carga_mad(char *file)
     tri = (cara *) malloc(sizeof(cara) * modelo_1->n_caras);
     modelo_1->triangulos = tri;
     for (j = 0; j < modelo_1->n_caras; j++) {
-        fread(&(modelo_1->triangulos[j]), sizeof(cara), 1, f_object);
+	fread(&(modelo_1->triangulos[j]), sizeof(cara), 1, f_object);
     }
     log_msj("[mad.c] Modelo cargado con %d caras\n", j);
     if (strlen(modelo_1->id_textura) == 0)
-        strcpy(modelo_1->id_textura, "(nullfile)");
+	strcpy(modelo_1->id_textura, "(nullfile)");
     log_msj("[mad.c] Skin  %s\n", modelo_1->id_textura);
 
 //modelo_1->n_textura = encola_textura(modelo_1->id_textura, GL_RGBA);
@@ -78,32 +78,32 @@ int render_mad(modelo * mad)
 /*if (mad->n_textura != 0)
             
 glBindTexture(GL_TEXTURE_2D, matriz_texturas[mad->n_textura]);*/
-        glBegin(GL_TRIANGLES);
-        glTexCoord2f(mad->triangulos[j].vertices[0].u,
-                     mad->triangulos[j].vertices[0].v);
-        glNormal3f(mad->triangulos[j].vertices[0].Nx,
-                   mad->triangulos[j].vertices[0].Ny,
-                   mad->triangulos[j].vertices[0].Nz);
-        glVertex3f(mad->triangulos[j].vertices[0].x * 30,
-                   mad->triangulos[j].vertices[0].y * 30,
-                   mad->triangulos[j].vertices[0].z * 30);
-        glTexCoord2f(mad->triangulos[j].vertices[1].u,
-                     mad->triangulos[j].vertices[1].v);
-        glNormal3f(mad->triangulos[j].vertices[1].Nx,
-                   mad->triangulos[j].vertices[1].Ny,
-                   mad->triangulos[j].vertices[1].Nz);
-        glVertex3f(mad->triangulos[j].vertices[1].x * 30,
-                   mad->triangulos[j].vertices[1].y * 30,
-                   mad->triangulos[j].vertices[1].z * 30);
-        glTexCoord2f(mad->triangulos[j].vertices[2].u,
-                     mad->triangulos[j].vertices[2].v);
-        glNormal3f(mad->triangulos[j].vertices[2].Nx,
-                   mad->triangulos[j].vertices[2].Ny,
-                   mad->triangulos[j].vertices[2].Nz);
-        glVertex3f(mad->triangulos[j].vertices[2].x * 30,
-                   mad->triangulos[j].vertices[2].y * 30,
-                   mad->triangulos[j].vertices[2].z * 30);
-        glEnd();
+	glBegin(GL_TRIANGLES);
+	glTexCoord2f(mad->triangulos[j].vertices[0].u,
+		     mad->triangulos[j].vertices[0].v);
+	glNormal3f(mad->triangulos[j].vertices[0].Nx,
+		   mad->triangulos[j].vertices[0].Ny,
+		   mad->triangulos[j].vertices[0].Nz);
+	glVertex3f(mad->triangulos[j].vertices[0].x * 30,
+		   mad->triangulos[j].vertices[0].y * 30,
+		   mad->triangulos[j].vertices[0].z * 30);
+	glTexCoord2f(mad->triangulos[j].vertices[1].u,
+		     mad->triangulos[j].vertices[1].v);
+	glNormal3f(mad->triangulos[j].vertices[1].Nx,
+		   mad->triangulos[j].vertices[1].Ny,
+		   mad->triangulos[j].vertices[1].Nz);
+	glVertex3f(mad->triangulos[j].vertices[1].x * 30,
+		   mad->triangulos[j].vertices[1].y * 30,
+		   mad->triangulos[j].vertices[1].z * 30);
+	glTexCoord2f(mad->triangulos[j].vertices[2].u,
+		     mad->triangulos[j].vertices[2].v);
+	glNormal3f(mad->triangulos[j].vertices[2].Nx,
+		   mad->triangulos[j].vertices[2].Ny,
+		   mad->triangulos[j].vertices[2].Nz);
+	glVertex3f(mad->triangulos[j].vertices[2].x * 30,
+		   mad->triangulos[j].vertices[2].y * 30,
+		   mad->triangulos[j].vertices[2].z * 30);
+	glEnd();
     }
     _return SI;
 }

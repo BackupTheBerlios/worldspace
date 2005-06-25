@@ -33,7 +33,7 @@ void uMayusculas(char *sCad)
 {
     int i;
     for (i = 0; sCad[i] != '\0'; i++)
-        sCad[i] = toupper(sCad[i]);
+	sCad[i] = toupper(sCad[i]);
 }
 
 //==========================================================================
@@ -49,11 +49,11 @@ char *uCopia_cadena(char *sCadena)
 
     sDestino = (char *) dar_m(strlen(sCadena) + 1, "uCopia_cadena");
     if (sDestino == NULL) {
-        // Debería de detener el programa, con una función general que
-        // restableciese los estados antes de lanzamiento del programa.
-        // Una función tipo 'Salida'.
-        // O controlar su salida.
-        return NULL;
+	// Debería de detener el programa, con una función general que
+	// restableciese los estados antes de lanzamiento del programa.
+	// Una función tipo 'Salida'.
+	// O controlar su salida.
+	return NULL;
     }
     strcpy(sDestino, sCadena);
 
@@ -70,35 +70,35 @@ char *uCopia_cadena(char *sCadena)
 //    dos tokens.
 //  Por esta última diferencia no se utiliza 'strtok'.
 //==========================================================================
-static char *sCadOrigen = NULL; // Debería liberarse al final. ¿ Cómo ?
-static int iLonOrigen = 0;      // Longitud de 'sOrigen'
-static int iCurOrigen = 0;      // Posicion en 'sOrigen'
+static char *sCadOrigen = NULL;	// Debería liberarse al final. ¿ Cómo ?
+static int iLonOrigen = 0;	// Longitud de 'sOrigen'
+static int iCurOrigen = 0;	// Posicion en 'sOrigen'
 //==========================================================================
 void uStrtoken(char *sDestino, char *sOrigen, char *sSep)
 {
     if (sOrigen != NULL) {
-        iLonOrigen = strlen(sOrigen);
-        iCurOrigen = 0;
-        sCadOrigen = (char *) liberar_m(sCadOrigen);
-        sCadOrigen = (char *) uCopia_cadena(sOrigen);
+	iLonOrigen = strlen(sOrigen);
+	iCurOrigen = 0;
+	sCadOrigen = (char *) liberar_m(sCadOrigen);
+	sCadOrigen = (char *) uCopia_cadena(sOrigen);
     }
 
     if (sCadOrigen != NULL) {
-        int iLonSep, i, k, iCurAnterior;
-        iLonSep = strlen(sSep);
-        iCurAnterior = iCurOrigen;
-        for (i = iCurOrigen, k = 0; i < iLonOrigen; i++, k++) {
-            if (!strncmp(sCadOrigen + i, sSep, iLonSep)) {
-                //if (!strcmp(sSep,"\n"))  k = ((k==0)? 0: k-1);
-                strncpy(sDestino, sCadOrigen + iCurOrigen, k);
-                iCurOrigen = i + iLonSep;
-                break;
-            }
-        }
-        if (iCurOrigen == iCurAnterior) // Si no cambia es que no lo encuentra.
-        {
-            strcpy(sDestino, sCadOrigen + iCurOrigen);  // Toda la cadena o el resto de ella.
-        }
+	int iLonSep, i, k, iCurAnterior;
+	iLonSep = strlen(sSep);
+	iCurAnterior = iCurOrigen;
+	for (i = iCurOrigen, k = 0; i < iLonOrigen; i++, k++) {
+	    if (!strncmp(sCadOrigen + i, sSep, iLonSep)) {
+		//if (!strcmp(sSep,"\n"))  k = ((k==0)? 0: k-1);
+		strncpy(sDestino, sCadOrigen + iCurOrigen, k);
+		iCurOrigen = i + iLonSep;
+		break;
+	    }
+	}
+	if (iCurOrigen == iCurAnterior)	// Si no cambia es que no lo encuentra.
+	{
+	    strcpy(sDestino, sCadOrigen + iCurOrigen);	// Toda la cadena o el resto de ella.
+	}
     }
 }
 
@@ -114,7 +114,7 @@ void uGuardarEstado(void)
     glGetIntegerv(GL_ATTRIB_STACK_DEPTH, &iNivelPilaEstados);
     glGetIntegerv(GL_MAX_ATTRIB_STACK_DEPTH, &iMaxNivelPilaEstados);
     if (iMaxNivelPilaEstados > iNivelPilaEstados)
-        glPushAttrib(GL_ALL_ATTRIB_BITS);
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
 }
 
 void uRecuperarEstado(void)
@@ -122,20 +122,26 @@ void uRecuperarEstado(void)
     int iNivelPilaEstados;
     glGetIntegerv(GL_ATTRIB_STACK_DEPTH, &iNivelPilaEstados);
     if (iNivelPilaEstados > 0)
-        glPopAttrib();
+	glPopAttrib();
 }
 
-void uRecuperarPila(void)       // Dejamos la pila de estados vacía recuperando
-{                               // el estado original
+void uRecuperarPila(void)	// Dejamos la pila de estados vacía recuperando
+{				// el estado original
     int iNivelPilaEstados;
     for (glGetIntegerv(GL_ATTRIB_STACK_DEPTH, &iNivelPilaEstados);
-         iNivelPilaEstados > 0;
-         glGetIntegerv(GL_ATTRIB_STACK_DEPTH, &iNivelPilaEstados)
-        ) {
-        glPopAttrib();
+	 iNivelPilaEstados > 0;
+	 glGetIntegerv(GL_ATTRIB_STACK_DEPTH, &iNivelPilaEstados)
+	) {
+	glPopAttrib();
     }
 }
 
+
+char * _(const char *msg) 
+{
+    return msg;
+
+}
 //==========================================================================
 //  Fin de util.c
 //==========================================================================

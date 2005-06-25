@@ -59,68 +59,68 @@ int logo(void)
     fAngulo = fIter = fInc = fSize = 0.0f;
 
     while (fIter < 1000.0f) {
-        glClearColor(fFondo[0], fFondo[1], fFondo[2], fFondo[3]);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-        glLightfv(GL_LIGHT0, GL_DIFFUSE, Diffuse0);
+	glClearColor(fFondo[0], fFondo[1], fFondo[2], fFondo[3]);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, Diffuse0);
 
-        glPushMatrix();
-        glTranslatef(0.0f, 0.0f, -(fAngulo / 34.28f) + 1.0f);
-        glRotatef(0.0f, 1.0f, 0.0f, 0.0f);
-        glRotatef(0.0f, 0.0f, 1.0f, 0.0f);
-        glRotatef(-fAngulo / 2, 1.0f, 1.0f, 1.0f);
-        if (logo != NULL)
-            render_mad(logo);
-        glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.0f, 0.0f, -(fAngulo / 34.28f) + 1.0f);
+	glRotatef(0.0f, 1.0f, 0.0f, 0.0f);
+	glRotatef(0.0f, 0.0f, 1.0f, 0.0f);
+	glRotatef(-fAngulo / 2, 1.0f, 1.0f, 1.0f);
+	if (logo != NULL)
+	    render_mad(logo);
+	glPopMatrix();
 
-        SDL_GL_SwapBuffers();
+	SDL_GL_SwapBuffers();
 
-        Diffuse0[0] = fAngulo / 1000.0f;
-        Diffuse0[1] = (fAngulo - 360) / 1000.0f;
-        Diffuse0[2] = fAngulo / 360.0f;
+	Diffuse0[0] = fAngulo / 1000.0f;
+	Diffuse0[1] = (fAngulo - 360) / 1000.0f;
+	Diffuse0[2] = fAngulo / 360.0f;
 
-        fFondo[0] = (fFondo[0] > 0.0f) ? fFondo[0] - 0.002f : 0.0f;
-        fFondo[1] = (fFondo[1] > 0.0f) ? fFondo[1] - 0.001f : 0.0f;
-        fFondo[2] = (fFondo[2] > 0.0f) ? fFondo[2] - 0.001f : 0.0f;
+	fFondo[0] = (fFondo[0] > 0.0f) ? fFondo[0] - 0.002f : 0.0f;
+	fFondo[1] = (fFondo[1] > 0.0f) ? fFondo[1] - 0.001f : 0.0f;
+	fFondo[2] = (fFondo[2] > 0.0f) ? fFondo[2] - 0.001f : 0.0f;
 
-        SDL_PollEvent(&event);
-        keys = SDL_GetKeyState(NULL);
-        if (keys[SDLK_ESCAPE]) {
-            break;
-        }
+	SDL_PollEvent(&event);
+	keys = SDL_GetKeyState(NULL);
+	if (keys[SDLK_ESCAPE]) {
+	    break;
+	}
 
-        intervalo = SDL_GetTicks() - taux;
-        taux = SDL_GetTicks();
-        fInc = (float) ((intervalo * 1000.0f) / 2000.0f);
-        fIter += fInc;
-        if (fAngulo < 720.0f)
-            fAngulo += fInc;
-        if (fSize < 3.0f)
-            fSize += 0.01f;
+	intervalo = SDL_GetTicks() - taux;
+	taux = SDL_GetTicks();
+	fInc = (float) ((intervalo * 1000.0f) / 2000.0f);
+	fIter += fInc;
+	if (fAngulo < 720.0f)
+	    fAngulo += fInc;
+	if (fSize < 3.0f)
+	    fSize += 0.01f;
     }
 
     w_begin();
     //---------------------------------------------------
     imprime(vFuente[eAgulon], (float) iAncho * 0.32f, (float) iAlto * 0.9f,
-            2.0f, "WorldSpace");
+	    2.0f, "WorldSpace");
     imprime(vFuente[eAgulon], (float) iAncho * 0.47f, (float) iAlto * 0.2f,
-            2.0f, "3D");
+	    2.0f, "3D");
     //---------------------------------------------------
     w_end();
 
     while (1) {
-        SDL_PollEvent(&event);
-        keys = SDL_GetKeyState(NULL);
-        if (keys[SDLK_ESCAPE]) {
-            break;
-        }
-        if (event.type == SDL_QUIT) {
-            log_msj(">>Abortado<<<");
-            exit(0);
-        }
-        SDL_Delay(15);
-        SDL_GL_SwapBuffers();
+	SDL_PollEvent(&event);
+	keys = SDL_GetKeyState(NULL);
+	if (keys[SDLK_ESCAPE]) {
+	    break;
+	}
+	if (event.type == SDL_QUIT) {
+	    log_msj(">>Abortado<<<");
+	    exit(0);
+	}
+	SDL_Delay(15);
+	SDL_GL_SwapBuffers();
     }
     glDisable(GL_LIGHT0);
     glDisable(GL_LIGHTING);
@@ -155,8 +155,8 @@ int ini_gl(char show_logo)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(45.0f,
-                   (GLfloat) configuracion.Xtam /
-                   (GLfloat) configuracion.Ytam, 0.01f, 100000.0f);
+		   (GLfloat) configuracion.Xtam /
+		   (GLfloat) configuracion.Ytam, 0.01f, 100000.0f);
 
     glGetDoublev(GL_PROJECTION_MATRIX, &matriz_proyeccion[0][0]);
 
@@ -206,7 +206,7 @@ int ini_gl(char show_logo)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     if (show_logo)
-        logo();
+	logo();
 
     log_msj("[OK] OpenGL inicializado\n");
 

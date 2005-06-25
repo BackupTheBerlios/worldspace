@@ -24,7 +24,9 @@ void uGuardarEstado(void);
 void uRecuperarEstado(void);
 void uRecuperarPila(void);
 //==========================================================================
-#endif                          // _UTIL_H_
+#endif				// _UTIL_H_
+
+char * _(const char *msg);
 
 //==========================================================================
 //  Fin de util.h

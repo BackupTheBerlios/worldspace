@@ -33,10 +33,10 @@ int ini_colores(void)
     int i;
 
     for (i = 256; i < 256 * 2; i++) {
-        vPaleta[i].vROJO = 0;
-        vPaleta[i].vVERDE = 0;
-        vPaleta[i].vAZUL = 0;
-        vPaleta[i].vALPHA = 255;
+	vPaleta[i].vROJO = 0;
+	vPaleta[i].vVERDE = 0;
+	vPaleta[i].vAZUL = 0;
+	vPaleta[i].vALPHA = 255;
     }
     // cNegro
     // cRojo

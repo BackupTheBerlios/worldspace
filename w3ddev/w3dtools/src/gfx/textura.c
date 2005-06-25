@@ -58,29 +58,29 @@ int encola_textura(char *sTextura, int iTipo)
 
     T_FUNC_IN;
 
-    if (prColaTexturas == NULL) // Iniciamos la lista, no hay ningún
-    {                           // nombre guardado.
-        prColaTexturas =
-            (miTextura *) dar_m(sizeof(miTextura), "encola_textura 1");
-        if (prColaTexturas == NULL) {
-            _return - 1;
-        }                       // Debo devolver error
-        prNomActual = prColaTexturas;
+    if (prColaTexturas == NULL)	// Iniciamos la lista, no hay ningún
+    {				// nombre guardado.
+	prColaTexturas =
+	    (miTextura *) dar_m(sizeof(miTextura), "encola_textura 1");
+	if (prColaTexturas == NULL) {
+	    _return - 1;
+	}			// Debo devolver error
+	prNomActual = prColaTexturas;
     } else {
-        prNomActual = prColaTexturas;
-        for (iNum = 0; prNomActual != NULL; iNum++) {
-            if (!strcmp(prNomActual->sFichero, sTextura)) {
-                _return prNomActual->iNText;    // Devuelve el indice que le corresponde
-            }
-            prNomAnt = prNomActual;
-            prNomActual = prNomActual->pSig;
-        }
-        prNomActual =
-            (miTextura *) dar_m(sizeof(miTextura), "encola_textura 2");
-        if (prNomActual == NULL) {
-            _return - 1;
-        }                       // Debo devolver error
-        prNomAnt->pSig = prNomActual;
+	prNomActual = prColaTexturas;
+	for (iNum = 0; prNomActual != NULL; iNum++) {
+	    if (!strcmp(prNomActual->sFichero, sTextura)) {
+		_return prNomActual->iNText;	// Devuelve el indice que le corresponde
+	    }
+	    prNomAnt = prNomActual;
+	    prNomActual = prNomActual->pSig;
+	}
+	prNomActual =
+	    (miTextura *) dar_m(sizeof(miTextura), "encola_textura 2");
+	if (prNomActual == NULL) {
+	    _return - 1;
+	}			// Debo devolver error
+	prNomAnt->pSig = prNomActual;
     }
     glGenTextures(1, (uint *) & prNomActual->iNText);
 
@@ -104,20 +104,20 @@ void cerrar_texturas(void)
     miTextura *prNomAnterior;
 
     if (prColaTexturas != NULL) {
-        prNomActual = prNomActual->pSig;
-        prColaTexturas = liberar_m(prColaTexturas);
+	prNomActual = prNomActual->pSig;
+	prColaTexturas = liberar_m(prColaTexturas);
 
-        for (; prNomActual != NULL;) {
-            prNomAnterior = prNomActual;
-            prNomActual = prNomActual->pSig;
-            prNomAnterior = liberar_m(prNomAnterior);
-        }
+	for (; prNomActual != NULL;) {
+	    prNomAnterior = prNomActual;
+	    prNomActual = prNomActual->pSig;
+	    prNomAnterior = liberar_m(prNomAnterior);
+	}
 
-        if (prListaTexturas) {
-            prListaTexturas->vTextura =
-                liberar_m(prListaTexturas->vTextura);
-            prListaTexturas = liberar_m(prListaTexturas);
-        }
+	if (prListaTexturas) {
+	    prListaTexturas->vTextura =
+		liberar_m(prListaTexturas->vTextura);
+	    prListaTexturas = liberar_m(prListaTexturas);
+	}
     }
 }
 
@@ -140,14 +140,14 @@ int carga_listaTexturas(miLTexturas * vLText)
     sprintf(sDirTexturas, "%s/", configuracion.sDirTexturas);
 
     for (i = 0; i < vLText->iNtexturas; i++) {
-        mInicio(sFichero);
-        sprintf(sFichero, "%s%s",
-                sDirTexturas, vLText->vTextura[i].sFichero);
-        vLText->vTextura[i].iNText =
-            encola_textura(sFichero, vLText->vTextura[i].iTipo);
-        if (vLText->vTextura[i].iNText < 0) {
-            _return - 1;
-        }                       // Algo ha ido mal.
+	mInicio(sFichero);
+	sprintf(sFichero, "%s%s",
+		sDirTexturas, vLText->vTextura[i].sFichero);
+	vLText->vTextura[i].iNText =
+	    encola_textura(sFichero, vLText->vTextura[i].iTipo);
+	if (vLText->vTextura[i].iNText < 0) {
+	    _return - 1;
+	}			// Algo ha ido mal.
     }
 
     _return 0;
@@ -171,40 +171,40 @@ int genera_texturas(void)
 
     T_FUNC_IN;
 
-    if (prColaTexturas == NULL) // Como no hay nada
-        return 0;               // tampoco hay error
+    if (prColaTexturas == NULL)	// Como no hay nada
+	return 0;		// tampoco hay error
 
     mInicio(rTextura.sFichero);
 
     if (prListaTexturas == NULL) {
-        prListaTexturas = dar_m(sizeof(miLTexturas), "genera_texturas 1");
-        if (prListaTexturas == NULL) {
-            _return - 1;
-        }
-        prListaTexturas->iNtexturas = iNumTexturas;
-        prListaTexturas->vTextura =
-            dar_m(sizeof(miTextura) * iNumTexturas, "genera_texturas 2");
-        if (prListaTexturas->vTextura == NULL) {
-            prListaTexturas = liberar_m(prListaTexturas);
-            _return - 1;
-        }
+	prListaTexturas = dar_m(sizeof(miLTexturas), "genera_texturas 1");
+	if (prListaTexturas == NULL) {
+	    _return - 1;
+	}
+	prListaTexturas->iNtexturas = iNumTexturas;
+	prListaTexturas->vTextura =
+	    dar_m(sizeof(miTextura) * iNumTexturas, "genera_texturas 2");
+	if (prListaTexturas->vTextura == NULL) {
+	    prListaTexturas = liberar_m(prListaTexturas);
+	    _return - 1;
+	}
     }
 
     log_msj("# Pasamos la Cola a la Lista ..\n");
     for (i = 0; prNomActual != NULL && i < iNumTexturas; i++) {
-        // Estos valores se conocen con 'encola_textura'.
-        prListaTexturas->vTextura[i].iTipo = prNomActual->iTipo;
-        prListaTexturas->vTextura[i].iNText = prNomActual->iNText;
-        prListaTexturas->vTextura[i].pSig = prNomActual->pSig;
-        strcpy(prListaTexturas->vTextura[i].sFichero,
-               prNomActual->sFichero);
-        // Valores que desconocemos hasta la 'carga_imagen'.
-        prListaTexturas->vTextura[i].iAlto =
-            prListaTexturas->vTextura[i].iAncho = 0;
+	// Estos valores se conocen con 'encola_textura'.
+	prListaTexturas->vTextura[i].iTipo = prNomActual->iTipo;
+	prListaTexturas->vTextura[i].iNText = prNomActual->iNText;
+	prListaTexturas->vTextura[i].pSig = prNomActual->pSig;
+	strcpy(prListaTexturas->vTextura[i].sFichero,
+	       prNomActual->sFichero);
+	// Valores que desconocemos hasta la 'carga_imagen'.
+	prListaTexturas->vTextura[i].iAlto =
+	    prListaTexturas->vTextura[i].iAncho = 0;
 
-        log_msj(" %2d %s\n", prNomActual->iNText, prNomActual->sFichero);
-        // Pasamos al siguiente en la cola.
-        prNomActual = prNomActual->pSig;
+	log_msj(" %2d %s\n", prNomActual->iNText, prNomActual->sFichero);
+	// Pasamos al siguiente en la cola.
+	prNomActual = prNomActual->pSig;
     }
     log_msj("# Lista de texturas generada ..\n");
 
@@ -227,9 +227,9 @@ int carga_texturas(void)
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
     for (i = 0; i < prListaTexturas->iNtexturas; i++) {
-        if (carga_textura(&prListaTexturas->vTextura[i])) {
-            _return - 1;
-        }
+	if (carga_textura(&prListaTexturas->vTextura[i])) {
+	    _return - 1;
+	}
     }
     glDisable(GL_TEXTURE_2D);
     log_msj("# Texturas cargadas y generadas ..\n");
@@ -253,18 +253,18 @@ int carga_textura(miTextura * prTextura)
     strcpy(rFic_imagen.sFichero, prTextura->sFichero);
 
     if (carga_imagen(&rFic_imagen)) {
-        prTextura->iNText = -1; // Valor de textura invalida.
-        // El mensaje sobra si ya se da el mensaje en carga_imagen.
-        log_msj("Error al cargar %s\n", prTextura->sFichero);
-        _return - 1;
+	prTextura->iNText = -1;	// Valor de textura invalida.
+	// El mensaje sobra si ya se da el mensaje en carga_imagen.
+	log_msj("Error al cargar %s\n", prTextura->sFichero);
+	_return - 1;
     }
     // Esto creo que sobra, ya se realiza en 'carga_tga'
     if (rFic_imagen.iTipo == FTGA
-        && rFic_imagen.iAncho != rFic_imagen.iAlto) {
-        log_msj("Ancho y Alto distinto en Textura: %s\n",
-                prTextura->sFichero);
-        rFic_imagen.pDatos = (char *) liberar_m(rFic_imagen.pDatos);
-        _return - 1;
+	&& rFic_imagen.iAncho != rFic_imagen.iAlto) {
+	log_msj("Ancho y Alto distinto en Textura: %s\n",
+		prTextura->sFichero);
+	rFic_imagen.pDatos = (char *) liberar_m(rFic_imagen.pDatos);
+	_return - 1;
     }
 
     prTextura->iAlto = rFic_imagen.iAlto;
@@ -278,49 +278,49 @@ int carga_textura(miTextura * prTextura)
 
     glBindTexture(GL_TEXTURE_2D, prTextura->iNText);
     switch (prTextura->iTipo) {
-    case AT0:                  // Texturas BMP sin canal Alpha
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexImage2D(GL_TEXTURE_2D, 0, 3,
-                     rFic_imagen.iAncho, rFic_imagen.iAlto,
-                     0, GL_RGB, GL_UNSIGNED_BYTE, rFic_imagen.pDatos);
-        break;
+    case AT0:			// Texturas BMP sin canal Alpha
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, 3,
+		     rFic_imagen.iAncho, rFic_imagen.iAlto,
+		     0, GL_RGB, GL_UNSIGNED_BYTE, rFic_imagen.pDatos);
+	break;
 
-    case AT1:                  // Fuentes BMP sin canal Alpha
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);       //GL_NEAREST
-        glTexImage2D(GL_TEXTURE_2D, 0, 3,
-                     rFic_imagen.iAncho, rFic_imagen.iAlto,
-                     0, GL_RGB, GL_UNSIGNED_BYTE, rFic_imagen.pDatos);
-        break;
+    case AT1:			// Fuentes BMP sin canal Alpha
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);	//GL_NEAREST
+	glTexImage2D(GL_TEXTURE_2D, 0, 3,
+		     rFic_imagen.iAncho, rFic_imagen.iAlto,
+		     0, GL_RGB, GL_UNSIGNED_BYTE, rFic_imagen.pDatos);
+	break;
 
-    case FT0:                  // Fuentes y Texturas TGA
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-                        GL_NEAREST_MIPMAP_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-                        GL_NEAREST_MIPMAP_NEAREST);
-        gluBuild2DMipmaps(GL_TEXTURE_2D, 4, rFic_imagen.iAncho,
-                          rFic_imagen.iAlto, GL_RGBA, GL_UNSIGNED_BYTE,
-                          rFic_imagen.pDatos);
-        break;
+    case FT0:			// Fuentes y Texturas TGA
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+			GL_NEAREST_MIPMAP_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+			GL_NEAREST_MIPMAP_NEAREST);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, 4, rFic_imagen.iAncho,
+			  rFic_imagen.iAlto, GL_RGBA, GL_UNSIGNED_BYTE,
+			  rFic_imagen.pDatos);
+	break;
 
-    case FT1:                  // Por ahora es el mismo que el de FT0
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-                        GL_LINEAR_MIPMAP_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-                        GL_LINEAR_MIPMAP_NEAREST);
-        gluBuild2DMipmaps(GL_TEXTURE_2D, 4, rFic_imagen.iAncho,
-                          rFic_imagen.iAlto, GL_RGBA, GL_UNSIGNED_BYTE,
-                          rFic_imagen.pDatos);
-        break;
+    case FT1:			// Por ahora es el mismo que el de FT0
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+			GL_LINEAR_MIPMAP_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+			GL_LINEAR_MIPMAP_NEAREST);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, 4, rFic_imagen.iAncho,
+			  rFic_imagen.iAlto, GL_RGBA, GL_UNSIGNED_BYTE,
+			  rFic_imagen.pDatos);
+	break;
 
-    case FT2:                  // Fuentes TGA con canal Alpha
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexImage2D(GL_TEXTURE_2D, 0, 4,
-                     rFic_imagen.iAncho, rFic_imagen.iAlto,
-                     0, GL_RGBA, GL_UNSIGNED_BYTE, rFic_imagen.pDatos);
-        break;
+    case FT2:			// Fuentes TGA con canal Alpha
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, 4,
+		     rFic_imagen.iAncho, rFic_imagen.iAlto,
+		     0, GL_RGBA, GL_UNSIGNED_BYTE, rFic_imagen.pDatos);
+	break;
     }
     rFic_imagen.pDatos = (char *) liberar_m(rFic_imagen.pDatos);
 
@@ -333,9 +333,9 @@ int carga_textura(miTextura * prTextura)
 void activa_textura(int iTextura)
 {
     if (iTextura > 0) {
-        if (!glIsEnabled(GL_TEXTURE_2D))
-            glEnable(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D, iTextura);
+	if (!glIsEnabled(GL_TEXTURE_2D))
+	    glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, iTextura);
     }
 }
 

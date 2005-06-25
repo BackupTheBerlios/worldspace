@@ -28,15 +28,15 @@
 // Extensiones de ficheros de imagenes
 //==========================================================================
 static char *vsFicImagen[] = {
-    "BMP",                      // FBMP
-    "TGA",                      // FTGA
-    "RGB",                      // FRGB
-    "BW",                       // FBW   // A lo peor con este no funciona por la longitud diferente
+    "BMP",			// FBMP
+    "TGA",			// FTGA
+    "RGB",			// FRGB
+    "BW",			// FBW   // A lo peor con este no funciona por la longitud diferente
 };
 
 //==========================================================================
-static char sAux1[LON_BUFF];    // Buffer auxiliar.
-static char sAux2[LON_BUFF];    // Buffer auxiliar.
+static char sAux1[LON_BUFF];	// Buffer auxiliar.
+static char sAux2[LON_BUFF];	// Buffer auxiliar.
 //==========================================================================
 
 //==========================================================================
@@ -53,63 +53,63 @@ int carga_imagen(miFic_imagen * prFic_imagen)
     T_FUNC_IN;
 
     if (prFic_imagen->sFichero == NULL) {
-        _return - 1;
+	_return - 1;
     } else {
-        char sCadena[LON_BUFF / 4];
-        char sColaFic[8];
-        int i, iAncho, iAlto;
-        void *imagen = NULL;
+	char sCadena[LON_BUFF / 4];
+	char sColaFic[8];
+	int i, iAncho, iAlto;
+	void *imagen = NULL;
 
-        //---------------------------------------------------
-        // Primero extraemos la extension del fichero
-        //---------------------------------------------------
-        mInicio(sColaFic);
-        mInicio(sCadena);
-        strcpy(sColaFic, prFic_imagen->sFichero + strlen(prFic_imagen->sFichero) - 7);  // Extraemos la cola del nombre del fichero
-        uStrtoken(sCadena, sColaFic, ".");      // El primero se queda con la izquierda
-        uStrtoken(sCadena, NULL, ".");  // El segundo se queda con la extensión
-        //---------------------------------------------------
-        uMayusculas(sCadena);
-        for (i = 0; i < NUM_FICIMAGEN; i++) {
-            if (!strcmp(sCadena, vsFicImagen[i]))
-                break;
-        }
-        //---------------------------------------------------
-        switch (i) {
-        case FBMP:
-            imagen = carga_bmp(prFic_imagen->sFichero, &iAncho, &iAlto);
-            break;
+	//---------------------------------------------------
+	// Primero extraemos la extension del fichero
+	//---------------------------------------------------
+	mInicio(sColaFic);
+	mInicio(sCadena);
+	strcpy(sColaFic, prFic_imagen->sFichero + strlen(prFic_imagen->sFichero) - 7);	// Extraemos la cola del nombre del fichero
+	uStrtoken(sCadena, sColaFic, ".");	// El primero se queda con la izquierda
+	uStrtoken(sCadena, NULL, ".");	// El segundo se queda con la extensión
+	//---------------------------------------------------
+	uMayusculas(sCadena);
+	for (i = 0; i < NUM_FICIMAGEN; i++) {
+	    if (!strcmp(sCadena, vsFicImagen[i]))
+		break;
+	}
+	//---------------------------------------------------
+	switch (i) {
+	case FBMP:
+	    imagen = carga_bmp(prFic_imagen->sFichero, &iAncho, &iAlto);
+	    break;
 
-        case FTGA:
-            imagen = carga_tga(prFic_imagen->sFichero, &iAncho, &iAlto);
-            break;
+	case FTGA:
+	    imagen = carga_tga(prFic_imagen->sFichero, &iAncho, &iAlto);
+	    break;
 
-            // Tenemos que crear la funcion y tener ficheros de prueba
-        case FRGB:
-            // imagen = read_rgb_texture(prFic_imagen->sNomfic, &iAncho, &iAlto);
-            break;
+	    // Tenemos que crear la funcion y tener ficheros de prueba
+	case FRGB:
+	    // imagen = read_rgb_texture(prFic_imagen->sNomfic, &iAncho, &iAlto);
+	    break;
 
-        case FBW:
-            // imagen = read_alpha_texture(prFic_imagen->sNomfic, &iAncho, &iAlto);
-            break;
+	case FBW:
+	    // imagen = read_alpha_texture(prFic_imagen->sNomfic, &iAncho, &iAlto);
+	    break;
 
-        default:               // Fichero no reconocido
-            log_msj("\n Extensión de fichero de imagen no reconocida: %s",
-                    sCadena);
-            _return - 1;
-        }
-        //---------------------------------------------------
-        if (imagen == NULL) {
-            _return - 1;
-        }
-        //---------------------------------------------------
-        prFic_imagen->iTipo = i;
-        prFic_imagen->iAncho = iAncho;
-        prFic_imagen->iAlto = iAlto;
-        prFic_imagen->pDatos = imagen;
+	default:		// Fichero no reconocido
+	    log_msj("\n Extensión de fichero de imagen no reconocida: %s",
+		    sCadena);
+	    _return - 1;
+	}
+	//---------------------------------------------------
+	if (imagen == NULL) {
+	    _return - 1;
+	}
+	//---------------------------------------------------
+	prFic_imagen->iTipo = i;
+	prFic_imagen->iAncho = iAncho;
+	prFic_imagen->iAlto = iAlto;
+	prFic_imagen->pDatos = imagen;
     }
 
-    _return 0;                  // Todo ha ido bien.
+    _return 0;			// Todo ha ido bien.
 }
 
 //==========================================================================
@@ -146,11 +146,11 @@ char *directorio(char *sDir, char *sFormat, ...)
     // Debemos recorrer la cadena limpiando valores tipo '//'
     // supongo también si el primero es '/' pero no estoy seguro.
     sCad = strtok(sAux1, "/");
-    for (i = 0; i < 10 && sCad != NULL; i++)    // Establecemos un límite por si 'overflow'
+    for (i = 0; i < 10 && sCad != NULL; i++)	// Establecemos un límite por si 'overflow'
     {
-        strcat(sAux2, sCad);
-        strcat(sAux2, "/");
-        sCad = strtok(NULL, "/");
+	strcat(sAux2, sCad);
+	strcat(sAux2, "/");
+	sCad = strtok(NULL, "/");
     }
     strcpy(sDir, sAux2);
 

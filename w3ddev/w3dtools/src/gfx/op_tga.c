@@ -49,14 +49,14 @@ void *carga_tga(char *sFichero, int *tam_x, int *tam_y)
 
     fichero = abre_fichero(sFichero, "rb");
     if (fichero == NULL) {
-        _return NULL;
+	_return NULL;
     }
     // Esto abre y comprueba que es un TGA.
     fread(TGAcompare, 1, sizeof(TGAcompare), fichero);
     if (memcmp(TGAheader, TGAcompare, sizeof(TGAheader)) != 0) {
-        log_msj("\n No es un fichero TGA: %s", sFichero);
-        fclose(fichero);
-        _return NULL;
+	log_msj("\n No es un fichero TGA: %s", sFichero);
+	fclose(fichero);
+	_return NULL;
     }
     // Leemos la cabecera.
     fread(header, 1, sizeof(header), fichero);
@@ -67,13 +67,13 @@ void *carga_tga(char *sFichero, int *tam_x, int *tam_y)
 
     // Vemos las características y comprobamos si son correctas.
     if (rImgTga.width <= 0 ||
-        rImgTga.height <= 0 ||
-        rImgTga.width > 256 ||
-        rImgTga.height != rImgTga.width || (header[4] != 32)) {
-        log_msj("\n Fichero TGA de características incorrectas: %s",
-                sFichero);
-        fclose(fichero);
-        _return NULL;
+	rImgTga.height <= 0 ||
+	rImgTga.width > 256 ||
+	rImgTga.height != rImgTga.width || (header[4] != 32)) {
+	log_msj("\n Fichero TGA de características incorrectas: %s",
+		sFichero);
+	fclose(fichero);
+	_return NULL;
     }
     // Calculamos la memoria que será necesaria.
     rImgTga.bpp = header[4];
@@ -83,21 +83,21 @@ void *carga_tga(char *sFichero, int *tam_x, int *tam_y)
     // Reservamos memoria.
     rImgTga.imageData = (GLubyte *) dar_m(imageSize, "carga_tga 1");
     if (rImgTga.imageData == NULL) {
-        fclose(fichero);
-        _return NULL;
+	fclose(fichero);
+	_return NULL;
     }
     // Cargamos y hacemos alguna comprobaciones.
     if (fread(rImgTga.imageData, 1, imageSize, fichero) != imageSize) {
-        log_msj("\n Lectura de la imagen del TGA: %s", sFichero);
-        rImgTga.imageData = (GLubyte *) liberar_m(rImgTga.imageData);
-        fclose(fichero);
-        _return NULL;
+	log_msj("\n Lectura de la imagen del TGA: %s", sFichero);
+	rImgTga.imageData = (GLubyte *) liberar_m(rImgTga.imageData);
+	fclose(fichero);
+	_return NULL;
     }
     // El TGA viene en formato BGR, lo pasamos a RGB.
     for (i = 0; i < (GLuint) (imageSize); i += bytesPerPixel) {
-        temp = rImgTga.imageData[i];
-        rImgTga.imageData[i] = rImgTga.imageData[i + 2];
-        rImgTga.imageData[i + 2] = temp;
+	temp = rImgTga.imageData[i];
+	rImgTga.imageData[i] = rImgTga.imageData[i + 2];
+	rImgTga.imageData[i + 2] = temp;
     }
 
     fclose(fichero);
@@ -106,14 +106,14 @@ void *carga_tga(char *sFichero, int *tam_x, int *tam_y)
     // un flip vertical.
     aux = (GLubyte *) dar_m(imageSize, "carga_tga 2");
     if (aux == NULL) {
-        rImgTga.imageData = (GLubyte *) liberar_m(rImgTga.imageData);
-        _return NULL;
+	rImgTga.imageData = (GLubyte *) liberar_m(rImgTga.imageData);
+	_return NULL;
     }
 
     for (i = 0; i < rImgTga.height; i++)
-        memcpy(&aux[imageSize - ((i + 1) * rImgTga.width * 4)],
-               &rImgTga.imageData[i * rImgTga.width * 4],
-               rImgTga.width * 4);
+	memcpy(&aux[imageSize - ((i + 1) * rImgTga.width * 4)],
+	       &rImgTga.imageData[i * rImgTga.width * 4],
+	       rImgTga.width * 4);
 
     //      aux=rImgTga.imageData;
     // tam devolverá el tamaño.

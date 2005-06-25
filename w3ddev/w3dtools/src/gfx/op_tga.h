@@ -28,7 +28,7 @@ typedef struct {
 
 void *carga_tga(char *sFichero, int *tam_x, int *tam_y);
 //==========================================================================
-#endif                          //_Carga_TGA_
+#endif				//_Carga_TGA_
 
 //==========================================================================
 //  Fin de op_tga.h

@@ -34,7 +34,7 @@ float camara[4][4];
 
 //==========================================================================
 miColor vPaleta[256 * 2];
-float fFondo[] = { 0.0f, 0.0f, 0.0f, 1.0f };    // Negro
+float fFondo[] = { 0.0f, 0.0f, 0.0f, 1.0f };	// Negro
 
 //==========================================================================
 
@@ -55,7 +55,7 @@ miFuente vFuente[] = {
     {0, 15, -3, 0, 0, FT2, "def.tga", 0, 0, {XfCOORD}},
     {0, 16, -4, 0, 0, FT2, "agulon.tga", 0, 0, {XfCOORD}},
     {0, 16, -2, 0, 0, AT1, "font.bmp", 0, 0, {XfCOORD}},
-};                              //! Un par de fuentes...
+};				//! Un par de fuentes...
 
 miLFuentes vListaFuentes = { NUM_FUENTES, vFuente };
 

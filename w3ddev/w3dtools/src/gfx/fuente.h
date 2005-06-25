@@ -23,21 +23,21 @@
 typedef unsigned int uint;
 #endif
 typedef struct stFuente {
-    uint mapabits;              // Identificador del mapa/textura
-    int tam_base;               // Tamaño base
-    int espacio_base;           // Espacio base
-    char inicializado;          // 0=NO 1=SI
-    int iGrupo;                 // 0 primer grupo, 1 segundo grupo.
-    int iTipo;                  // Tipo de textura utilizada
-    char sFichero[256];         // Nombre del fichero de textura
-    int iAncho;                 // Ancho y alto
-    int iAlto;                  // del fichero Textura.
-    float fCoord[128][4];       // Coordenadas de cada letra
+    uint mapabits;		// Identificador del mapa/textura
+    int tam_base;		// Tamaño base
+    int espacio_base;		// Espacio base
+    char inicializado;		// 0=NO 1=SI
+    int iGrupo;			// 0 primer grupo, 1 segundo grupo.
+    int iTipo;			// Tipo de textura utilizada
+    char sFichero[256];		// Nombre del fichero de textura
+    int iAncho;			// Ancho y alto
+    int iAlto;			// del fichero Textura.
+    float fCoord[128][4];	// Coordenadas de cada letra
 } miFuente;
 
 typedef struct {
-    int iNfuentes;              // Número de texturas.
-    miFuente *vFuente;          // Lista de texturas.
+    int iNfuentes;		// Número de texturas.
+    miFuente *vFuente;		// Lista de texturas.
 } miLFuentes;
 
 enum {
@@ -45,19 +45,19 @@ enum {
     eAgulon,
     eFont,
     NUM_FUENTES
-};                              // Declaramos las fuentes especificas de la aplicacion
+};				// Declaramos las fuentes especificas de la aplicacion
 
 //==========================================================================
 int carga_listaFuentes(miLFuentes * vListaFuentes);
 int carga_fuente(miFuente * Fuente);
 int imprime(miFuente Fuente, float x, float y, float tam, char *texto,
-            ...);
+	    ...);
 int imprimeC(miFuente Fuente, int Color, float x, float y, float tam,
-             char *texto, ...);
+	     char *texto, ...);
 void w_begin(void);
 void w_end(void);
 //==========================================================================
-#endif                          // _FUENTE_H_
+#endif				// _FUENTE_H_
 
 //==========================================================================
 //  Fin de fuente.h

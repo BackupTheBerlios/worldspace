@@ -20,7 +20,7 @@
 
 #ifdef main
 #undef main
-#endif                          // main
+#endif				// main
 
 #define main MiMain
 
@@ -36,7 +36,7 @@ static char **vArg;
 static char *pCadW;
 
 int WINAPI WinMain(HINSTANCE hInstance,
-                   HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+		   HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     //==============================================================
     //  Construcción de los argumentos en : iArg y vArg.
@@ -45,11 +45,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
     strcpy(sAux, lpCmdLine);
 
     for (iArg = 0, pCadW = strtok(lpCmdLine, " "); pCadW; iArg++)
-        pCadW = strtok(NULL, " ");
+	pCadW = strtok(NULL, " ");
 
     vArg =
-        (char **) dar_m(sizeof(char *) * (iArg + 1),
-                        "Linea de argumentos");
+	(char **) dar_m(sizeof(char *) * (iArg + 1),
+			"Linea de argumentos");
     miNulo(vArg);
 
     vArg[0] = (char *) dar_m(strlen("Programa") + 1, "Nombre Programa");
@@ -58,13 +58,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
     strcpy(vArg[0], "Programa");
 
     for (iArg = 1, pCadW = strtok(sAux, " "); pCadW; iArg++) {
-        iLonW = strlen(pCadW);
+	iLonW = strlen(pCadW);
 
-        vArg[iArg] = (char *) dar_m(iLonW + 1, "Argumento");
-        miNulo(vArg[iArg]);
+	vArg[iArg] = (char *) dar_m(iLonW + 1, "Argumento");
+	miNulo(vArg[iArg]);
 
-        strcpy(vArg[iArg], pCadW);
-        pCadW = strtok(NULL, " ");
+	strcpy(vArg[iArg], pCadW);
+	pCadW = strtok(NULL, " ");
     }
     //==============================================================
 
@@ -72,7 +72,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 }
 
 //==========================================================================
-#endif                          // _mimain_h_
+#endif				// _mimain_h_
 
 //==========================================================================
 //  Fin de mimain.h

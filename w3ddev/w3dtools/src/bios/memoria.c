@@ -37,50 +37,50 @@ void *dar_m(int iSize, char *sChivato)
 
     pBloc = malloc(iSize);
     if (pBloc == NULL) {
-        log_msj("No hay memoria suficiente. Bloques asignados %d\n",
-                Bloques_asignados);
-        // Lo mejor es terminar el programa, para liberar a las funciones
-        // que llamen el control del error.
-        return NULL;
+	log_msj("No hay memoria suficiente. Bloques asignados %d\n",
+		Bloques_asignados);
+	// Lo mejor es terminar el programa, para liberar a las funciones
+	// que llamen el control del error.
+	return NULL;
     }
 
     if (prMemoria == NULL) {
-        prMemoria = (miMemoria *) malloc(sizeof(miMemoria) * LIM_MEM);
-        if (prMemoria == NULL) {
-            log_msj("No hay memoria para el Vector de memoria\n");
-            free(pBloc);
-            return NULL;
-        }
-        for (i = 0; i < LIM_MEM; i++) {
-            prMemoria[i].iDes = -1;     // No se esta utilizando
-            prMemoria[i].pSig = NULL;
-            prMemoria[i].pMem = NULL;
-            mInicio(prMemoria[i].sChivato);
-        }
+	prMemoria = (miMemoria *) malloc(sizeof(miMemoria) * LIM_MEM);
+	if (prMemoria == NULL) {
+	    log_msj("No hay memoria para el Vector de memoria\n");
+	    free(pBloc);
+	    return NULL;
+	}
+	for (i = 0; i < LIM_MEM; i++) {
+	    prMemoria[i].iDes = -1;	// No se esta utilizando
+	    prMemoria[i].pSig = NULL;
+	    prMemoria[i].pMem = NULL;
+	    mInicio(prMemoria[i].sChivato);
+	}
     }
 
     for (i = 0; i < LIM_MEM; i++) {
-        if (prMemoria[i].iDes == -1)
-            break;
+	if (prMemoria[i].iDes == -1)
+	    break;
     }
 
     if (i == LIM_MEM) {
-        free(pBloc);
-        log_msj("Donde: [%s]\n", sChivato);
-        log_msj("Hemos superado el límite de memoria de LIM_MEM : %d\n",
-                LIM_MEM);
-        log_msj("Aumenta el valor de LIM_MEM y recompila el programa\n");
-        return NULL;
+	free(pBloc);
+	log_msj("Donde: [%s]\n", sChivato);
+	log_msj("Hemos superado el límite de memoria de LIM_MEM : %d\n",
+		LIM_MEM);
+	log_msj("Aumenta el valor de LIM_MEM y recompila el programa\n");
+	return NULL;
     }
 
     Bloques_asignados++;
     prMemoria[i].iDes = i;
-    prMemoria[i].pSig = NULL;   // No lo estamos utilizando POR AHORA
+    prMemoria[i].pSig = NULL;	// No lo estamos utilizando POR AHORA
     prMemoria[i].pMem = pBloc;
     strncpy(prMemoria[i].sChivato, sChivato,
-            sizeof(prMemoria[i].sChivato) - 1);
+	    sizeof(prMemoria[i].sChivato) - 1);
 
-    return pBloc;               // Si ha ido mal devuelve NULL.
+    return pBloc;		// Si ha ido mal devuelve NULL.
 }
 
 // ==================================================================
@@ -89,28 +89,28 @@ void *dar_m(int iSize, char *sChivato)
 void *liberar_m(void *pBloc)
 {
     if (pBloc) {
-        int i;
+	int i;
 
-        Bloques_asignados--;
-        if (Bloques_asignados < 0)
-            Bloques_asignados = 0;
-        free(pBloc);
+	Bloques_asignados--;
+	if (Bloques_asignados < 0)
+	    Bloques_asignados = 0;
+	free(pBloc);
 
-        for (i = 0; i < LIM_MEM; i++) {
-            if (prMemoria[i].pMem == pBloc) {
-                prMemoria[i].iDes = -1;
-                prMemoria[i].pMem = NULL;
-                prMemoria[i].pSig = NULL;
-                mInicio(prMemoria[i].sChivato);
-                break;
-            }
-        }
+	for (i = 0; i < LIM_MEM; i++) {
+	    if (prMemoria[i].pMem == pBloc) {
+		prMemoria[i].iDes = -1;
+		prMemoria[i].pMem = NULL;
+		prMemoria[i].pSig = NULL;
+		mInicio(prMemoria[i].sChivato);
+		break;
+	    }
+	}
 
-        if (i == LIM_MEM) {
-            log_msj("Bloque de memoria no asignado por el gestor\n");
-        }
+	if (i == LIM_MEM) {
+	    log_msj("Bloque de memoria no asignado por el gestor\n");
+	}
     }
-    return NULL;                // El puntero que quede inicializado a NULL.
+    return NULL;		// El puntero que quede inicializado a NULL.
 }
 
 //===========================================================================
@@ -129,26 +129,26 @@ int bloques_asignados(void)
 void control_memoria(void)
 {
     if (prMemoria) {
-        int i;
+	int i;
 
-        if (Bloques_asignados)
-            log_msj("Bloques asignados: %d\n", Bloques_asignados);
+	if (Bloques_asignados)
+	    log_msj("Bloques asignados: %d\n", Bloques_asignados);
 
-        for (i = 0; i < LIM_MEM; i++) {
-            if (prMemoria[i].iDes > -1) {
-                prMemoria[i].iDes = -1;
-                if (prMemoria[i].pSig)
-                    free(prMemoria[i].pSig);
-                prMemoria[i].pSig = NULL;
-                if (prMemoria[i].pSig)
-                    free(prMemoria[i].pMem);
-                prMemoria[i].pMem = NULL;
-                log_msj(" %2d [%s]\n", i, prMemoria[i].sChivato);
-            }
-        }
+	for (i = 0; i < LIM_MEM; i++) {
+	    if (prMemoria[i].iDes > -1) {
+		prMemoria[i].iDes = -1;
+		if (prMemoria[i].pSig)
+		    free(prMemoria[i].pSig);
+		prMemoria[i].pSig = NULL;
+		if (prMemoria[i].pSig)
+		    free(prMemoria[i].pMem);
+		prMemoria[i].pMem = NULL;
+		log_msj(" %2d [%s]\n", i, prMemoria[i].sChivato);
+	    }
+	}
 
-        free(prMemoria);
-        prMemoria = NULL;
+	free(prMemoria);
+	prMemoria = NULL;
     }
 }
 

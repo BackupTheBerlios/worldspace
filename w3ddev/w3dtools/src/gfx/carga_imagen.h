@@ -24,17 +24,17 @@ enum { FBMP = 0,
 };
 
 typedef struct {
-    int iTipo;                  // Tipo que indica con que extensión se abre.
-    int iAncho, iAlto;          // Ancho x Alto en pixeles de la imagen.
-    char sFichero[256];         // Nombre del fichero.
-    void *pDatos;               // Puntero Buffer donde guarda contenido fichero.
+    int iTipo;			// Tipo que indica con que extensión se abre.
+    int iAncho, iAlto;		// Ancho x Alto en pixeles de la imagen.
+    char sFichero[256];		// Nombre del fichero.
+    void *pDatos;		// Puntero Buffer donde guarda contenido fichero.
 } miFic_imagen;
 
 int carga_imagen(miFic_imagen * pFic_imagen);
 char *tipo_imagen(int iTipo);
 char *directorio(char *sDir, char *sFormat, ...);
 //==========================================================================
-#endif                          //_Carga_Imagen_
+#endif				//_Carga_Imagen_
 
 //==========================================================================
 //  Fin de carga_Imagen.h.
