@@ -152,16 +152,19 @@
       <envvars/>
       <runarguments>
         <qtmadtool></qtmadtool>
+        <plugin_md2></plugin_md2>
       </runarguments>
       <cwd>
         <qtmadtool>/home/tyler/projects/qtmadtool</qtmadtool>
+        <plugin_md2>/home/tyler/projects/qtmadtool</plugin_md2>
       </cwd>
       <debugarguments>
         <qtmadtool></qtmadtool>
+        <plugin_md2></plugin_md2>
       </debugarguments>
     </run>
     <general>
-      <activedir>src</activedir>
+      <activedir>plugin_md2</activedir>
     </general>
     <make>
       <abortonerror>true</abortonerror>
