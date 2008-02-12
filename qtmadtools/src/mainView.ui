@@ -1,0 +1,222 @@
+<ui version="4.0" >
+ <class>AppMainWindow</class>
+ <widget class="QMainWindow" name="AppMainWindow" >
+  <property name="windowModality" >
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="font" >
+   <font>
+    <pointsize>8</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle" >
+   <string>QT MAD Tool</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset resource="icon.qrc" >:/new/prefix1/w3d.gif</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget" >
+   <widget class="MyGLWidget" native="1" name="mainFrame" >
+    <property name="geometry" >
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>791</width>
+      <height>541</height>
+     </rect>
+    </property>
+    <property name="focusPolicy" >
+     <enum>Qt::WheelFocus</enum>
+    </property>
+    <property name="acceptDrops" >
+     <bool>true</bool>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuArchivo" >
+    <property name="title" >
+     <string>Archivo</string>
+    </property>
+    <addaction name="actionImportar" />
+    <addaction name="actionExportar" />
+    <addaction name="actionCargar_Textura" />
+    <addaction name="actionSalir" />
+   </widget>
+   <widget class="QMenu" name="menuTransformaciones" >
+    <property name="title" >
+     <string>Transformaciones</string>
+    </property>
+    <addaction name="actionEscalar" />
+    <addaction name="actionRotar" />
+   </widget>
+   <addaction name="menuArchivo" />
+   <addaction name="menuTransformaciones" />
+  </widget>
+  <widget class="QStatusBar" name="statusbar" />
+  <action name="actionImportar" >
+   <property name="icon" >
+    <iconset resource="icon.qrc" >:/new/prefix1/project_open.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Importar</string>
+   </property>
+   <property name="font" >
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionExportar" >
+   <property name="icon" >
+    <iconset resource="icon.qrc" >:/new/prefix1/fileexport.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Exportar</string>
+   </property>
+   <property name="font" >
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionCargar_Textura" >
+   <property name="icon" >
+    <iconset resource="icon.qrc" >:/new/prefix1/imagegallery.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Cargar Textura</string>
+   </property>
+   <property name="font" >
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionSalir" >
+   <property name="icon" >
+    <iconset resource="icon.qrc" >:/new/prefix1/exit.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Salir</string>
+   </property>
+   <property name="font" >
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionEscalar" >
+   <property name="icon" >
+    <iconset resource="icon.qrc" >:/new/prefix1/viewmagfit.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Escalar</string>
+   </property>
+   <property name="font" >
+    <font>
+     <family>Sans Serif</family>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionEje_X" >
+   <property name="icon" >
+    <iconset resource="icon.qrc" >:/new/prefix1/rotate.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Eje X</string>
+   </property>
+  </action>
+  <action name="actionEje_Y" >
+   <property name="icon" >
+    <iconset resource="icon.qrc" >:/new/prefix1/rotate.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Eje Y</string>
+   </property>
+  </action>
+  <action name="actionEje_Z" >
+   <property name="icon" >
+    <iconset resource="icon.qrc" >:/new/prefix1/rotate.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Eje Z</string>
+   </property>
+  </action>
+  <action name="actionRotar" >
+   <property name="icon" >
+    <iconset resource="icon.qrc" >:/new/prefix1/rotate.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Rotar</string>
+   </property>
+   <property name="font" >
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyGLWidget</class>
+   <extends>QWidget</extends>
+   <header>MyGLWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="icon.qrc" />
+ </resources>
+ <connections>
+  <connection>
+   <sender>actionSalir</sender>
+   <signal>triggered()</signal>
+   <receiver>AppMainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionImportar</sender>
+   <signal>triggered()</signal>
+   <receiver>mainFrame</receiver>
+   <slot>ImportarModelo()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>395</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
