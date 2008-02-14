@@ -1,5 +1,6 @@
 SOURCES += main.cpp \
- plugins.cpp
+ plugins.cpp \
+ tga.cpp
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
@@ -16,7 +17,8 @@ DESTDIR = .
 HEADERS += MyGLWidget.h \
  globals.h \
  structures.h \
- plugins.h
+ plugins.h \
+ tga.h
 
 DEFINES += LINUX
 

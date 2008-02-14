@@ -22,6 +22,8 @@
 #include <QtGui>
 #include <QFileDialog>
 #include "plugins.h"
+#include "tga.h"
+
 
 
 typedef struct {
@@ -50,9 +52,13 @@ class MyGLWidget:public QGLWidget {
 
 
   public:
-    bool blend;
-    QWidget *myParent;
-    int rX,rY;
+   bool blend;
+   QWidget *myParent;
+   int rX,rY;
+   char last_file_model[1024];
+   char last_file_texture[1024];
+
+
    MyGLWidget(QWidget * parent = 0):QGLWidget(parent) {
 
         initializeGL();
@@ -74,7 +80,7 @@ class MyGLWidget:public QGLWidget {
 
         printf("Import Model Called!!\n");
         filename = QFileDialog::getOpenFileName(this,
-     tr("Open Image"), "", QString(qextensiones));
+     tr("Open Image"), QString(last_file_model), QString(qextensiones));
         c_filename=filename.toAscii();
 	//strcpy(c_filename,(char *)filename.toAscii());
 	fich_imp=c_filename.data();
@@ -83,6 +89,7 @@ class MyGLWidget:public QGLWidget {
 
 	extension = &fich_imp[strlen(fich_imp) - 3];
 	if (!filename.isNull()) {
+		strcpy(last_file_model,fich_imp);
 		printf("Extension: %s\n", extension);
         	for (int i = 0; i < numero_plugins; i++)
             		if (strstr(plugins[i].extension, extension) == NULL)
@@ -106,6 +113,57 @@ class MyGLWidget:public QGLWidget {
 	return;
 
     }
+
+   protected slots: virtual void LoadTexture() {
+
+
+        QString filename;
+	QByteArray c_filename;
+	char *fich_imp,*extension;
+
+        int indice=0;
+        int tam_x, tam_y,j;
+        char *textura_datos;
+        char msg[1024];
+        char extensiones[]="Ficheros TGA (*.tga)";
+        filename = QFileDialog::getOpenFileName(this,tr("Open Image"), QString(last_file_texture),extensiones);
+        c_filename=filename.toAscii();
+	fich_imp=c_filename.data();
+	printf("Importar textura: %s\n",c_filename.data());
+	extension = &fich_imp[strlen(fich_imp) - 3];
+	if (!filename.isNull()) {
+		strcpy(last_file_texture,fich_imp);
+		if (textura_cargada!=1)
+			glGenTextures(0, &textura);
+	      	textura_datos = (char *) CargaTGA(fich_imp, &tam_x, &tam_y);
+		
+		if (tam_x != tam_y)
+			return ;
+		if (textura_datos == NULL) {
+		        return ;
+		}
+
+		glBindTexture(GL_TEXTURE_2D, textura);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR);
+		gluBuild2DMipmaps(GL_TEXTURE_2D, 4, tam_x, tam_y, GL_RGBA,GL_UNSIGNED_BYTE, textura_datos);
+		free(textura_datos);
+	
+		textura_cargada=1;
+		if (modelo_cargado==1) {
+			strcpy(msg,fich_imp);
+			for (j=strlen(msg)-1;j>=0;j--)
+			if ((msg[j]=='/')||(msg[j]=='\\'))
+				break;
+	
+			strcpy(model->id_textura,&msg[j+1]);
+			printf("Textura activa ->%s",model->id_textura);
+			modo_dibujo=3;
+		}
+		updateGL();	
+	
+      }
+}
 
   protected:
     void initializeGL() {

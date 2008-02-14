@@ -13,8 +13,8 @@
     <projectname>qtmadtool</projectname>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
-    <description></description>
-    <defaultencoding></defaultencoding>
+    <description/>
+    <defaultencoding/>
   </general>
   <kdevfileview>
     <groups>
@@ -65,7 +65,7 @@
       <includePaths>.;</includePaths>
     </codecompletion>
     <creategettersetter>
-      <prefixGet></prefixGet>
+      <prefixGet/>
       <prefixSet>set</prefixSet>
       <prefixVariable>m_,_</prefixVariable>
       <parameterName>theValue</parameterName>
@@ -119,16 +119,16 @@
   </kdevdoctreeview>
   <kdevdebugger>
     <general>
-      <dbgshell></dbgshell>
+      <dbgshell/>
       <breakpoints/>
       <programargs/>
       <gdbpath>/usr/bin/gdb</gdbpath>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
-      <configGdbScript></configGdbScript>
-      <runShellScript></runShellScript>
-      <runGdbScript></runGdbScript>
+      <configGdbScript/>
+      <runShellScript/>
+      <runGdbScript/>
     </general>
     <display>
       <staticmembers>false</staticmembers>
@@ -140,9 +140,9 @@
   <kdevtrollproject>
     <run>
       <mainprogram>/home/tyler/projects/qtmadtool/bin/qtmadtool</mainprogram>
-      <programargs></programargs>
+      <programargs/>
       <directoryradio>executable</directoryradio>
-      <globaldebugarguments></globaldebugarguments>
+      <globaldebugarguments/>
       <globalcwd>/home/tyler/projects/qtmadtool/bin/</globalcwd>
       <useglobalprogram>true</useglobalprogram>
       <terminal>false</terminal>
@@ -151,27 +151,27 @@
       <autokdesu>false</autokdesu>
       <envvars/>
       <runarguments>
-        <qtmadtool></qtmadtool>
-        <plugin_md2></plugin_md2>
+        <qtmadtool/>
+        <plugin_md2/>
       </runarguments>
       <cwd>
         <qtmadtool>/home/tyler/projects/qtmadtool</qtmadtool>
         <plugin_md2>/home/tyler/projects/qtmadtool</plugin_md2>
       </cwd>
       <debugarguments>
-        <qtmadtool></qtmadtool>
-        <plugin_md2></plugin_md2>
+        <qtmadtool/>
+        <plugin_md2/>
       </debugarguments>
     </run>
     <general>
-      <activedir>plugin_md2</activedir>
+      <activedir>src</activedir>
     </general>
     <make>
       <abortonerror>true</abortonerror>
       <runmultiplejobs>false</runmultiplejobs>
       <numberofjobs>1</numberofjobs>
       <dontact>false</dontact>
-      <makebin></makebin>
+      <makebin/>
       <prio>0</prio>
       <envvars/>
     </make>
